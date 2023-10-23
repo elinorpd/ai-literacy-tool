@@ -11,7 +11,6 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 def read_lesson_plan(file_name):
  
     f = open(file_name)
-    for i in 
     data = json.load(f)
     print(data['activities'][1]['title'])
 
