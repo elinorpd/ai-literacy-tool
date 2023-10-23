@@ -11,27 +11,20 @@
         },
     "learning_objectives": [
             {
-                    "editable": false,
-                    "value": "Understand the basics of JavaScript syntax"
-                }
+                "editable": false,
+                "value": "Understand the basics of JavaScript syntax"
             },
             {
-                "objective": {
-                    "editable": false,
-                    "value": "Learn how to declare variables and use different data types"
-                }
+                "editable": false,
+                "value": "Learn how to declare variables and use different data types"
             },
             {
-                "objective": {
-                    "editable": false,
-                    "value": "Define and call functions in JavaScript"
-                }
+                "editable": false,
+                "value": "Define and call functions in JavaScript"
             },
             {
-                "objective": {
-                    "editable": false,
-                    "value": "Use if/else statements to control program flow"
-                }
+                "editable": false,
+                "value": "Use if/else statements to control program flow"
             }
         ],
         "activities": [
@@ -50,5 +43,8 @@
                 "description":"Learn how to use if/else statements to control program flow in JavaScript.",
                 "editable": false
             }
-        ]
+        ],
+    "ai_activity_duration":{
+        "value": 10
+    }
 }
