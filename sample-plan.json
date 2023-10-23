@@ -10,7 +10,7 @@
             "value": "This lesson will cover the basics of JavaScript programming language."
         },
     "learning_objectives": [
-            {
+            {   "objective": {
                     "editable": false,
                     "value": "Understand the basics of JavaScript syntax"
                 }
