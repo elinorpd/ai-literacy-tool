@@ -222,7 +222,7 @@ def input_lesson_form():
 
         elif lesson_parameter == "Save Form":
             lesson_details = {
-                    inquirer.Text("parameter", message="Before saving the form, how long do you want the AI activity to be?")
+                    inquirer.Text("parameter", message="Before saving the form, how long do you want the AI activity to be (in minutes)?")
             }
             inq_var = inquirer.prompt(lesson_details)
             cur_dict['value'] = int(inq_var['parameter'])
