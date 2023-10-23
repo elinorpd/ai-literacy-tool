@@ -12,13 +12,15 @@ def read_lesson_plan(file_name):
  
     f = open(file_name)
     data = json.load(f)
-    print(data['activities'][1]['title'])
-
-    for act in data['activities']:
-        print(act['title'])
-        print(act['description'])
-        print(act['editable'])
-    f.close()
+    if 'activities' in data:
+        for act in data['activities']:
+            print(act['title'])
+            print(act['description'])
+            print(act['editable'])
+        f.close()
+    else:
+        print("WARNING! No activities in lesson plan.")
+        f.close()
 
 #function to read multiline input
 def get_multiline_input():
@@ -59,7 +61,7 @@ def input_lesson_form():
         form_choice = [
         inquirer.List('lesson_parameters',
                     message="What would you like to input? When you are done, select 'Save Form'",
-                    choices=['Title', 'Learning Objectives', 'Duration', 'Discussions', 'Activities','Save Form'],
+                    choices=['Title', 'Learning Objectives', 'Duration', 'Discussions', 'Activities', 'Custom Component', 'Save Form'],
                 ),
         ]
 
@@ -102,7 +104,7 @@ def input_lesson_form():
                 confirmation = inquirer.prompt(confirm)['confirmation']
             if confirmation == True:
                 lesson_details = {
-                    inquirer.Text("parameter", message="Enter the duration of the lesson in mins"),
+                    inquirer.Text("parameter", message="Enter the duration of the lesson in minutes"),
                     inquirer.Confirm('confirmation',
                         message="Do you want to make 'Duration' an editable parameter by the AI?" ,
                         default=False),
@@ -202,7 +204,7 @@ def input_lesson_form():
                 user_input = input("Enter activity title for the lesson:")
                 cur_dict['title'] = user_input
 
-                print("Enter description of activity:")
+                print("Enter description of activity (including desired length in minutes, if applicable):")
                 user_input= get_multiline_input()
                 cur_dict['description'] = user_input
 
@@ -220,16 +222,49 @@ def input_lesson_form():
                 else:
                     lesson_plan['activities']=[]
                     lesson_plan['activities'].append(cur_dict)
+                    
+        elif lesson_parameter == "Custom Component":
+            if confirmation == True:
+                user_input = input("Enter a title:")
+                cur_dict['title'] = user_input
 
+                print("Enter a description:")
+                user_input= get_multiline_input()
+                cur_dict['description'] = user_input
+
+                lesson_details = {
+                    inquirer.Confirm('confirmation',
+                        message="Do you want to make this 'Custom Component' an editable parameter by the AI?" ,
+                        default=False),
+                }
+                inq_var = inquirer.prompt(lesson_details)
+                cur_dict['editable'] = inq_var['confirmation']
+                if 'custom' in lesson_plan:
+                    lesson_plan['custom'].append(cur_dict)
+                else:
+                    lesson_plan['custom']=[]
+                    lesson_plan['custom'].append(cur_dict)
+        
         elif lesson_parameter == "Save Form":
-            lesson_details = {
-                    inquirer.Text("parameter", message="Before saving the form, how long do you want the AI activity to be (in minutes)?")
-            }
-            inq_var = inquirer.prompt(lesson_details)
-            cur_dict['value'] = int(inq_var['parameter'])
-            lesson_plan['ai_activity_duration'] = cur_dict
-
-            print("Here is the saved lesson plan: ",lesson_plan)
+            edit_activities = False
+            if 'activities' in lesson_plan:
+                for act in lesson_plan['activities']:
+                    # check if any activities are editable, if none are, 
+                    # then ask if they want a new activity with ai lit incorporated and length as below
+                    if act['editable']: # == True:
+                        edit_activities = True
+                        break
+            if edit_activities == False:
+                print("None of your activities are marked as editable for the AI. Would you like the AI to suggest a new AI literacy activity?")
+                lesson_details = {
+                    inquirer.Text("parameter", message="If so, please enter the activity length in minutes. If not, enter 0")
+                    }
+                inq_var = inquirer.prompt(lesson_details)
+                cur_dict['value'] = int(inq_var['parameter'])
+                lesson_plan['ai_activity_duration'] = cur_dict
+            
+            print("Here is the saved lesson plan:")
+            print(json.dumps(lesson_plan, indent=4))
             now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
             file_name = 'lesson_plan_' + now + '.json'
             with open(file_name, 'w') as fp:
