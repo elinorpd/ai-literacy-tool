@@ -11,6 +11,7 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 def read_lesson_plan(file_name):
  
     f = open(file_name)
+    for i in 
     data = json.load(f)
     print(data['activities'][1]['title'])
 
@@ -20,15 +21,19 @@ def read_lesson_plan(file_name):
         print(act['editable'])
     f.close()
 
-def temp():
-    print("Enter/Paste your content. Ctrl-D or Ctrl-Z ( windows ) to save it.")
-    contents = []
+#function to read multiline input
+def get_multiline_input():
+    print("Double-enter to save it.")
+    content = []
     while True:
         try:
-            line = input()
-        except EOFError:
-            break
-        contents.append(line)
+            data = input()
+            content.append(data)
+            if not data: 
+                content_str = "\n".join(content[:-1])
+                return content_str
+        except KeyboardInterrupt:
+            return
 
 # Define a function to generate a response from GPT-4
 def generate_response():
@@ -123,17 +128,18 @@ def input_lesson_form():
                 confirmation = inquirer.prompt(confirm)['confirmation']
             
             if confirmation == True:
-                # user_input = input("Enter learning objective for the lesson:")
-                # cur_dict['value'] = user_input
+                print("Enter learning objective for the lesson:")
+                user_input= get_multiline_input()
+                cur_dict['value'] = user_input
 
                 lesson_details = {
-                    inquirer.Text("parameter", message="Enter learning objective for the lesson"),
+                    # inquirer.Text("parameter", message="Enter learning objective for the lesson"),
                     inquirer.Confirm('confirmation',
                         message="Do you want to make this 'Learning Objective' an editable parameter by the AI?" ,
                         default=False),
                 }
                 inq_var = inquirer.prompt(lesson_details)
-                cur_dict['value'] = inq_var['parameter']
+                # cur_dict['value'] = inq_var['parameter']
                 cur_dict['editable'] = inq_var['confirmation']
                 if 'learning_objectives' in lesson_plan:
                     lesson_plan['learning_objectives'].append(cur_dict)
@@ -157,16 +163,21 @@ def input_lesson_form():
                 confirmation = inquirer.prompt(confirm)['confirmation']
             
             if confirmation == True:
+                user_input = input("Enter title for the discussion:")
+                cur_dict['title'] = user_input
+
+                print("Enter description of discussion:")
+                user_input= get_multiline_input()
+                cur_dict['description'] = user_input
+
                 lesson_details = {
-                    inquirer.Text("parameter", message="Enter discussion title for the lesson"),
-                    inquirer.Text("parameter_descr", message="Enter description of discussion"),
+                    # inquirer.Text("parameter", message="Enter discussion title for the lesson"),
+                    # inquirer.Text("parameter_descr", message="Enter description of discussion"),
                     inquirer.Confirm('confirmation',
                         message="Do you want to make this 'Discussion' an editable parameter by the AI?" ,
                         default=False),
                 }
                 inq_var = inquirer.prompt(lesson_details)
-                cur_dict['title'] = inq_var['parameter']
-                cur_dict['description'] = inq_var['parameter_descr']
                 cur_dict['editable'] = inq_var['confirmation']
                 if 'discussions' in lesson_plan:
                     lesson_plan['discussions'].append(cur_dict)
@@ -189,16 +200,21 @@ def input_lesson_form():
                 confirmation = inquirer.prompt(confirm)['confirmation']
             
             if confirmation == True:
+                user_input = input("Enter activity title for the lesson:")
+                cur_dict['title'] = user_input
+
+                print("Enter description of activity:")
+                user_input= get_multiline_input()
+                cur_dict['description'] = user_input
+
                 lesson_details = {
-                    inquirer.Text("parameter", message="Enter activity title for the lesson"),
-                    inquirer.Text("parameter_descr", message="Enter description of activity"),
+                    # inquirer.Text("parameter", message="Enter activity title for the lesson"),
+                    # inquirer.Text("parameter_descr", message="Enter description of activity"),
                     inquirer.Confirm('confirmation',
                         message="Do you want to make this 'Activity' an editable parameter by the AI?" ,
                         default=False),
                 }
                 inq_var = inquirer.prompt(lesson_details)
-                cur_dict['title'] = inq_var['parameter']
-                cur_dict['description'] = inq_var['parameter_descr']
                 cur_dict['editable'] = inq_var['confirmation']
                 if 'activities' in lesson_plan:
                     lesson_plan['activities'].append(cur_dict)
@@ -225,19 +241,8 @@ def input_lesson_form():
 
 if __name__ == "__main__":
     
-    temp()
-    # file_name= input_lesson_form()
-    # read_lesson_plan('sample-plan-new.json')
-    # read_lesson_plan(file_name)
-    
-
-# # Start the chat loop
-# while True:
-#     # Get user input
-#     user_input = input("You: ")
-
-#     # Generate response from GPT-4
-#     response = generate_response(user_input)
-
-#     # Print response
-#     print("GPT-4:", response)
+    # get_multiline_input()
+    file_name= input_lesson_form()
+    read_lesson_plan(file_name)
+    # generate AI modified lesson plan
+    #generate_response()
