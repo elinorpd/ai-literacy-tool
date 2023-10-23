@@ -10,6 +10,7 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 #function to load and read json file containing the lesson plan
 def read_lesson_plan(file_name):
  
+    #here we can read the lesson plan json file. The json file also contains parameters that need to be edited by the AI
     f = open(file_name)
     data = json.load(f)
     if 'activities' in data:
@@ -275,7 +276,6 @@ def input_lesson_form():
 
 if __name__ == "__main__":
     
-    # get_multiline_input()
     file_name= input_lesson_form()
     read_lesson_plan(file_name)
     # generate AI modified lesson plan
