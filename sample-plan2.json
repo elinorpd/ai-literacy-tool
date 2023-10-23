@@ -1,0 +1,82 @@
+{
+    "title": {
+        "editable": false,
+        "value": "What is Physical Computing?"},
+    "duration": {
+            "editable": false,
+            "value": 45},
+    "overview": {
+            "editable": false,
+            "value": "In this lesson, students will be introduced to the concept and the focus areas of Physical Computing. They will analyze how they interact with the technology around them and begin work in their design journals which they will decorate in this lesson and use throughout the course to document their work."
+        },
+    "learning_objectives": [
+            {
+                "objective": {
+                    "editable": false,
+                    "value": "Understand the focus areas of Physical Computing"
+                }
+            },
+            {
+                "objective": {
+                    "editable": false,
+                    "value": "Describe how a computing device works"
+                }
+            },
+            {
+                "objective": {
+                    "editable": false,
+                    "value": "Identify an Input - Process - Output system"
+                }
+            },
+            {
+                "objective": {
+                    "editable": false,
+                    "value": "Explain their roles in physical computing class"
+                }
+            }
+        ],
+        "Discussion": [
+            {
+                "title": "Variables and Data Types",
+                "description": "Ask students to complete the worksheet. 
+                Once students are done with independent work with the worksheet, ask them to share their object or device with their neighbors. 
+                Conclude this activity addressing the following items.
+                These interactions were designed by people and could have been designed to operate differently. (For example, an engineer can build a fan that turns on when you kick it.)
+                We are going to design physical interactions with computers and will need to determine which actions are best suited to trigger specific responses from the computer. 
+                ",
+                "editable": false
+            },
+            {
+                "title": "Functions",
+                "description":"Learn how to define and call functions in JavaScript.",
+                "editable": false
+            },
+            {
+                "title": "Conditional Statements",
+                "description":"Learn how to use if/else statements to control program flow in JavaScript.",
+                "editable": false
+            }
+        ],
+        "activities": [
+            {
+                "title": "Variables and Data Types",
+                "description": "Ask students to complete the worksheet. 
+                Once students are done with independent work with the worksheet, ask them to share their object or device with their neighbors. 
+                Conclude this activity addressing the following items.
+                These interactions were designed by people and could have been designed to operate differently. (For example, an engineer can build a fan that turns on when you kick it.)
+                We are going to design physical interactions with computers and will need to determine which actions are best suited to trigger specific responses from the computer. 
+                ",
+                "editable": false
+            },
+            {
+                "title": "Functions",
+                "description":"Learn how to define and call functions in JavaScript.",
+                "editable": false
+            },
+            {
+                "title": "Conditional Statements",
+                "description":"Learn how to use if/else statements to control program flow in JavaScript.",
+                "editable": false
+            }
+        ]
+}
