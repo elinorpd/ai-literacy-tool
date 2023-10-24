@@ -41,3 +41,9 @@ However, many school teachers do not have the expertise or capacity to develop n
 - This will allow educators to more easily come up with a class plan to teach students AI concepts and how to interact with these tools safely
 - The tool is designed to be open ended and thus can be used across a variety of academic disciplines and topics such as science, history, english literature, arts, etc
 - We are in the process of meeting with middle school educators to update our design to cater more directly to their needs and experiences as teachers today
+
+## Sample Files
+
+- `lesson_plan_physical-computing_text.txt` : sample lesson plan in text format which can be used to copy/ paste as an input form in `chat_script.py`
+
+- `lesson_plan_physical-computing.json` : sample lesson plan in json format. This file can be provided as input file for `chat_script.py`
