@@ -40,15 +40,15 @@ def parse_lesson_plan(file_path, editable=True):
             for act in data[key]:
                 lesson_plan += "\t- Title" + editable_str(editable, act['editable']) + act['title'] + "\n"
                 lesson_plan += "\tDescription" + editable_str(editable, act['editable']) + act['description'] + "\n"
+            if 'ai_activity_duration' in data and data['ai_activity_duration']['value'] > 0:
+                lesson_plan += "\t- AI Activity (editable: True):\n"
+                lesson_plan += "\tDescription (editable: True): " + f"{str(data['ai_activity_duration']['value'])} minute AI suggested activity goes here.\n"
         elif key == 'custom':
             # lesson_plan += "Additional Components:\n"
             for cust in data[key]:
                 lesson_plan += cust['type'] + ":\n"
                 lesson_plan += "Title" + editable_str(editable, cust['editable']) + cust['title'] + "\n"
-                lesson_plan += "Description" + editable_str(editable, cust['editable']) + cust['description'] + "\n"
-    if 'ai_activity_duration' in data and data['ai_activity_duration']['value'] > 0:
-            lesson_plan += "AI Activity Duration (editable: True): " + str(data[key]['value']) + " mins\n"
-            
+                lesson_plan += "Description" + editable_str(editable, cust['editable']) + cust['description'] + "\n"            
     return lesson_plan
         
 #function to load and print json file containing the lesson plan
@@ -83,25 +83,26 @@ def get_multiline_input():
             return
 
 # Define a function to generate a response from GPT-4
-def generate_response(file_name):
-    # system message is like the hidden prompt
-    # assistant message is the gpt output
-    # user message is the user input
-    
+def generate_response(file_name, args):
     lesson_plan = parse_lesson_plan(file_name)
-    
-    
-    prompt = "What is physical computing?Share a definition of physical computing upon which this course is based.Physical Computing is an approach to computer-human interaction design that starts by considering how humans express themselves physically.Review keywords and phrases from the definition.Computer-human interaction design: Every device has a trigger and a response (input and output). The way we use a device was decided by designers and engineers. How humans express themselves physically: The physical actions that we are capable of can be used to trigger a response from a device. We can press with our fingers, step with our feet, turn with our wrists, and so on. These are all considerations when designing interactions."
     response = openai.ChatCompletion.create(
-                  model="gpt-3.5-turbo", #gpt-4
-                  messages=[{"role": "system", "content": "You are an expert in lesson planning and you will have access to an existing lesson plan from a teacher. Suggest another activity instead of the one listed. additionally suggest one fun, safe and appropriate AI literacy activity for the lesson which can be integrated into the lesson plan for 10 mins. Respond with the new lesson plan in short points without changing the contents of other parts."},
-                            {"role": "user", "content": prompt}
-                  ])
+                  model=args.model,
+                  messages=[
+                      {"role": "system", "content": "You are an expert in AI literacy and middle school education. We will give you an existing lesson plan from a middle school teacher. For each component of the plan, it will indicate whether or not you should edit that section. For any activities that have 'editable: True', please modify or replace the activity with an engaging, safe, and time-appropriate AI literacy activity relevant to the lesson. Do not change any components with 'editable: False'. Return only the lesson plan in the same format, with your edits to the editable sections with no additional text. Don't include the (editable: value) statements."},
+                      {"role": "user", "content": lesson_plan },
+                  ],
+                  )
 
     result = response["choices"][0]["message"]["content"]
+    print("Here is the new lesson plan:")
     print(result)
-    #return response.choices[0].text.strip()
-
+    now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
+    output_dir = os.path.join(os.path.abspath(os.getcwd()), args.output_dir) # TODO use argparse to make this flexible
+    file_name = 'ai_lesson_plan_' + now + '.txt'
+    file_path = os.path.join(output_dir, file_name)
+    with open(file_path, 'w') as fp:
+        fp.write(result)
+    return lesson_plan
 
 #function to input and save lesson plan
 def input_lesson_form(args):
@@ -111,9 +112,10 @@ def input_lesson_form(args):
         lesson_plan={}
     form = 1
     
-    # TODO (eventually) dont allow empty inputs
-    # TODO (eventually) add overview section, maybe as well as other sections. for now these are covered in catch all custom component
-    # TODO (eventually) allow user to specify the order of the lesson. currently its grouped by our ordering and type of component
+    # TODO!! allow teacher to select from a list of AI Literacy learning objectives (or write their own) to guide the edits
+    # TODO(eventually) dont allow empty inputs
+    # TODO(eventually) add overview section, maybe as well as other sections. for now these are covered in catch all custom component
+    # TODO(eventually) allow user to specify the order of the lesson. currently its grouped by our ordering and type of component
     
     print("Hello! Please enter your current lesson plan. At a minimum, you must give a Title, Learning Objectives, and Duration.\n\
         For each component, you will be asked whether it is 'editable.' This means that the AI will potentially modify this section in order to add AI Literacy learning objectives and/or activities.\n\
@@ -328,11 +330,12 @@ def input_lesson_form(args):
                 cur_dict['value'] = int(inq_var['parameter'])
                 cur_dict['editable'] = True
                 lesson_plan['ai_activity_duration'] = cur_dict
+                lesson_plan['duration']['value'] += lesson_plan['ai_activity_duration']['value']
             
             print("Here is the saved lesson plan:")
             print(json.dumps(lesson_plan, indent=4))
             now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
-            output_dir = os.path.join(os.path.abspath(os.getcwd()), 'output') # TODO use argparse to make this flexible
+            output_dir = os.path.join(os.path.abspath(os.getcwd()), args.output_dir) # TODO use argparse to make this flexible
             file_name = 'lesson_plan_' + now + '.json'
             file_path = os.path.join(output_dir, file_name)
             with open(file_path, 'w') as fp:
@@ -344,11 +347,12 @@ def input_lesson_form(args):
 if __name__ == "__main__":
     argparse = argparse.ArgumentParser()
     argparse.add_argument('--input', type=str, default=None, help='input json file name')
-    argparse.add_argument('--output', type=str, default='output', help='output directory name')
+    argparse.add_argument('--output_dir', type=str, default='output', help='output directory name')
+    argparse.add_argument('--model', type=str, default='gpt-3.5-turbo', help='openai model to use')
     args = argparse.parse_args()
     
     file_path = input_lesson_form(args)
     # print_lesson_plan(file_path)
     print(parse_lesson_plan(file_path))
     # generate AI modified lesson plan
-    #generate_response()
+    generate_response(file_path, args)
