@@ -340,6 +340,8 @@ def input_lesson_form(args):
             print(json.dumps(lesson_plan, indent=4))
             now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
             output_dir = os.path.join(os.path.abspath(os.getcwd()), args.output_dir) # TODO use argparse to make this flexible
+            if os.path.isdir(output_dir) == False:
+                os.mkdir(output_dir)
             file_name = 'lesson_plan_' + now + '.json'
             file_path = os.path.join(output_dir, file_name)
             with open(file_path, 'w') as fp:
