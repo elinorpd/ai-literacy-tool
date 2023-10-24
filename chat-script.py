@@ -42,7 +42,7 @@ def parse_lesson_plan(file_path, editable=True):
                 lesson_plan += "\tDescription" + editable_str(editable, act['editable']) + act['description'] + "\n"
             if 'ai_activity_duration' in data and data['ai_activity_duration']['value'] > 0:
                 lesson_plan += "\t- AI Activity (editable: True):\n"
-                lesson_plan += "\tDescription (editable: True): " + f"{str(data['ai_activity_duration']['value'])} minute AI suggested activity goes here.\n"
+                lesson_plan += "\tDescription (editable: True): " + f"{str(data['ai_activity_duration']['value'])} minute activity goes here.\n"
         elif key == 'custom':
             # lesson_plan += "Additional Components:\n"
             for cust in data[key]:
@@ -88,7 +88,7 @@ def generate_response(file_name, args):
     response = openai.ChatCompletion.create(
                   model=args.model,
                   messages=[
-                      {"role": "system", "content": "You are an expert in AI literacy and middle school education. We will give you an existing lesson plan from a middle school teacher. For each component of the plan, it will indicate whether or not you should edit that section. For any activities that have 'editable: True', please modify or replace the activity with an engaging, safe, and time-appropriate AI literacy activity relevant to the lesson. Do not change any components with 'editable: False'. Return only the lesson plan in the same format, with your edits to the editable sections with no additional text. Don't include the (editable: value) statements."},
+                      {"role": "system", "content": "You are an expert in AI literacy and middle school education. We will give you an existing lesson plan from a middle school teacher. For each component of the plan, it will indicate whether or not you should edit that section. For any activities that have 'editable: True', please modify or replace the activity with an engaging, safe, and time-appropriate AI literacy activity relevant to the lesson. Do not change any components with 'editable: False'. Return only the lesson plan in the same format, with your edits to the editable sections with no additional text or references to your edits. Don't include the (editable: value) statements."},
                       {"role": "user", "content": lesson_plan },
                   ],
                   )
@@ -98,7 +98,8 @@ def generate_response(file_name, args):
     print(result)
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
     output_dir = os.path.join(os.path.abspath(os.getcwd()), args.output_dir) # TODO use argparse to make this flexible
-    if os.isdir(output_dir) == False:
+    # check if output_dir is a directory, if not, create it
+    if os.path.isdir(output_dir) == False:
         os.mkdir(output_dir)
     file_name = 'ai_lesson_plan_' + now + '.txt'
     file_path = os.path.join(output_dir, file_name)
@@ -120,8 +121,9 @@ def input_lesson_form(args):
     # TODO(eventually) allow user to specify the order of the lesson. currently its grouped by our ordering and type of component
     
     print("Hello! Please enter your current lesson plan. At a minimum, you must give a Title, Learning Objectives, and Duration.\n\
-        For each component, you will be asked whether it is 'editable.' This means that the AI will potentially modify this section in order to add AI Literacy learning objectives and/or activities.\n\
-        Ideally, you should include at least one activity that is editable. If not, the AI will suggest a new AI literacy activity for you.")
+        For each component, you will be asked whether it is 'editable.' This means that the AI will potentially modify this section in\n\
+            order to add AI Literacy learning objectives and/or activities. Ideally, you should include at least one activity that is editable.\n\
+            If not, the AI will suggest a new AI literacy activity for you.")
     while form:
         form_choice = [
         inquirer.List('lesson_parameters',
@@ -357,4 +359,5 @@ if __name__ == "__main__":
     # print_lesson_plan(file_path)
     print(parse_lesson_plan(file_path))
     # generate AI modified lesson plan
+    print("Generating AI modified lesson plan...")
     generate_response(file_path, args)

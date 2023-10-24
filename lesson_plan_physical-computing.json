@@ -1,0 +1,33 @@
+{
+    "lesson_title": {
+        "value": "What is Physical Computing?",
+        "editable": false
+    },
+    "learning_objectives": [
+        {
+            "value": "Students will be able to\nUnderstand the focus areas of Physical Computing\nDescribe how a computing device works\nIdentify an Input - Process - Output system  \nExplain their roles in physical computing class",
+            "editable": false
+        }
+    ],
+    "duration": {
+        "value": 45,
+        "editable": false
+    },
+    "discussions": [
+        {
+            "title": "Physical Interactions Around Us",
+            "description": "On the worksheet, students will be tasked with the following:\nThink of a typical weekday and pick one object or device that you used in your house or classroom.\nWhat object did you pick?\nDescribe the object and how it works. \nHow did you interact with the object or device?\nWhich body part did you use\u2014hands, feet, or face?\nWhat type of action did you take? Think of verbs that describe your action\u2014touch, turn, squeeze, or kick?\nUse these sample answers (Sample 1, Sample 2) and demonstrate how students can work on the worksheet.",
+            "editable": false
+        }
+    ],
+    "activities": [
+        {
+            "title": "Physical Interactions Around Us",
+            "description": "Ask students to complete the worksheet. \nOnce students are done with independent work with the worksheet, ask them to share their object or device with their neighbors. \nConclude this activity addressing the following items.\nThese interactions were designed by people and could have been designed to operate differently. (For example, an engineer can build a fan that turns on when you kick it.)\nWe are going to design physical interactions with computers and will need to determine which actions are best suited to trigger specific responses from the computer.",
+            "editable": true
+        }
+    ],
+    "ai_activity_duration": {
+        "value": 10
+    }
+}
