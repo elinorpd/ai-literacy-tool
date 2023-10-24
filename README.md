@@ -17,7 +17,7 @@ A project for MIT Media Lab [MAS.S10: Generative Artificial Intelligence in K-12
                           optional output directory name (relative path), default "output"
     --model MODEL         openai model to use, default "gpt-3.5-turbo" or use "gpt-4"
     ```
-5. It will prompt you to input a lesson plan part-by-part. When done, it will save your input as a json file in case you'd like to reuse it for future runs.
+5. It will prompt you to input a lesson plan part-by-part. You may do this from scratch or you may use one of the existing examples in this repository.
 6. It will print the newly generated lesson plan and save it as a text file in the output directory
 
 ## Motivation 
