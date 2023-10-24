@@ -98,6 +98,8 @@ def generate_response(file_name, args):
     print(result)
     now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
     output_dir = os.path.join(os.path.abspath(os.getcwd()), args.output_dir) # TODO use argparse to make this flexible
+    if os.isdir(output_dir) == False:
+        os.mkdir(output_dir)
     file_name = 'ai_lesson_plan_' + now + '.txt'
     file_path = os.path.join(output_dir, file_name)
     with open(file_path, 'w') as fp:
@@ -346,9 +348,9 @@ def input_lesson_form(args):
 
 if __name__ == "__main__":
     argparse = argparse.ArgumentParser()
-    argparse.add_argument('--input', type=str, default=None, help='input json file name')
-    argparse.add_argument('--output_dir', type=str, default='output', help='output directory name')
-    argparse.add_argument('--model', type=str, default='gpt-3.5-turbo', help='openai model to use')
+    argparse.add_argument('--input', type=str, default=None, help='optional input json file name')
+    argparse.add_argument('--output_dir', type=str, default='output', help='optional output directory name (relative path), default "output"')
+    argparse.add_argument('--model', type=str, default='gpt-3.5-turbo', help='openai model to use, default "gpt-3.5-turbo" or use "gpt-4"')
     args = argparse.parse_args()
     
     file_path = input_lesson_form(args)
