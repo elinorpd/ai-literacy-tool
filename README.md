@@ -2,6 +2,23 @@
 
 A project for MIT Media Lab [MAS.S10: Generative Artificial Intelligence in K-12 Education](https://mit-cml.github.io/gen-ai-fall-2023.github.io/) by Shrestha Mohanty, Elinor Poole-Dayan, and Swati Garg.
 
+## Instructions
+1. Install necessary python libraries with `pip install -r requirements.txt`
+2. Create a command line environment variable with your private OpenAI API key via `export OPENAI_API_KEY='sk-yourkeyhere'`
+3. Run the script with `python chat-script.py`
+
+    ```
+    usage: chat-script.py [-h] [--input INPUT] [--output_dir OUTPUT_DIR] [--model MODEL]
+
+    options:
+    -h, --help            show this help message and exit
+    --input INPUT         optional input json file name
+    --output_dir OUTPUT_DIR
+                          optional output directory name (relative path), default "output"
+    --model MODEL         openai model to use, default "gpt-3.5-turbo" or use "gpt-4"
+    ```
+5. It will prompt you to input a lesson plan part-by-part. When done, it will save your input as a json file in case you'd like to reuse it for future runs.
+6. It will print the newly generated lesson plan and save it as a text file in the output directory
 
 ## Motivation 
 - There is a growing need for AI literacy in younger students as AI tools are increasingly accessible
