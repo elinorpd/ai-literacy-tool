@@ -59,7 +59,7 @@ html, body {
 .columns {
   display: flex;
   flex: 1; /* This will make the .columns element take up the remaining space */
-  min-height: 30%; /* This prevents flex items from overflowing */
+  min-height: 0; /* This prevents flex items from overflowing */
 }
 
 .leftColumn, .rightColumn {
@@ -79,3 +79,25 @@ html, body {
 .lessonComponent {
   /* Add styles for your lesson components if needed */
 }
+
+.output {
+  background-color: #EBEAED;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #9358f1;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.buttons {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    /* background-color: white; */
+  }

@@ -83,10 +83,21 @@ def get_multiline_input():
             return
 
 # Define a function to generate a response from GPT-4
-def generate_response(file_name, args):
+def generate_response(file_name, args=None, save=True):
+    """
+    Generates a new lesson plan by modifying editable sections of an existing lesson plan using OpenAI's GPT-3 language model.
+
+    Args:
+        file_name (str): The file path of the existing lesson plan to modify.
+        args (argparse.Namespace, optional): Command-line arguments. Defaults to None.
+
+    Returns:
+        str: The original lesson plan with modified editable sections, written to a new file.
+    """    
     lesson_plan = parse_lesson_plan(file_name)
+
     response = openai.ChatCompletion.create(
-                  model=args.model,
+                  model=args.model if args else "gpt-3.5-turbo",
                   messages=[
                       {"role": "system", "content": "You are an expert in AI literacy and middle school education. We will give you an existing lesson plan from a middle school teacher. For each component of the plan, it will indicate whether or not you should edit that section. For any activities that have 'editable: True', please modify or replace the activity with an engaging, safe, and time-appropriate AI literacy activity relevant to the lesson. Do not change any components with 'editable: False'. For other editable sections, modify if you think it is necessary to incorporate AI Literacy learning objectives and maintain coherence.\n\nReturn only the lesson plan in the same format, with your edits to the editable sections with no additional text or references to your edits. Don't include the (editable: value) statements."},
                       {"role": "user", "content": lesson_plan },
@@ -96,16 +107,21 @@ def generate_response(file_name, args):
     result = response["choices"][0]["message"]["content"]
     print("Here is the new lesson plan:")
     print(result)
-    now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
-    output_dir = os.path.join(os.path.abspath(os.getcwd()), args.output_dir) # TODO use argparse to make this flexible
-    # check if output_dir is a directory, if not, create it
-    if os.path.isdir(output_dir) == False:
-        os.mkdir(output_dir)
-    file_name = 'ai_lesson_plan_' + now + '.txt'
-    file_path = os.path.join(output_dir, file_name)
-    with open(file_path, 'w') as fp:
-        fp.write(result)
-    return lesson_plan
+    if save: # save the file to output_dir
+        now = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
+        if not args:
+            output_dir = os.path.join(os.path.abspath(os.getcwd()), args.output_dir)
+        else:
+            output_dir = os.path.abspath(os.getcwd())
+        # check if output_dir is a directory, if not, create it
+        if os.path.isdir(output_dir) == False:
+            os.mkdir(output_dir)
+        file_name = 'ai_lesson_plan_' + now + '.txt'
+        file_path = os.path.join(output_dir, file_name)
+        with open(file_path, 'w') as fp:
+            fp.write(result)
+    
+    return result
 
 #function to input and save lesson plan
 def input_lesson_form(args):

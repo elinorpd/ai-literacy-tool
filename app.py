@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  # Import CORS
 import json
+from chat_script import generate_response
 
 
 app = Flask(__name__)
@@ -35,12 +36,16 @@ def submit_lesson_plan():
 def handle_submit():
     components = request.json
     print('Received components:', components)
-    
+        
     # Logic to save components into a JSON file
     with open('components.json', 'w') as file:
         json.dump(components, file, indent=4)
+        
+    # now do the thing to create the lesson plan
+    new_lesson_plan = generate_response('components.json', None, False)
+    print(new_lesson_plan)
     
-    return jsonify({'status': 'success'}), 200
+    return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
 
 # @app.route('/api/submit', methods=['OPTIONS'])
 # def handle_options_request():

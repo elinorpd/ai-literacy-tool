@@ -6,7 +6,9 @@ const LessonComponent = ({ data, onEditClick }) => {
     <div>
       <h3>{data.title}</h3>
       <p>{data.value}</p>
-      <button onClick={() => onEditClick(data)}>Edit</button>
+      <div className='buttons'>
+      <button type='button' onClick={() => onEditClick(data)}>Edit</button>
+      </div>
     </div>
   );
 };

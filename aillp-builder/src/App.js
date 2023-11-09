@@ -27,6 +27,7 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   // State to manage the form data
   const [formData, setFormData] = useState({});
+  const [lessonPlan, setLessonPlan] = useState(null); // new state for the lesson plan
 
   /**
    * Function to generate a unique ID
@@ -106,25 +107,59 @@ function App() {
   };
   console.log(components);
 
+  // const handleSubmit = async () => {
+  //   const jsonData = JSON.stringify(components);
+    
+  //   fetch('http://localhost:5000/api/submit', { // This URL needs to be the endpoint to your Python script on the server
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: jsonData,
+  //   })
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log('Success:', data);
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error:', error);
+  //   });
+  // };  
   const handleSubmit = async () => {
+    setLessonPlan(null); // Reset the lesson plan state
     const jsonData = JSON.stringify(components);
     
-    fetch('http://localhost:5000/api/submit', { // This URL needs to be the endpoint to your Python script on the server
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonData,
-    })
-    .then(response => response.json())
-    .then(data => {
+    // Start using try-catch for async-await pattern
+    try {
+      const response = await fetch('http://localhost:5000/api/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonData,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
       console.log('Success:', data);
-    })
-    .catch((error) => {
+  
+      // Update the state with the new lesson plan
+      setLessonPlan(data.new_lesson_plan);
+    } catch (error) {
       console.error('Error:', error);
-    });
-  };  
-
+    }
+  };
+  
+  const handleReset = () => {
+    // Set the components state back to the initial state, this could be an empty array or object depending on your setup
+    setComponents([]);
+    // Clear the lesson plan output
+    setLessonPlan(null);
+  };
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -158,10 +193,22 @@ function App() {
               {comp.title}: {comp.editable ? 'Editable' : 'Not Editable'}
             </p>
           ))}
-          <button onClick={() => handleOpenPopup({})}>Add Component</button>
-        </div>
+          <div className='buttons'><button type='button' onClick={() => handleOpenPopup({})}>Add Component</button></div>
+          
+          <div className='buttons'>
+        <button type='submit' onClick={handleSubmit}>Submit</button>
+        <button type='button' onClick={handleReset}>Reset</button>
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+        </div>
+        
+      </div>
+      {/* Render the new lesson plan if it exists */}
+      {lessonPlan && (
+        <div className="output">
+          <h2>Generated Lesson Plan:</h2>
+          <p>{lessonPlan}</p>
+        </div>
+      )}
     </div>
   );
 }
