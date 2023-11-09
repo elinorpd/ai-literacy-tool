@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import LessonComponent from './LessonComponent';
 import Popup from './Popup';
 
@@ -106,16 +106,35 @@ function App() {
   };
   console.log(components);
 
+  const handleSubmit = async () => {
+    const jsonData = JSON.stringify(components);
+    
+    fetch('http://localhost:5000/api/submit', { // This URL needs to be the endpoint to your Python script on the server
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  };  
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Lesson Plan Builder</h1>
-        {components.map((comp, index) => (
+        <h1>AI Literacy Lesson Plan Builder</h1>
+        {/* {components.map((comp, index) => (
           <p key={comp.id}>
             {comp.title}: {comp.editable ? 'Editable' : 'Not Editable'}
           </p>
-        ))}
-        <button onClick={() => handleOpenPopup({})}>Add Component</button>
+        ))} */}
+        {/* <button onClick={() => handleOpenPopup({})}>Add Component</button> */}
       </header>
       {showPopup && (
         <Popup
@@ -125,33 +144,24 @@ function App() {
           data={formData}      
         />
       )}
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="componentsDroppable">
-          {(provided, snapshot) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey' }}
-            >
-              {components.map((item, index) => (
-                <Draggable key={item.id} draggableId={String(item.id)} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={provided.draggableProps.style}
-                    >
-                      <LessonComponent data={item} onEditClick={() => handleEditClick(item)} />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
+      <div className="columns">
+        <div className="leftColumn">
+          {components.map((item, index) => (
+            <div key={item.id} className="lessonComponent">
+              <LessonComponent data={item} onEditClick={() => handleEditClick(item)} />
             </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+          ))}
+        </div>
+        <div className="rightColumn">
+          {components.map((comp, index) => (
+            <p key={comp.id}>
+              {comp.title}: {comp.editable ? 'Editable' : 'Not Editable'}
+            </p>
+          ))}
+          <button onClick={() => handleOpenPopup({})}>Add Component</button>
+        </div>
+      </div>
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 }

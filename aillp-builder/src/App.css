@@ -1,9 +1,25 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+}
+
 .App {
   text-align: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; /* This will make the .App element take up the entire viewport height */
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #2F1893;
   width: 100%;
   height: 20%; /* Limiting the header height to 20% of the viewport height */
   display: flex;
@@ -13,6 +29,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 20px; /* Adding some padding */
+  flex-shrink: 0; /* Preventing the header from shrinking */
 }
 
 .App-logo {
@@ -37,4 +54,28 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.columns {
+  display: flex;
+  flex: 1; /* This will make the .columns element take up the remaining space */
+  min-height: 30%; /* This prevents flex items from overflowing */
+}
+
+.leftColumn, .rightColumn {
+  padding: 10px; /* adjust padding as needed */
+}
+
+.leftColumn {
+  flex: 33%;
+  background-color: #D9D9D9; /* your desired shade of grey */
+}
+
+.rightColumn {
+  flex: 67%;
+  background-color: #EBEAED; /* a lighter shade of grey */
+}
+
+.lessonComponent {
+  /* Add styles for your lesson components if needed */
 }
