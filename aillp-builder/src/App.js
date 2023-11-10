@@ -28,6 +28,7 @@ function App() {
   // State to manage the form data
   const [formData, setFormData] = useState({});
   const [lessonPlan, setLessonPlan] = useState(null); // new state for the lesson plan
+  const [isLoading, setisLoading] = useState(false); // to show a loading indicator during generation
 
   /**
    * Function to generate a unique ID
@@ -94,10 +95,17 @@ function App() {
    * Function to open the Popup and optionally initialize with data
    * @param {Object} data - The data to initialize the Popup with
    */
-  const handleOpenPopup = (data) => {
-    setFormData(data); // You can pass existing data if you are editing an item
+  const handleOpenPopup = () => {
+    // Reset the form data to empty fields
+    setFormData({
+      title: '',
+      value: '',
+      editable: false,
+      id: null, // Ensure no id is set when adding a new component
+    });
     setShowPopup(true);
   };
+  
 
   /**
    * Function to close the Popup
@@ -127,6 +135,7 @@ function App() {
   // };  
   const handleSubmit = async () => {
     setLessonPlan(null); // Reset the lesson plan state
+    setisLoading(true); // Start loading
     const jsonData = JSON.stringify(components);
     
     // Start using try-catch for async-await pattern
@@ -150,6 +159,8 @@ function App() {
       setLessonPlan(data.new_lesson_plan);
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setisLoading(false); // End loading
     }
   };
   
@@ -159,6 +170,11 @@ function App() {
     // Clear the lesson plan output
     setLessonPlan(null);
   };
+
+  const handleDeleteComponent = (idToDelete) => {
+    setComponents(components.filter(component => component.id !== idToDelete));
+  };
+
   
   return (
     <div className="App">
@@ -170,6 +186,13 @@ function App() {
           </p>
         ))} */}
         {/* <button onClick={() => handleOpenPopup({})}>Add Component</button> */}
+        <div className='buttons'><button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
+        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
+        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
+        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
+        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
+        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
+        </div>
       </header>
       {showPopup && (
         <Popup
@@ -179,11 +202,23 @@ function App() {
           data={formData}      
         />
       )}
+      {/* {isLoading && <Popup message="Please wait while the AI generates your lesson plan..." />} */}
+      <Popup
+          show={showPopup || isLoading} // Show popup when it needs to be shown or when loading
+          isLoading={isLoading}
+          onClose={handleClosePopup}
+          onSave={handleSaveFormData}
+          data={formData}      
+        />
       <div className="columns">
         <div className="leftColumn">
           {components.map((item, index) => (
             <div key={item.id} className="lessonComponent">
-              <LessonComponent data={item} onEditClick={() => handleEditClick(item)} />
+              <LessonComponent 
+              data={item} 
+              onEditClick={() => handleEditClick(item)} 
+              onDeleteClick={() => handleDeleteComponent(item.id)}
+              />
             </div>
           ))}
         </div>
@@ -193,7 +228,7 @@ function App() {
               {comp.title}: {comp.editable ? 'Editable' : 'Not Editable'}
             </p>
           ))}
-          <div className='buttons'><button type='button' onClick={() => handleOpenPopup({})}>Add Component</button></div>
+          
           
           <div className='buttons'>
         <button type='submit' onClick={handleSubmit}>Submit</button>
@@ -206,7 +241,7 @@ function App() {
       {lessonPlan && (
         <div className="output">
           <h2>Generated Lesson Plan:</h2>
-          <p>{lessonPlan}</p>
+          {lessonPlan}
         </div>
       )}
     </div>

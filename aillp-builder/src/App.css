@@ -101,3 +101,18 @@ html, body {
     flex-wrap: wrap;
     /* background-color: white; */
   }
+
+  .lesson-component {
+    border: 2px solid #ccc; /* Example border color */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Some padding inside the border */
+    margin-bottom: 10px; /* Space between each lesson component */
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .lesson-component button {
+    margin-left: 10px; /* Space between buttons */
+  }
+  

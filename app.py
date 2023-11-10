@@ -42,8 +42,8 @@ def handle_submit():
         json.dump(components, file, indent=4)
         
     # now do the thing to create the lesson plan
-    new_lesson_plan = generate_response('components.json', None, False)
-    print(new_lesson_plan)
+    new_lesson_plan = generate_response(components, None, False)
+    # print(new_lesson_plan)
     
     return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
 

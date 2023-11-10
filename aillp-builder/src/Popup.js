@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './Popup.css'; // You will need to create a corresponding CSS file for styling.
 
-const Popup = ({ show, onClose, onSave, data }) => {
+const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   const [title, setTitle] = useState(data?.title || '');
   const [value, setValue] = useState(data?.value || '');
   const [editable, setEditable] = useState(data?.editable || false);
   const [id, setId] = useState(data?.id || null); // use null to signify no id if new component
+
+  useEffect(() => {
+    setTitle(data?.title || '');
+    setValue(data?.value || '');
+    setEditable(data?.editable || false);
+    setId(data?.id || null); // Reset ID when opening for a new component
+  }, [data]);
 
   if (!show) {
     return null;
@@ -16,6 +23,18 @@ const Popup = ({ show, onClose, onSave, data }) => {
     onSave({ id, title, value, editable });
   };  
 
+    // If isLoading is true, render the loading message instead of the form
+    if (isLoading) {
+      return (
+        <div className="popup">
+          <div className="popup-content">
+            <p>Please wait while the AI generates your lesson plan...</p>
+          </div>
+        </div>
+      );
+    }
+  
+  // Otherwise, render the form
   return (
     <div className="popup">
       <div className="popup-content">

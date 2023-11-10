@@ -93,14 +93,20 @@ def generate_response(file_name, args=None, save=True):
 
     Returns:
         str: The original lesson plan with modified editable sections, written to a new file.
-    """    
-    lesson_plan = parse_lesson_plan(file_name)
+    """   
+    print(type(file_name))
+    print(file_name)
+    if type(file_name) != str:
+        lesson_plan = file_name
+    else:
+        lesson_plan = parse_lesson_plan(file_name)
+    print(lesson_plan)
 
     response = openai.ChatCompletion.create(
                   model=args.model if args else "gpt-3.5-turbo",
                   messages=[
-                      {"role": "system", "content": "You are an expert in AI literacy and middle school education. We will give you an existing lesson plan from a middle school teacher. For each component of the plan, it will indicate whether or not you should edit that section. For any activities that have 'editable: True', please modify or replace the activity with an engaging, safe, and time-appropriate AI literacy activity relevant to the lesson. Do not change any components with 'editable: False'. For other editable sections, modify if you think it is necessary to incorporate AI Literacy learning objectives and maintain coherence.\n\nReturn only the lesson plan in the same format, with your edits to the editable sections with no additional text or references to your edits. Don't include the (editable: value) statements."},
-                      {"role": "user", "content": lesson_plan },
+                      {"role": "system", "content": "You are an expert in AI literacy and middle school education. We will give you an existing lesson plan from a middle school teacher. For each component of the plan, it will indicate whether or not you should edit that section. For any activities that have 'editable: True', please modify or replace the activity with an engaging, safe, and time-appropriate AI literacy activity relevant to the lesson. Do not change any components with 'editable: False'. For other editable sections, modify if you think it is necessary to incorporate AI Literacy learning objectives and maintain coherence.\n\nReturn only the lesson plan in html formatting within a <p></p>, with your edits to the editable sections with no additional text or references to your edits. Don't include the (editable: value) statements."},
+                      {"role": "user", "content": str(lesson_plan)},
                   ],
                   )
 
