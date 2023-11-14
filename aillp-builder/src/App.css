@@ -1,12 +1,17 @@
-/* html, body {
-  height: 100%;
+html, body {
+  width: 100%;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 #root {
-  height: 100%;
-} */
+  width: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box; /* Apply box-sizing to all elements */
+}
 
 .App {
   text-align: center;
@@ -55,11 +60,12 @@
 }
 
 .columns {
+  width: 100%;
   display: flex;
   flex: 1; /* This will make the .columns element take up the remaining space */
   flex-grow: 1; /* This will make the .columns element take up the remaining space */
   min-height: 0; /* This prevents flex items from overflowing */
-  overflow: hidden; /* This prevents flex items from overflowing */
+  overflow: hidden; /*This prevents flex items from overflowing*/
 }
 
 .leftColumn, .rightColumn {
@@ -102,6 +108,7 @@
     align-items: center;
     align-content: center;
     flex-wrap: wrap;
+    gap: 10px;
     /* background-color: white; */
   }
 

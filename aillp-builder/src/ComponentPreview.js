@@ -15,12 +15,8 @@ const ComponentPreview = ({ comp }) => {
 
     switch (comp.type) {
       case 'Title':
-      case 'Duration':
       case 'Overview':
-      case 'Objectives':
       case 'Audience':
-      case 'Custom':
-      case 'Activity':
         return (
           <>
             <div className="titleRow">
@@ -31,6 +27,50 @@ const ComponentPreview = ({ comp }) => {
             <p>{comp.properties.value}</p>
           </>
         );
+        case 'Objectives':
+          return (
+            <>
+              <div className="titleRow">
+                <h3>Learning {comp.type}</h3>
+                <span className="editableStatus">{renderEditableStatus()}</span>
+              </div>
+              {comp.properties.title && <h4>{comp.properties.title}</h4>}
+              <p>{comp.properties.value}</p>
+            </>
+          );
+        case 'Activity':
+          return (
+            <>
+              <div className="titleRow">
+                <h3>{comp.type}: {comp.properties.title}</h3>
+                <span className="editableStatus">{renderEditableStatus()}</span>
+              </div>
+              
+              <p>{comp.properties.value}</p>
+            </>
+          );
+        case 'Custom':
+          return (
+            <>
+              <div className="titleRow">
+                <h3>{comp.properties.title}</h3>
+                <span className="editableStatus">{renderEditableStatus()}</span>
+              </div>
+              
+              <p>{comp.properties.value}</p>
+            </>
+          );
+        case 'Duration':
+          return (
+            <>
+              <div className="titleRow">
+                <h3>{comp.type}</h3>
+                <span className="editableStatus">{renderEditableStatus()}</span>
+              </div>
+              {comp.properties.title && <h4>{comp.properties.title}</h4>}
+              <p>{comp.properties.value} minutes</p>
+            </>
+          );
       case 'AIObjectives':
         return (
           <>

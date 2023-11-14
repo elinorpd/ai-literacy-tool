@@ -1,8 +1,9 @@
 # app.py
+import json
+from bs4 import BeautifulSoup
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  # Import CORS
-import json
 from chat_script import generate_response
 
 
@@ -16,6 +17,14 @@ db = SQLAlchemy(app)
 class LessonPlan(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.JSON)
+    
+def is_valid_html(html_string):
+    try:
+        BeautifulSoup(html_string, "html.parser")
+        return True
+    except Exception as e:
+        print(f"Invalid HTML: {e}")
+        return False
 
 @app.route('/submit-lesson-plan', methods=['POST'])
 def submit_lesson_plan():
@@ -38,6 +47,12 @@ def handle_submit():
     # now do the thing to create the lesson plan
     new_lesson_plan = generate_response(components, None, False)
     # print(new_lesson_plan)
+    if is_valid_html(new_lesson_plan):
+        return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
+    else:
+        # need to clean up the html
+        # call chatgpt to generate a new lesson plan in plain text
+        new_lesson_plan = generate_response(components, None, False, False)
     
     return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
 

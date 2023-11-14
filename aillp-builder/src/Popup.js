@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Popup.css'; // You will need to create a corresponding CSS file for styling.
 
 const Popup = ({ show, onClose, onSave, data, isLoading }) => {
-  const [title, setTitle] = useState(data?.title || '');
-  const [value, setValue] = useState(data?.value || '');
-  const [editable, setEditable] = useState(data?.editable || false);
+  // const [title, setTitle] = useState(data?.title || '');
+  // const [value, setValue] = useState(data?.value || '');
+  // const [editable, setEditable] = useState(data?.editable || false);
   const [id, setId] = useState(data?.id || null); // use null to signify no id if new component
   const [properties, setProperties] = useState(data.properties || { checklist: [] });
 

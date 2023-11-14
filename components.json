@@ -1,43 +1,19 @@
 [
     {
-        "id": "comp_10",
+        "id": "comp_0",
         "type": "Title",
         "properties": {
-            "editable": true,
-            "value": "4"
+            "editable": false,
+            "value": "ecology of sahara desert"
         }
     },
     {
-        "id": "comp_11",
-        "type": "Duration",
+        "id": "comp_1",
+        "type": "Activity",
         "properties": {
             "editable": true,
-            "value": "4"
-        }
-    },
-    {
-        "id": "comp_12",
-        "type": "Overview",
-        "properties": {
-            "editable": true,
-            "value": "4"
-        }
-    },
-    {
-        "id": "comp_13",
-        "type": "Objectives",
-        "properties": {
-            "editable": true,
-            "value": "r"
-        }
-    },
-    {
-        "id": "comp_14",
-        "type": "Custom",
-        "properties": {
-            "editable": true,
-            "title": "4",
-            "value": "4"
+            "title": "15 mins",
+            "value": ""
         }
     }
 ]

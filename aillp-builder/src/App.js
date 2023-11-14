@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import './App.css';
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import LessonComponent from './LessonComponent';
@@ -15,12 +15,12 @@ let uniqueIdCounter = 0;
  * @param {number} endIndex - The index to move the item to
  * @returns {Array} - The reordered list
  */
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  return result;
-};
+// const reorder = (list, startIndex, endIndex) => {
+//   const result = Array.from(list);
+//   const [removed] = result.splice(startIndex, 1);
+//   result.splice(endIndex, 0, removed);
+//   return result;
+// };
 
 function App() {
   const [components, setComponents] = useState([]);
@@ -30,6 +30,7 @@ function App() {
   const [formData, setFormData] = useState({});
   const [lessonPlan, setLessonPlan] = useState(null); // new state for the lesson plan
   const [isLoading, setisLoading] = useState(false); // to show a loading indicator during generation
+  const outputRef = useRef(null); // Create a ref for the output section
 
   /**
    * Function to generate a unique ID
@@ -39,6 +40,24 @@ function App() {
     return `comp_${uniqueIdCounter++}`;
   };
 
+  const scrollToOutput = () => {
+    console.log("scrolling to output")
+    console.log(outputRef.current)
+    if (outputRef.current) {
+      outputRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    if (lessonPlan && outputRef.current) {
+      scrollToOutput();
+    }
+  }, [lessonPlan]); // Depend on lessonPlan to trigger the effect
+
+  const createMarkup = (htmlString) => {
+    return { __html: htmlString };
+  };
+  
   /**
    * Function to handle the edit click event
    * @param {Object} component - The component to edit
@@ -77,35 +96,36 @@ function App() {
    * Function to handle the drag end event
    * @param {Object} result - The drag result object
    */
-  const onDragEnd = (result) => {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
+  // const onDragEnd = (result) => {
+  //   // dropped outside the list
+  //   if (!result.destination) {
+  //     return;
+  //   }
 
-    const items = reorder(
-      components,
-      result.source.index,
-      result.destination.index
-    );
+  //   const items = reorder(
+  //     components,
+  //     result.source.index,
+  //     result.destination.index
+  //   );
 
-    setComponents(items);
-  };
+  //   setComponents(items);
+  // };
 
   /**
    * Function to open the Popup and optionally initialize with data
    * @param {Object} data - The data to initialize the Popup with
    */
-  const handleOpenPopup = () => {
-    // Reset the form data to empty fields
-    setFormData({
-      title: '',
-      value: '',
-      editable: false,
-      id: null, // Ensure no id is set when adding a new component
-    });
-    setShowPopup(true);
-  };
+  // deprecated
+  // const handleOpenPopup = () => {
+  //   // Reset the form data to empty fields
+  //   setFormData({
+  //     title: '',
+  //     value: '',
+  //     editable: false,
+  //     id: null, // Ensure no id is set when adding a new component
+  //   });
+  //   setShowPopup(true);
+  // };
   
   const handleAddComponentClick = (componentType) => {
     let newComponentProperties = {
@@ -168,6 +188,7 @@ function App() {
       console.error('Error:', error);
     } finally {
       setisLoading(false); // End loading
+      scrollToOutput(); // Scroll to the output section
     }
   };
   
@@ -238,6 +259,8 @@ function App() {
           {components.filter(comp => comp).map((comp) => (
             <ComponentPreview key={comp.id} comp={comp} />
           ))}
+          {components.length === 0 && <p>Currently empty. You can use the buttons above to add components to your lesson plan!</p>}
+          {components.length > 0 && <hr></hr>}
           <div className='buttons'>
             <button type='submit' onClick={handleSubmit}>Submit</button>
             <button type='button' onClick={handleReset}>Reset</button>
@@ -247,9 +270,9 @@ function App() {
       </div>
       {/* Render the new lesson plan if it exists */}
       {lessonPlan && (
-        <div className="output">
+        <div className="output" ref={outputRef}>
           <h2>Generated Lesson Plan:</h2>
-          {lessonPlan}
+          <div dangerouslySetInnerHTML={createMarkup(lessonPlan)} />
         </div>
       )}
     </div>
