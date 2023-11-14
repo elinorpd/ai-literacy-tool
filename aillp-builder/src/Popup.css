@@ -59,3 +59,16 @@
     background-color: #ccc;
   }
   
+  .checkboxItem {
+    display: flex;
+    align-items: left;
+    margin-bottom: 1px; /* Adjust as needed for spacing between items */
+  }
+  
+  .checkboxItem input[type="checkbox"],
+  .checkboxItem label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px; /* Space between checkbox and label */
+  }
+  

@@ -215,7 +215,18 @@ function App() {
     } else if (['Activity', 'Custom'].includes(componentType)) {
       newComponentProperties = { ...newComponentProperties, title: '', value: '' };
     } else if (componentType === 'AIObjectives') {
-      newComponentProperties.checklist = [{ label: "Placeholder 1", checked: false }, { label: "Placeholder 2", checked: false }];
+      newComponentProperties.checklist = [
+        { label: "Understand the basic concept of AI, its main components, and everyday examples.", checked: false }, 
+        { label: "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.", checked: false },
+        { label: "Analyze the impact of AI on society, culture, and human interaction.", checked: false },
+        { label: "Understand the concept of bias in AI and its societal implications.", checked: false },
+        { label: "Understand the collaboration between human creativity and AI algorithms.", checked: false },
+        { label: "Explore real-world applications of AI in learning, scientific research and experiments.", checked: false },
+        { label: "Recognize the importance of digital privacy and the role of AI in data collection.", checked: false },
+        { label: "Understand the basics of safe online behavior in AI-integrated platforms.", checked: false },
+        { label: "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).", checked: false },
+        { label: "Discuss strategies for maintaining a balance between AI assistance and independent decision-making.", checked: false }
+      ];
     }  
   
     // Set the form data for a new component

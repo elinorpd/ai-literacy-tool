@@ -99,14 +99,16 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     <>
     <label>AI Literacy Learning Objectives</label>
     {properties.checklist.map((item, index) => (
-      <div key={`checklist-item-${index}-${item.checked}`}>
-        <label htmlFor={`objective${index}`}>{item.label}</label>
-        <input
-          type="checkbox"
-          id={`objective${index}`}
-          checked={item.checked || false}
-          onChange={(e) => handleChecklistChange(e, index)}
-        />
+      <div key={index} className="checkboxItem">
+        <div key={`checklist-item-${index}-${item.checked}`}>
+          <input
+            type="checkbox"
+            id={`objective${index}`}
+            checked={item.checked || false}
+            onChange={(e) => handleChecklistChange(e, index)}
+          />
+          <label htmlFor={`objective${index}`}>{item.label}</label>
+        </div>
       </div>
     ))}
     {/* {data.properties.checklist.map((item, index) => (
