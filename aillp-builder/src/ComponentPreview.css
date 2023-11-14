@@ -1,0 +1,36 @@
+.componentPreview {
+  text-align: left;
+  margin-bottom: 2em;
+}
+
+.componentPreview .titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.componentPreview h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+  
+.componentPreview h4 {
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.componentPreview p {
+  font-size: 1em;
+  margin-bottom: 1em;
+}
+
+.componentPreview ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.componentPreview .editableStatus {
+  float: right;
+  margin-left: auto;
+}

@@ -3,6 +3,7 @@ import './App.css';
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import LessonComponent from './LessonComponent';
 import Popup from './Popup';
+import ComponentPreview from './ComponentPreview'; // Adjust the path as necessary
 
 // Initialize a counter for unique IDs outside of the component
 let uniqueIdCounter = 0;
@@ -54,23 +55,23 @@ function App() {
    */
   const handleSaveFormData = (data) => {
     console.log('Saving form data:', data);
-    // If the form data has an id, it's an edit; otherwise, it's a new component
-    if (data.id) {
+  
+    // Check if we are editing an existing component or adding a new one
+    if (data.id && components.some(comp => comp.id === data.id)) {
+      // Existing component: Update
       console.log('Updating existing component');
-      setComponents(
-        components.map((comp) => (comp.id === data.id ? data : comp))
-      );
+      setComponents(components.map(comp => comp.id === data.id ? data : comp));
     } else {
+      // New component: Add
       console.log('Adding new component');
-      // Assuming you have a utility to generate a unique ID for new components
       const newComponent = { ...data, id: generateUniqueId() };
       setComponents([...components, newComponent]);
     }
-    
+  
     console.log('Form Data Saved:', data);
-    // Add here any additional logic you need upon saving the data
-    setShowPopup(false); // This will close the popup
+    setShowPopup(false); // Close the popup after saving the data
   };
+  
 
   /**
    * Function to handle the drag end event
@@ -106,6 +107,30 @@ function App() {
     setShowPopup(true);
   };
   
+  const handleAddComponentClick = (componentType) => {
+    let newComponentProperties = {
+      editable: true, // Ensure this is always set
+    };
+    
+    // Initializing properties based on component type
+    if (['Title', 'Duration', 'Overview', 'Objectives', 'Audience'].includes(componentType)) {
+      newComponentProperties.value = '';
+    } else if (['Activity', 'Custom'].includes(componentType)) {
+      newComponentProperties = { ...newComponentProperties, title: '', value: '' };
+    } else if (componentType === 'AIObjectives') {
+      newComponentProperties.checklist = [{ label: "Placeholder 1", checked: false }, { label: "Placeholder 2", checked: false }];
+    }  
+  
+    // Set the form data for a new component
+    setFormData({
+      id: null, // null signifies a new component
+      type: componentType,
+      properties: newComponentProperties,
+    });
+  
+    // Open the popup
+    setShowPopup(true);
+  };  
 
   /**
    * Function to close the Popup
@@ -115,24 +140,6 @@ function App() {
   };
   console.log(components);
 
-  // const handleSubmit = async () => {
-  //   const jsonData = JSON.stringify(components);
-    
-  //   fetch('http://localhost:5000/api/submit', { // This URL needs to be the endpoint to your Python script on the server
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: jsonData,
-  //   })
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log('Success:', data);
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error:', error);
-  //   });
-  // };  
   const handleSubmit = async () => {
     setLessonPlan(null); // Reset the lesson plan state
     setisLoading(true); // Start loading
@@ -186,12 +193,15 @@ function App() {
           </p>
         ))} */}
         {/* <button onClick={() => handleOpenPopup({})}>Add Component</button> */}
-        <div className='buttons'><button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
-        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
-        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
-        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
-        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
-        <button type='button' onClick={() => handleOpenPopup({})}>Add Component</button>
+        <div className='buttons'>
+          <button type='button' onClick={() => handleAddComponentClick('Title')}>Lesson Title</button>
+          <button type='button' onClick={() => handleAddComponentClick('Duration')}>Duration</button>
+          <button type='button' onClick={() => handleAddComponentClick('Overview')}>Lesson Overview</button>
+          <button type='button' onClick={() => handleAddComponentClick('Objectives')}>Learning Objectives</button>
+          <button type='button' onClick={() => handleAddComponentClick('AIObjectives')}>AI Literacy Learning Objectives</button>
+          <button type='button' onClick={() => handleAddComponentClick('Activity')}>Activity</button>
+          <button type='button' onClick={() => handleAddComponentClick('Audience')}>Target Audience</button>
+          <button type='button' onClick={() => handleAddComponentClick('Custom')}>Custom Component</button>
         </div>
       </header>
       {showPopup && (
@@ -223,17 +233,15 @@ function App() {
           ))}
         </div>
         <div className="rightColumn">
-          {components.map((comp, index) => (
-            <p key={comp.id}>
-              {comp.title}: {comp.editable ? 'Editable' : 'Not Editable'}
-            </p>
+          <h2>Lesson Plan Preview</h2>
+          <hr></hr>
+          {components.filter(comp => comp).map((comp) => (
+            <ComponentPreview key={comp.id} comp={comp} />
           ))}
-          
-          
           <div className='buttons'>
-        <button type='submit' onClick={handleSubmit}>Submit</button>
-        <button type='button' onClick={handleReset}>Reset</button>
-      </div>
+            <button type='submit' onClick={handleSubmit}>Submit</button>
+            <button type='button' onClick={handleReset}>Reset</button>
+          </div>
         </div>
         
       </div>

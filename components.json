@@ -1,1 +1,43 @@
-[]
+[
+    {
+        "id": "comp_10",
+        "type": "Title",
+        "properties": {
+            "editable": true,
+            "value": "4"
+        }
+    },
+    {
+        "id": "comp_11",
+        "type": "Duration",
+        "properties": {
+            "editable": true,
+            "value": "4"
+        }
+    },
+    {
+        "id": "comp_12",
+        "type": "Overview",
+        "properties": {
+            "editable": true,
+            "value": "4"
+        }
+    },
+    {
+        "id": "comp_13",
+        "type": "Objectives",
+        "properties": {
+            "editable": true,
+            "value": "r"
+        }
+    },
+    {
+        "id": "comp_14",
+        "type": "Custom",
+        "properties": {
+            "editable": true,
+            "title": "4",
+            "value": "4"
+        }
+    }
+]

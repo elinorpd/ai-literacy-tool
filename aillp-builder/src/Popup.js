@@ -6,13 +6,242 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   const [value, setValue] = useState(data?.value || '');
   const [editable, setEditable] = useState(data?.editable || false);
   const [id, setId] = useState(data?.id || null); // use null to signify no id if new component
+  const [properties, setProperties] = useState(data.properties || { checklist: [] });
 
   useEffect(() => {
-    setTitle(data?.title || '');
-    setValue(data?.value || '');
-    setEditable(data?.editable || false);
+    setProperties(data.properties || {});
     setId(data?.id || null); // Reset ID when opening for a new component
   }, [data]);
+
+  const renderEditableCheckbox = () => {
+    if (!properties) {
+      return null; // or some default UI
+    }
+  
+    return (
+      <div>
+        <label htmlFor="editable">Editable</label>
+        <input
+          type="checkbox"
+          id="editable"
+          checked={properties.editable || false}
+          onChange={handleEditableChange}
+        />
+      </div>
+    );
+  };
+  
+  
+  // 1. Title
+  const renderTitleFields = () => (
+    <>
+      <label htmlFor="value">Title</label>
+      <input
+        type="text"
+        id="value"
+        value={properties.value || ''}
+        onChange={handleValueChange}
+      />
+      {renderEditableCheckbox()}
+    </>
+  );
+
+  // 2. Duration
+  const renderDurationFields = () => (
+    <>
+      <label htmlFor="value">Duration</label>
+      <input
+        type="number"
+        id="value"
+        value={properties.value || ''}
+        onChange={handleValueChange}
+      />
+      {renderEditableCheckbox()}
+    </>
+  );
+
+  // 3. Overview
+  const renderOverviewFields = () => (
+    <>
+    <label htmlFor="value">Overview</label>
+    <textarea
+      id="value"
+      value={properties.value || ''}
+        onChange={handleValueChange}
+    />
+    {renderEditableCheckbox()}
+  </>
+);
+
+  // 4. Learning Objectives
+  const renderObjectivesFields = () => (
+    <>
+      <label htmlFor="value">Learning Objectives</label>
+      <input
+        type="text"
+        id="value"
+        value={properties.value || ''}
+        onChange={handleValueChange}
+      />
+      {renderEditableCheckbox()}
+    </>
+  );
+
+  // 5. AI Literacy Learning Objectives
+  const renderAIObjectivesFields = () => {
+    // console.log("rendering AI objectives fields")
+    // console.log(properties)
+    if (!properties.checklist) {
+      return (<p>no checklist</p>)
+    }
+    
+    return (
+    <>
+    <label>AI Literacy Learning Objectives</label>
+    {properties.checklist.map((item, index) => (
+      <div key={`checklist-item-${index}-${item.checked}`}>
+        <label htmlFor={`objective${index}`}>{item.label}</label>
+        <input
+          type="checkbox"
+          id={`objective${index}`}
+          checked={item.checked || false}
+          onChange={(e) => handleChecklistChange(e, index)}
+        />
+      </div>
+    ))}
+    {/* {data.properties.checklist.map((item, index) => (
+      <div key={index}>
+        <label htmlFor={`objective${index}`}>{item.label}</label>
+        <input
+          type="checkbox"
+          id={`objective${index}`}
+          checked={item.checked || false}
+          onChange={(e) => handleChecklistChange(e, index)}
+        />
+      </div>
+    ))} */}
+    {/* <div>
+    <label htmlFor="objective1">Placeholder 1</label>
+        <input
+          type="checkbox"
+          id="objective1"
+          checked={properties.editable || false}
+          onChange={(e) => handleChecklistChange(e)}
+        />
+      </div> */}
+  {renderEditableCheckbox()}
+  </>
+)};
+
+  // 6. Activities
+  const renderActivityFields = () => (
+    <>
+      <label htmlFor="title">Activity Title</label>
+      <input
+        type="text"
+        id="title"
+        value={properties.title || ''}
+        onChange={handleTitleChange}
+      />
+      <label htmlFor="value">Description</label>
+      <textarea
+        id="value"
+        value={properties.value || ''}
+        onChange={handleValueChange}
+      />
+      {renderEditableCheckbox()}
+    </>
+  );
+  
+
+  // 7. Target Audience
+  const renderAudienceFields = () => (
+      <>
+        <label htmlFor="value">Target Audience</label>
+        <input
+          type="text"
+          id="value"
+          value={properties.value || ''}
+          onChange={handleValueChange}
+        />
+        {renderEditableCheckbox()}
+      </>
+    );
+
+  // 8. Custom Component
+  const renderCustomFields = () => (
+    <>
+      <label htmlFor="title">Custom Component Title</label>
+      <input
+        type="text"
+        id="title"
+        value={properties.title || ''}
+        onChange={handleTitleChange}
+      />
+      <label htmlFor="value">Custom Description</label>
+      <textarea
+        id="value"
+        value={properties.value || ''}
+        onChange={handleValueChange}
+      />
+      {renderEditableCheckbox()}
+    </>
+  );
+
+  // helper functions to handle changes in the forms 
+  const handleChecklistChange = (e, index) => {
+    console.log("checklist is changing!")
+    // Create a new checklist array with the updated item
+    const updatedChecklist = properties.checklist.map((item, i) => {
+      if (i === index) {
+        return { ...item, checked: e.target.checked };
+      }
+      return item;
+    });  
+    console.log(updatedChecklist)
+
+    // Update the state with the new checklist
+    setProperties({ ...properties, checklist: updatedChecklist });
+  };
+
+  const handleTitleChange = (e) => {
+    setProperties({ ...properties, title: e.target.value });
+  };  
+
+  const handleValueChange = (e) => {
+    setProperties({ ...properties, value: e.target.value });
+  };
+  
+  const handleEditableChange = (e) => {
+    setProperties({ ...properties, editable: e.target.checked });
+  };
+
+  // Function to determine which form fields to render
+  const renderFormFields = () => {
+    // console.log("render form fields")
+    // console.log(data)
+    switch (data.type) {
+      case 'Title':
+        return renderTitleFields();
+      case 'Duration':
+        return renderDurationFields();
+      case 'Overview':
+        return renderOverviewFields();
+      case 'Objectives':
+        return renderObjectivesFields();
+      case 'AIObjectives':
+        return renderAIObjectivesFields();
+      case 'Activity':
+        return renderActivityFields();
+      case 'Audience':
+        return renderAudienceFields();
+      case 'Custom':
+        return renderCustomFields();
+      default:
+        return <p>Unknown component type</p>;
+    }
+  };
+  
 
   if (!show) {
     return null;
@@ -20,8 +249,17 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave({ id, title, value, editable });
-  };  
+  
+    const componentData = {
+      id: data.id ? data.id : Date.now(), // If it's a new component, generate a new ID
+      type: data.type,
+      properties: { ...properties }
+    };
+  
+    // Call the onSave prop with the new or updated component data
+    onSave(componentData);
+  };
+  
 
     // If isLoading is true, render the loading message instead of the form
     if (isLoading) {
@@ -39,26 +277,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     <div className="popup">
       <div className="popup-content">
         <form onSubmit={handleSubmit}>
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <label htmlFor="value">Value</label>
-          <textarea
-            id="value"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <label htmlFor="editable">Editable</label>
-          <input
-            type="checkbox"
-            id="editable"
-            checked={editable}
-            onChange={(e) => setEditable(e.target.checked)}
-          />
+          {renderFormFields()}  {/* This will dynamically render the correct fields based on the type */}
           <div className="buttons">
             <button type="button" onClick={onClose}>
               Cancel
@@ -69,6 +288,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
       </div>
     </div>
   );
+  
 };
 
 export default Popup;
