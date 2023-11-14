@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect} from 'react';
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import './App.css';
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import LessonComponent from './LessonComponent';
@@ -57,6 +59,81 @@ function App() {
   const createMarkup = (htmlString) => {
     return { __html: htmlString };
   };
+
+  function downloadLessonPlan() {
+    const filename = "lesson_plan.txt";
+    const blob = new Blob([lessonPlan], { type: "text/plain" });
+    const href = URL.createObjectURL(blob);
+  
+    // Create a link element, use it to download the file and then remove it
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  
+    // Free up memory when done
+    URL.revokeObjectURL(href);
+  }  
+  
+  // function downloadPDF() {
+  //   const doc = new jsPDF();
+  
+  //   // Add your content to the PDF. 
+  //   // This example assumes `lessonPlan` is plain text. 
+  //   // For HTML content, further conversion might be necessary.
+  //   doc.text(lessonPlan, 10, 10);
+  
+  //   // Save the PDF
+  //   doc.save("lesson_plan.pdf");
+  // }
+  function downloadPDF() {
+    const input = document.getElementById('output'); // The ID of the HTML content you want to download as PDF
+  
+    html2canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        // A4 size page in portrait orientation
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        const canvasAspectRatio = canvas.width / canvas.height;
+        const pdfAspectRatio = pdfWidth / pdfHeight;
+
+        let finalPdfWidth = pdfWidth;
+        let finalPdfHeight = pdfHeight;
+
+        // Adjust dimensions based on aspect ratio
+        if (canvasAspectRatio > pdfAspectRatio) {
+          // Canvas is wider than PDF page, fit to width
+          finalPdfHeight = pdfWidth / canvasAspectRatio;
+        } else {
+          // Canvas is taller than PDF page, fit to height
+          finalPdfWidth = pdfHeight * canvasAspectRatio;
+        }
+
+        // Calculate margins to center the image
+        const marginLeft = (pdfWidth - finalPdfWidth) / 2;
+        const marginTop = (pdfHeight - finalPdfHeight) / 2;
+
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: [pdfWidth, pdfHeight]
+        });
+        pdf.addImage(imgData, 'PNG', marginLeft, marginTop, finalPdfWidth, finalPdfHeight);
+
+        // Add additional text to the PDF
+        const additionalText = "AI generated Lesson Plan. Note that AI may make mistakes.";
+        pdf.setFontSize(12); // Set font size
+        pdf.text(additionalText, 10, pdfHeight - 10); // Position the text at the bottom of the PDF
+
+        pdf.save("lesson_plan.pdf");
+      })
+      .catch(err => {
+        console.error("Could not generate PDF: ", err);
+      });
+  }  
   
   /**
    * Function to handle the edit click event
@@ -241,8 +318,9 @@ function App() {
           onSave={handleSaveFormData}
           data={formData}      
         />
-      <div className="columns">
+      <div className="columns outer">
         <div className="leftColumn">
+          <h2>Edit</h2>
           {components.map((item, index) => (
             <div key={item.id} className="lessonComponent">
               <LessonComponent 
@@ -254,7 +332,7 @@ function App() {
           ))}
         </div>
         <div className="rightColumn">
-          <h2>Lesson Plan Preview</h2>
+          <h2>Preview</h2>
           <hr></hr>
           {components.filter(comp => comp).map((comp) => (
             <ComponentPreview key={comp.id} comp={comp} />
@@ -268,13 +346,23 @@ function App() {
         </div>
         
       </div>
-      {/* Render the new lesson plan if it exists */}
+      <div className='outer'>
+        {/* Render the new lesson plan if it exists */}
+      <span id="output"> {/* anything in this span will be in the downloadable PDF */}
       {lessonPlan && (
         <div className="output" ref={outputRef}>
-          <h2>Generated Lesson Plan:</h2>
+          <h2 className='glp'>Generated Lesson Plan:</h2>
           <div dangerouslySetInnerHTML={createMarkup(lessonPlan)} />
         </div>
       )}
+      </span>
+      <div className='buttons'>
+        <button type='button' onClick={downloadLessonPlan}>Download</button>
+        <button type='button' onClick={downloadPDF}>Download PDF</button>   
+        </div> 
+      </div>
+
+          
     </div>
   );
 }

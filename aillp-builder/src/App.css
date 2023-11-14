@@ -76,11 +76,15 @@ html, body {
 .leftColumn {
   flex: 33%;
   background-color: #D9D9D9; /* your desired shade of grey */
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .rightColumn {
   flex: 67%;
   background-color: #EBEAED; /* a lighter shade of grey */
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .lessonComponent {
@@ -98,6 +102,21 @@ html, body {
   padding-right: 20px;
   overflow: auto;
   flex-shrink: 0; /* Preventing the output from shrinking */
+  text-align: left;
+}
+
+.outer {
+  background-color: #ffffff;
+  margin-top: 0px;
+  border-top: 0px solid #ccc;
+  padding: 20px;
+  overflow: auto;
+  flex-shrink: 0; /* Preventing the output from shrinking */
+  text-align: left;
+}
+
+.glp {
+  text-align: center;
 }
 
 .buttons {
@@ -112,17 +131,16 @@ html, body {
     /* background-color: white; */
   }
 
-  .lesson-component {
-    border: 2px solid #ccc; /* Example border color */
-    border-radius: 8px; /* Rounded corners */
-    padding: 10px; /* Some padding inside the border */
-    margin-bottom: 10px; /* Space between each lesson component */
-    /* display: flex; */
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .lesson-component button {
-    margin-left: 10px; /* Space between buttons */
-  }
-  
+.lesson-component {
+  border: 2px solid #ccc; /* Example border color */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Some padding inside the border */
+  margin-bottom: 10px; /* Space between each lesson component */
+  /* display: flex; */
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lesson-component button {
+  margin-left: 10px; /* Space between buttons */
+}

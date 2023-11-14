@@ -3,17 +3,41 @@
         "id": "comp_0",
         "type": "Title",
         "properties": {
-            "editable": false,
-            "value": "ecology of sahara desert"
+            "editable": true,
+            "value": "ghoeisg"
         }
     },
     {
         "id": "comp_1",
-        "type": "Activity",
+        "type": "Duration",
         "properties": {
             "editable": true,
-            "title": "15 mins",
-            "value": ""
+            "value": "23"
+        }
+    },
+    {
+        "id": "comp_2",
+        "type": "Audience",
+        "properties": {
+            "editable": true,
+            "value": "tgesd"
+        }
+    },
+    {
+        "id": "comp_3",
+        "type": "AIObjectives",
+        "properties": {
+            "editable": true,
+            "checklist": [
+                {
+                    "label": "Placeholder 1",
+                    "checked": true
+                },
+                {
+                    "label": "Placeholder 2",
+                    "checked": true
+                }
+            ]
         }
     }
 ]
