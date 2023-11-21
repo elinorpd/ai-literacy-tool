@@ -15,8 +15,23 @@ def editable_str(editable, value):
     else:
         return ": "
 
+# helper function to parse lesson plan components list into a string
+def parse_lesson_plan(components):
+    components_str = ""
+    for component in components:
+        if component["type"] in ['Duration', 'Title', 'Audience', 'Overview', 'Learning Objectives']:
+            components_str += component["type"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
+        elif component["type"] == 'Activity':
+            components_str += component["type"] +"Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
+        elif component["type"] == 'Custom':
+            components_str += "Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
+        elif component["type"] == 'AIObjectives':
+            components_str += "AI Literacy Learning Objectives" + editable_str(True, component["properties"]["editable"]) + "\n".join([o["label"] for o in component["properties"]["checklist"] if o["checked"]==True]) + "\n"
+            
+    return components_str
+
 #function to load and parse json file containing the lesson plan
-def parse_lesson_plan(file_path, editable=True):
+def parse_lesson_plan_cli(file_path, editable=True):
     # TODO maybe need to have a version that only includes the editable components
     f = open(file_path)
     data = json.load(f)
@@ -94,18 +109,21 @@ def generate_response(file_name, args=None, save=True, html=True):
     Returns:
         str: The original lesson plan with modified editable sections, written to a new file.
     """   
-    print(type(file_name))
-    print(file_name)
-    if type(file_name) != str:
-        lesson_plan = file_name
-    else:
-        lesson_plan = parse_lesson_plan(file_name)
-    print(lesson_plan)
+    # disabling functionality for inputting a file name because its irrelevant now. we can add this functinoality back in later if we want
+    # print(type(file_name))
+    # print(file_name)
+    # if type(file_name) != str:
+    #     lesson_plan = file_name
+    # else:
+    #     lesson_plan = parse_lesson_plan(file_name)
+    # print(lesson_plan)
     
+    lesson_plan = parse_lesson_plan(file_name)
+    print(lesson_plan)
     html_str = "html formatting within a <p></p>" if html else "plain text formatting"
 
     response = openai.ChatCompletion.create(
-                  model=args.model if args else "gpt-3.5-turbo",
+                  model=args.model if args else "gpt-4-1106-preview",
                   messages=[
                       {"role": "system", "content": f"You are an expert in AI literacy and middle school education. We will give you an existing lesson plan from a middle school teacher. For each component of the plan, it will indicate whether or not you should edit that section. For any activities that have 'editable: True', please modify or replace the activity with an engaging, safe, and time-appropriate AI literacy activity relevant to the lesson. Do not change any components with 'editable: False'. For other editable sections, modify if you think it is necessary to incorporate AI Literacy learning objectives and maintain coherence.\n\nReturn only the lesson plan in {html_str}, with your edits to the editable sections with no additional text or references to your edits. Don't include the (editable: value) statements."},
                       {"role": "user", "content": str(lesson_plan)},

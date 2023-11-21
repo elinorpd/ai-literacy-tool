@@ -33,7 +33,7 @@ def submit_lesson_plan():
     db.session.add(lesson_plan)
     db.session.commit()
     return jsonify({"status": "success", "message": "Lesson plan submitted!"}), 200
-
+        
 
 @app.route('/api/submit', methods=['POST'])
 def handle_submit():
