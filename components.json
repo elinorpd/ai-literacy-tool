@@ -1,36 +1,16 @@
 [
     {
         "id": "comp_0",
-        "type": "Title",
-        "properties": {
-            "editable": true,
-            "value": "Intro to AI"
-        }
-    },
-    {
-        "id": "comp_1",
-        "type": "Duration",
-        "properties": {
-            "editable": true,
-            "value": "45"
-        }
-    },
-    {
-        "id": "comp_2",
         "type": "AIObjectives",
         "properties": {
             "editable": true,
             "checklist": [
                 {
                     "label": "Understand the basic concept of AI, its main components, and everyday examples.",
-                    "checked": true
-                },
-                {
-                    "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
                     "checked": false
                 },
                 {
-                    "label": "Analyze the impact of AI on society, culture, and human interaction.",
+                    "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
                     "checked": false
                 },
                 {
@@ -39,10 +19,6 @@
                 },
                 {
                     "label": "Understand the collaboration between human creativity and AI algorithms.",
-                    "checked": false
-                },
-                {
-                    "label": "Explore real-world applications of AI in learning, scientific research and experiments.",
                     "checked": false
                 },
                 {
@@ -56,29 +32,47 @@
                 {
                     "label": "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).",
                     "checked": false
+                }
+            ],
+            "customObjective": "fergthyjukilop;'"
+        }
+    },
+    {
+        "id": "comp_1",
+        "type": "AIObjectives",
+        "properties": {
+            "editable": true,
+            "checklist": [
+                {
+                    "label": "Understand the basic concept of AI, its main components, and everyday examples.",
+                    "checked": false
                 },
                 {
-                    "label": "Discuss strategies for maintaining a balance between AI assistance and independent decision-making.",
+                    "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
+                    "checked": false
+                },
+                {
+                    "label": "Understand the concept of bias in AI and its societal implications.",
+                    "checked": false
+                },
+                {
+                    "label": "Understand the collaboration between human creativity and AI algorithms.",
+                    "checked": false
+                },
+                {
+                    "label": "Recognize the importance of digital privacy and the role of AI in data collection.",
+                    "checked": false
+                },
+                {
+                    "label": "Understand the basics of safe online behavior in AI-integrated platforms.",
+                    "checked": false
+                },
+                {
+                    "label": "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).",
                     "checked": false
                 }
-            ]
-        }
-    },
-    {
-        "id": "comp_3",
-        "type": "Activity",
-        "properties": {
-            "editable": true,
-            "title": "ai literacy activity",
-            "value": "appropriate activity based on learning objectives"
-        }
-    },
-    {
-        "id": "comp_4",
-        "type": "Audience",
-        "properties": {
-            "editable": true,
-            "value": "middle school"
+            ],
+            "customObjective": "fregthryjtukyilo"
         }
     }
 ]

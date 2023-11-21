@@ -44,6 +44,7 @@ const LessonComponent = ({ data, onEditClick, onDeleteClick }) => {
               {data.properties.checklist.filter(item => item.checked).map((item, index) => (
                 <li key={index}>{item.label}</li>
               ))}
+              {data.properties.customObjective && <li>{data.properties.customObjective}</li>}
             </ul>
           </>
         );

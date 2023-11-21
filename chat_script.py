@@ -28,7 +28,11 @@ def parse_lesson_plan(components):
         elif component["type"] == 'Custom':
             components_str += "Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
         elif component["type"] == 'AIObjectives':
-            components_str += "AI Literacy Learning Objectives" + editable_str(True, component["properties"]["editable"]) + "\n".join([o["label"] for o in component["properties"]["checklist"] if o["checked"]==True]) + "\n"
+            # if any of the existing objectives are checked, add them to the lesson plan
+            if any([o["checked"]==True for o in component["properties"]["checklist"]]):
+                components_str += "AI Literacy Learning Objectives" + editable_str(True, component["properties"]["editable"]) + "\n".join([o["label"] for o in component["properties"]["checklist"] if o["checked"]==True]) + "\n"
+            elif component["properties"]["customObjective"] != "":
+                components_str += "AI Literacy Learning Objectives" + editable_str(True, component["properties"]["editable"]) + component["properties"]["customObjective"] + "\n"
             
     return components_str
 

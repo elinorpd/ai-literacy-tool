@@ -111,26 +111,16 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         </div>
       </div>
     ))}
-    {/* {data.properties.checklist.map((item, index) => (
-      <div key={index}>
-        <label htmlFor={`objective${index}`}>{item.label}</label>
+    <br/>
+      <div className="customObjectiveRow">
+        <label htmlFor="customObjective">Custom Objective:</label>
         <input
-          type="checkbox"
-          id={`objective${index}`}
-          checked={item.checked || false}
-          onChange={(e) => handleChecklistChange(e, index)}
+          type="text"
+          id="customObjective"
+          value={properties.customObjective || ''}
+          onChange={(e) => setProperties({ ...properties, customObjective: e.target.value })}
         />
       </div>
-    ))} */}
-    {/* <div>
-    <label htmlFor="objective1">Placeholder 1</label>
-        <input
-          type="checkbox"
-          id="objective1"
-          checked={properties.editable || false}
-          onChange={(e) => handleChecklistChange(e)}
-        />
-      </div> */}
   {renderEditableCheckbox()}
   </>
 )};

@@ -77,17 +77,6 @@ function App() {
     URL.revokeObjectURL(href);
   }  
   
-  // function downloadPDF() {
-  //   const doc = new jsPDF();
-  
-  //   // Add your content to the PDF. 
-  //   // This example assumes `lessonPlan` is plain text. 
-  //   // For HTML content, further conversion might be necessary.
-  //   doc.text(lessonPlan, 10, 10);
-  
-  //   // Save the PDF
-  //   doc.save("lesson_plan.pdf");
-  // }
   function downloadPDF() {
     const input = document.getElementById('output'); // The ID of the HTML content you want to download as PDF
   
@@ -218,15 +207,16 @@ function App() {
       newComponentProperties.checklist = [
         { label: "Understand the basic concept of AI, its main components, and everyday examples.", checked: false }, 
         { label: "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.", checked: false },
-        { label: "Analyze the impact of AI on society, culture, and human interaction.", checked: false },
+        // { label: "Analyze the impact of AI on society, culture, and human interaction.", checked: false },
         { label: "Understand the concept of bias in AI and its societal implications.", checked: false },
         { label: "Understand the collaboration between human creativity and AI algorithms.", checked: false },
-        { label: "Explore real-world applications of AI in learning, scientific research and experiments.", checked: false },
+        // { label: "Explore real-world applications of AI in learning, scientific research and experiments.", checked: false },
         { label: "Recognize the importance of digital privacy and the role of AI in data collection.", checked: false },
         { label: "Understand the basics of safe online behavior in AI-integrated platforms.", checked: false },
         { label: "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).", checked: false },
-        { label: "Discuss strategies for maintaining a balance between AI assistance and independent decision-making.", checked: false }
+        // { label: "Discuss strategies for maintaining a balance between AI assistance and independent decision-making.", checked: false }
       ];
+      newComponentProperties.customObjective = '';
     }  
   
     // Set the form data for a new component

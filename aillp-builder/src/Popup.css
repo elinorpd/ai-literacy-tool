@@ -72,3 +72,19 @@
     margin-right: 5px; /* Space between checkbox and label */
   }
   
+  .customObjectiveRow {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 2px; /* Space between label and input */
+  }
+  
+  .customObjectiveRow label {
+    margin-bottom: 0; /* Remove any default margin from the label */
+    text-align: left;
+  }
+  
+  .customObjectiveRow input {
+    flex-grow: 1; /* Let the input take up the remaining space */
+    text-align: left;
+  }
+  

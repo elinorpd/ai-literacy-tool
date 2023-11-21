@@ -82,6 +82,7 @@ const ComponentPreview = ({ comp }) => {
               {comp.properties.checklist.filter(item => item.checked).map((item, index) => (
                 <li key={index}>{item.label}</li>
               ))}
+              {comp.properties.customObjective && <li>{comp.properties.customObjective}</li>}
             </ul>
           </>
         );
