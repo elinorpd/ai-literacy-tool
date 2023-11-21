@@ -88,3 +88,12 @@
     text-align: left;
   }
   
+  .popup input[type="text"] {
+    min-width: 33vw; /* 33% of the viewport width */
+  }
+
+  .popup textarea {
+    min-width: 33vw; /* 33% of the viewport width */
+    min-height: 10vh; /* 10% of the viewport height */
+  }
+  
