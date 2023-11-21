@@ -154,6 +154,12 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.value || ''}
         onChange={handleValueChange}
       />
+      {/* <label htmlFor="value">Assessment</label>
+      <textarea
+        id="value"
+        value={properties.value || ''}
+        onChange={handleValueChange}
+      /> */}
       {renderEditableCheckbox()}
     </>
   );
