@@ -73,6 +73,19 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   </>
 );
 
+  // another one. Assessment
+  const renderAssessmentFields = () => (
+    <>
+    <label htmlFor="value">Assessment</label>
+    <textarea
+      id="value"
+      value={properties.value || ''}
+        onChange={handleValueChange}
+    />
+    {renderEditableCheckbox()}
+  </>
+);
+
   // 4. Learning Objectives
   const renderObjectivesFields = () => (
     <>
@@ -219,6 +232,8 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         return renderDurationFields();
       case 'Overview':
         return renderOverviewFields();
+      case 'Assessment':
+        return renderAssessmentFields();
       case 'Objectives':
         return renderObjectivesFields();
       case 'AIObjectives':

@@ -7,6 +7,7 @@ const LessonComponent = ({ data, onEditClick, onDeleteClick }) => {
       case 'Overview':
       case 'Objectives':
       case 'Audience':
+      case 'Assessment':
         return (
           <>
             <h3>{data.type}</h3>

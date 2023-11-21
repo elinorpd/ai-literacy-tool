@@ -19,7 +19,7 @@ def editable_str(editable, value):
 def parse_lesson_plan(components):
     components_str = ""
     for component in components:
-        if component["type"] in ['Title', 'Audience', 'Overview', 'Learning Objectives']:
+        if component["type"] in ['Title', 'Audience', 'Overview', 'Learning Objectives', 'Assessment']:
             components_str += component["type"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
         if component["type"] == 'Duration':
             components_str += component["type"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "mins.\n"

@@ -199,7 +199,7 @@ function App() {
     };
     
     // Initializing properties based on component type
-    if (['Title', 'Duration', 'Overview', 'Objectives', 'Audience'].includes(componentType)) {
+    if (['Title', 'Duration', 'Overview', 'Objectives', 'Audience', 'Assessment'].includes(componentType)) {
       newComponentProperties.value = '';
     } else if (['Activity', 'Custom'].includes(componentType)) {
       newComponentProperties = { ...newComponentProperties, title: '', value: '' };
@@ -299,6 +299,7 @@ function App() {
           <button type='button' onClick={() => handleAddComponentClick('Objectives')}>Learning Objectives</button>
           <button type='button' onClick={() => handleAddComponentClick('AIObjectives')}>AI Literacy Learning Objectives</button>
           <button type='button' onClick={() => handleAddComponentClick('Activity')}>Activity</button>
+          <button type='button' onClick={() => handleAddComponentClick('Assessment')}>Assessment</button>
           <button type='button' onClick={() => handleAddComponentClick('Audience')}>Target Audience</button>
           <button type='button' onClick={() => handleAddComponentClick('Custom')}>Custom Component</button>
         </div>

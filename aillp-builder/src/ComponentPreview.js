@@ -16,6 +16,7 @@ const ComponentPreview = ({ comp }) => {
     switch (comp.type) {
       case 'Title':
       case 'Overview':
+      case 'Assessment':
       case 'Audience':
         return (
           <>
