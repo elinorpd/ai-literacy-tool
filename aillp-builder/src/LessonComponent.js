@@ -23,11 +23,22 @@ const LessonComponent = ({ data, onEditClick, onDeleteClick }) => {
             <p>{data.properties.value} minutes</p>
           </>
         );
-      case 'Activity':
+        case 'Activity':
+          return (
+            <>
+              <h3>{data.type}: {data.properties.title}</h3>
+              <p>{data.properties.value}</p>
+              {data.properties.assessment && <h5>Assessment</h5>}
+              {data.properties.assessment && <p>{data.properties.assessment}</p>}
+            </>
+          );
+      case 'AIActivity':
         return (
           <>
-            <h3>{data.type}: {data.properties.title}</h3>
-            <p>{data.properties.value}</p>
+            <h3>AI Literacy Activity</h3>
+            <p>Duration: {data.properties.value} minutes.</p>
+            {data.properties.req && <h5>Activity Specifications</h5>}
+            {data.properties.req && <p>{data.properties.req}</p>}
           </>
         );
       case 'Custom':

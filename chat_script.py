@@ -20,13 +20,20 @@ def parse_lesson_plan(components):
     components_str = ""
     for component in components:
         if component["type"] in ['Title', 'Audience', 'Overview', 'Learning Objectives', 'Assessment']:
-            components_str += component["type"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
+            components_str += f'{component["type"]}: ' + component["properties"]["value"] + "\n"
+            
         if component["type"] == 'Duration':
-            components_str += component["type"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "mins.\n"
+            components_str += f'Lesson {component["type"]}: ' + component["properties"]["value"] + "mins.\n"
+            
         elif component["type"] == 'Activity':
-            components_str += component["type"] + " Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
+            components_str += component["type"] + " Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n" + "Activity Assessment: " + component["properties"]["assessment"] + "\n"
+            
+        elif component["type"] == 'AIActivity':
+            components_str += "AI Literacy Activity" + editable_str(True, component["properties"]["editable"]) + "\nDuration " + str(component["properties"]["value"]) + "minutes.\nActivity requirements: "  + component["properties"]["req"] + "\n" + "AI Literacy Activity Assessment: \n"
+            
         elif component["type"] == 'Custom':
             components_str += "Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
+            
         elif component["type"] == 'AIObjectives':
             # if any of the existing objectives are checked, add them to the lesson plan
             if any([o["checked"]==True for o in component["properties"]["checklist"]]):
@@ -35,6 +42,15 @@ def parse_lesson_plan(components):
                 components_str += "AI Literacy Learning Objectives" + editable_str(True, component["properties"]["editable"]) + component["properties"]["customObjective"] + "\n"
             
     return components_str
+
+def parse_lesson_plan_html(components):
+    pass # for now
+    components_str = ""
+    for component in components:
+        if component["type"] in ['Title', 'Audience', 'Overview', 'Learning Objectives', 'Assessment']:
+            components_str += f'<p>{component["type"]}: ' + component["properties"]["value"] + "</p>"
+    
+    
 
 #function to load and parse json file containing the lesson plan
 def parse_lesson_plan_cli(file_path, editable=True):

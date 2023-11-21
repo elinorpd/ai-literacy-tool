@@ -42,21 +42,21 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.value || ''}
         onChange={handleValueChange}
       />
-      {renderEditableCheckbox()}
+      {/* {renderEditableCheckbox()} */}
     </>
   );
 
   // 2. Duration
   const renderDurationFields = () => (
     <>
-      <label htmlFor="value">Duration</label>
+      <label htmlFor="value">Duration (mins)</label>
       <input
         type="number"
         id="value"
         value={properties.value || ''}
         onChange={handleValueChange}
       />
-      {renderEditableCheckbox()}
+      {/* {renderEditableCheckbox()} */}
     </>
   );
 
@@ -69,7 +69,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
       value={properties.value || ''}
         onChange={handleValueChange}
     />
-    {renderEditableCheckbox()}
+    {/* {renderEditableCheckbox()} */}
   </>
 );
 
@@ -96,7 +96,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.value || ''}
         onChange={handleValueChange}
       />
-      {renderEditableCheckbox()}
+      {/* {renderEditableCheckbox()} */}
     </>
   );
 
@@ -154,13 +154,33 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.value || ''}
         onChange={handleValueChange}
       />
-      {/* <label htmlFor="value">Assessment</label>
+      <label htmlFor="assessment">Activity Assessment</label>
       <textarea
+        id="assessment"
+        value={properties.assessment || ''}
+        onChange={handleAssessmentChange}
+      />
+      {renderEditableCheckbox()}
+    </>
+  );
+
+  // 6.1. AI Activity
+  const renderAIActivityFields = () => (
+    <>
+    <p>AI Activity</p>
+      <label htmlFor="value">Duration (mins)</label>
+      <input
+        type="number"
         id="value"
         value={properties.value || ''}
         onChange={handleValueChange}
-      /> */}
-      {renderEditableCheckbox()}
+      />
+      <label htmlFor="req">Requirements or specifications (optional)</label>
+      <textarea
+        id="req"
+        value={properties.req || ''}
+        onChange={handleReqChange}
+      />
     </>
   );
   
@@ -175,7 +195,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
           value={properties.value || ''}
           onChange={handleValueChange}
         />
-        {renderEditableCheckbox()}
+        {/* {renderEditableCheckbox()} */}
       </>
     );
 
@@ -222,7 +242,16 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   const handleValueChange = (e) => {
     setProperties({ ...properties, value: e.target.value });
   };
+
   
+  const handleReqChange = (e) => {
+    setProperties({ ...properties, req: e.target.value });
+  };
+
+  const handleAssessmentChange = (e) => {
+    setProperties({ ...properties, assessment: e.target.value });
+  };
+
   const handleEditableChange = (e) => {
     setProperties({ ...properties, editable: e.target.checked });
   };
@@ -246,6 +275,8 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         return renderAIObjectivesFields();
       case 'Activity':
         return renderActivityFields();
+      case 'AIActivity':
+        return renderAIActivityFields();
       case 'Audience':
         return renderAudienceFields();
       case 'Custom':

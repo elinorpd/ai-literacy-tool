@@ -46,8 +46,23 @@ const ComponentPreview = ({ comp }) => {
                 <h3>{comp.type}: {comp.properties.title}</h3>
                 <span className="editableStatus">{renderEditableStatus()}</span>
               </div>
-              
+              <h5>Description</h5>
               <p>{comp.properties.value}</p>
+              
+              {comp.properties.assessment && <h5>Assessment</h5>}
+              {comp.properties.assessment && <p>{comp.properties.assessment}</p>}
+            </>
+          );
+        case 'AIActivity':
+          return (
+            <>
+              <div className="titleRow">
+                <h3>AI Literacy Activity</h3>
+                <span className="editableStatus">{renderEditableStatus()}</span>
+              </div>
+              <p>Duration: {comp.properties.value} minutes.</p>
+              {comp.properties.req && <h5>Activity Specifications</h5>}
+              {comp.properties.req && <p>{comp.properties.req}</p>}
             </>
           );
         case 'Custom':

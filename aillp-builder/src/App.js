@@ -195,13 +195,17 @@ function App() {
   
   const handleAddComponentClick = (componentType) => {
     let newComponentProperties = {
-      editable: true, // Ensure this is always set
+      editable: false, // Ensure this is always set
     };
     
     // Initializing properties based on component type
     if (['Title', 'Duration', 'Overview', 'Objectives', 'Audience', 'Assessment'].includes(componentType)) {
       newComponentProperties.value = '';
-    } else if (['Activity', 'Custom'].includes(componentType)) {
+    } else if (['Activity'].includes(componentType)) {
+      newComponentProperties = { ...newComponentProperties, title: '', value: '', assessment: '' };
+    } else if (['AIActivity'].includes(componentType)) {
+      newComponentProperties = { ...newComponentProperties, value: '', req: '' };
+    } else if (['Custom'].includes(componentType)) {
       newComponentProperties = { ...newComponentProperties, title: '', value: '' };
     } else if (componentType === 'AIObjectives') {
       newComponentProperties.checklist = [
@@ -298,6 +302,7 @@ function App() {
           <button type='button' onClick={() => handleAddComponentClick('Overview')}>Lesson Overview</button>
           <button type='button' onClick={() => handleAddComponentClick('Objectives')}>Learning Objectives</button>
           <button type='button' onClick={() => handleAddComponentClick('AIObjectives')}>AI Literacy Learning Objectives</button>
+          <button type='button' onClick={() => handleAddComponentClick('AIActivity')}>AI Activity</button>
           <button type='button' onClick={() => handleAddComponentClick('Activity')}>Activity</button>
           <button type='button' onClick={() => handleAddComponentClick('Assessment')}>Assessment</button>
           <button type='button' onClick={() => handleAddComponentClick('Audience')}>Target Audience</button>
