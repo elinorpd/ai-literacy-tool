@@ -26,7 +26,9 @@ def parse_lesson_plan(components):
             components_str += f'Lesson {component["type"]}: ' + component["properties"]["value"] + "mins.\n"
             
         elif component["type"] == 'Activity':
-            components_str += component["type"] + " Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n" + "Activity Assessment: " + component["properties"]["assessment"] + "\n"
+            components_str += component["type"] + " Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n" 
+            if component["properties"]["assessment"] != "":
+                components_str += "Activity Assessment: " + component["properties"]["assessment"] + "\n"
             
         elif component["type"] == 'AIActivity':
             components_str += "AI Literacy Activity" + editable_str(True, component["properties"]["editable"]) + "\nDuration " + str(component["properties"]["value"]) + "minutes.\nActivity requirements: "  + component["properties"]["req"] + "\n" + "AI Literacy Activity Assessment: \n"
@@ -44,12 +46,42 @@ def parse_lesson_plan(components):
     return components_str
 
 def parse_lesson_plan_html(components):
-    pass # for now
     components_str = ""
     for component in components:
-        if component["type"] in ['Title', 'Audience', 'Overview', 'Learning Objectives', 'Assessment']:
-            components_str += f'<p>{component["type"]}: ' + component["properties"]["value"] + "</p>"
+        if component["type"] == 'Title': 
+            components_str += f'<h3>{component["type"]}: {component["properties"]["value"]}</h3>' + "<br/><br/>\n"
+        
+        elif component["type"] in ['Audience', 'Overview', 'Learning Objectives', 'Assessment']:
+            components_str += f'<h3>{component["type"]}:</h3><br/><p>{component["properties"]["value"]}</p>'  + "<br/>\n"
+        
+        elif component["type"] == 'Duration':
+            components_str += f'<h3>Lesson {component["type"]}:</h3><br/><p>{component["properties"]["value"]} mins.</p>'  + "<br/>\n"
+       
+        elif component["type"] == 'Activity':
+            components_str += f'<h3>{component["type"]} Title:</h3><br/><p>{component["properties"]["title"]}</p>'  + "<br/>\n"
+            components_str += f'<h5>{component["type"]} Description:</h5><br/><p>{component["properties"]["value"]}</p>'  + "<br/>\n"
+            if component["properties"]["assessment"] != "":
+                components_str += f'<h5>{component["type"]} Assessment:</h5><br/><p>{component["properties"]["assessment"]}</p>'  + "<br/>\n"
+       
+        elif component["type"] == 'AIActivity':
+            components_str += f'<h3>AI Literacy Activity</h3><br/><p>Duration {component["properties"]["value"]} minutes.</p>'  + "<br/>\n"
+            components_str += f'<h5>AI Literacy Activity Description:</h5><br/><p>{component["properties"]["req"]}</p>'  + "<br/>\n"
+            components_str += f'<h5>AI Literacy Activity Assessment:</h5><br/><p>short assessment goes here</p>'  + "<br/>\n"    
     
+        elif component["type"] == 'Custom': # disabled for now
+            components_str += f'<h3>Title:{component["properties"]["title"]}</h3>'  + "<br/>\n"
+            components_str += f'<h5>Description:</h5><br/><p>{component["properties"]["value"]}</p>'  + "<br/>\n"
+            
+        elif component["type"] == 'AIObjectives':
+            # if any of the existing objectives are checked, add them to the lesson plan
+            if any([o["checked"]==True for o in component["properties"]["checklist"]]):
+                components_str += f'<h3>AI Literacy Learning Objectives</h3><br/><p>' + "\n<ul>\n"
+                # create html bullet list
+                components_str += "\n".join([f'<li>{o["label"]}</li>' for o in component["properties"]["checklist"] if o["checked"]==True])
+            elif component["properties"]["customObjective"] != "":
+                components_str += f'<li>{component["properties"]["customObjective"]}</li>\n</ul>\n<br/>\n'
+                
+    return components_str
     
 
 #function to load and parse json file containing the lesson plan
@@ -140,7 +172,7 @@ def generate_response(file_name, args=None, save=True, html=True):
     #     lesson_plan = parse_lesson_plan(file_name)
     # print(lesson_plan)
     
-    lesson_plan = parse_lesson_plan(file_name)
+    lesson_plan = parse_lesson_plan_html(file_name)
     print(lesson_plan)
     html_str = "html formatting within a <p></p>" if html else "plain text formatting"
 

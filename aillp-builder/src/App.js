@@ -302,13 +302,13 @@ function App() {
         <div className='buttons'>
           <button type='button' onClick={() => handleAddComponentClick('Title')}>Lesson Title</button>
           <button type='button' onClick={() => handleAddComponentClick('Duration')}>Duration</button>
+          <button type='button' onClick={() => handleAddComponentClick('Audience')}>Target Audience</button>
           <button type='button' onClick={() => handleAddComponentClick('Overview')}>Lesson Overview</button>
           <button type='button' onClick={() => handleAddComponentClick('Objectives')}>Learning Objectives</button>
           <button type='button' onClick={() => handleAddComponentClick('AIObjectives')}>AI Literacy Learning Objectives</button>
           <button type='button' onClick={() => handleAddComponentClick('AIActivity')}>AI Activity</button>
           <button type='button' onClick={() => handleAddComponentClick('Activity')}>Activity</button>
           {/* <button type='button' onClick={() => handleAddComponentClick('Assessment')}>Assessment</button> */}
-          <button type='button' onClick={() => handleAddComponentClick('Audience')}>Target Audience</button>
           {/* <button type='button' onClick={() => handleAddComponentClick('Custom')}>Custom Component</button> */}
         </div>
       </header>

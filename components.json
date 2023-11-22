@@ -1,10 +1,90 @@
 [
     {
         "id": "comp_0",
-        "type": "Assessment",
+        "type": "Title",
         "properties": {
-            "editable": true,
-            "value": "they perform an exit quiz on what they learned"
+            "editable": false,
+            "value": "introduction to linguistics"
+        }
+    },
+    {
+        "id": "comp_1",
+        "type": "Duration",
+        "properties": {
+            "editable": false,
+            "value": "65"
+        }
+    },
+    {
+        "id": "comp_2",
+        "type": "Objectives",
+        "properties": {
+            "editable": false,
+            "value": "learn the basics of what linguistics is\nbasic subfields and topics in linguistics, short introduction to each one\nability to identify difference between linguistics and other fields like learning languages, psychology, philosophy..."
+        }
+    },
+    {
+        "id": "comp_3",
+        "type": "AIObjectives",
+        "properties": {
+            "editable": false,
+            "checklist": [
+                {
+                    "label": "Understand the basic concept of AI, its main components, and everyday examples.",
+                    "checked": true
+                },
+                {
+                    "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
+                    "checked": true
+                },
+                {
+                    "label": "Understand the concept of bias in AI and its societal implications.",
+                    "checked": false
+                },
+                {
+                    "label": "Understand the collaboration between human creativity and AI algorithms.",
+                    "checked": false
+                },
+                {
+                    "label": "Recognize the importance of digital privacy and the role of AI in data collection.",
+                    "checked": false
+                },
+                {
+                    "label": "Understand the basics of safe online behavior in AI-integrated platforms.",
+                    "checked": false
+                },
+                {
+                    "label": "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).",
+                    "checked": false
+                }
+            ],
+            "customObjective": ""
+        }
+    },
+    {
+        "id": "comp_4",
+        "type": "AIActivity",
+        "properties": {
+            "editable": false,
+            "value": "20",
+            "req": "activity should include students using computers but not using ai itself. there shuold be groupwork and a component where they share their learnings with the class."
+        }
+    },
+    {
+        "id": "comp_5",
+        "type": "AIActivity",
+        "properties": {
+            "editable": false,
+            "value": "10",
+            "req": "a debate about a topic in the intersection of ai literacy and linguistics"
+        }
+    },
+    {
+        "id": "comp_6",
+        "type": "Audience",
+        "properties": {
+            "editable": false,
+            "value": "middle schoolers in humanities classroom"
         }
     }
 ]

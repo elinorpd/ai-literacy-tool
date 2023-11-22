@@ -183,11 +183,8 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     <>
     <div className='ailitobj'>
     <h5>AI Activity</h5>
-    <p align="left">The AI will create an AI Literacy related activity in your lesson. 
-    First, enter a duration for the activity if you desire. Then, enter any specifications or requirements for the activity. 
-    This works best if you give some specifications, requirements, or desires to guide the AI.
-      For example, you could write "I would like the activity to be offline, without the use of technology" or "this activity should be in the form of a debate between two halves of the classroom" etc.
-      The generated activity will always include a short assessment at the end to assess students' learning from the activity.
+    <p align="left">The AI will craft an AI Literacy-related activity tailored to your lesson. Begin by specifying the duration of the activity, if desired, and outline any particular specifications or requirements in the text box. The resulting activity will always include a short assessment at the end to gauge students' learning outcomes.<br/><br/>
+    Be specific for optimal results. For example, request an offline activity without the use of technology, ask for a debate-style activity, or specify that the assessment should be in multiple choice format.   
       </p>
       <label htmlFor="value">Duration (mins)</label>
       <input
