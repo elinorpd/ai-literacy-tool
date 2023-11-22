@@ -289,13 +289,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>AI Literacy Lesson Plan Builder</h1>
+        <h1>AI Lesson Plan Builder</h1>
+        <h3>A GPT-4 powered tool for middle school educators to improve and incorporate AI literacy into lesson plans.</h3>
         {/* {components.map((comp, index) => (
           <p key={comp.id}>
             {comp.title}: {comp.editable ? 'Editable' : 'Not Editable'}
           </p>
         ))} */}
         {/* <button onClick={() => handleOpenPopup({})}>Add Component</button> */}
+        <p>To get started, first input your existing lesson plan using the buttons below. Then, click "Submit" to generate a lesson plan that incorporates AI literacy activities and/or improves existing activities!
+          Use the buttons on the left to edit or delete exiting components.</p>
         <div className='buttons'>
           <button type='button' onClick={() => handleAddComponentClick('Title')}>Lesson Title</button>
           <button type='button' onClick={() => handleAddComponentClick('Duration')}>Duration</button>
@@ -304,9 +307,9 @@ function App() {
           <button type='button' onClick={() => handleAddComponentClick('AIObjectives')}>AI Literacy Learning Objectives</button>
           <button type='button' onClick={() => handleAddComponentClick('AIActivity')}>AI Activity</button>
           <button type='button' onClick={() => handleAddComponentClick('Activity')}>Activity</button>
-          <button type='button' onClick={() => handleAddComponentClick('Assessment')}>Assessment</button>
+          {/* <button type='button' onClick={() => handleAddComponentClick('Assessment')}>Assessment</button> */}
           <button type='button' onClick={() => handleAddComponentClick('Audience')}>Target Audience</button>
-          <button type='button' onClick={() => handleAddComponentClick('Custom')}>Custom Component</button>
+          {/* <button type='button' onClick={() => handleAddComponentClick('Custom')}>Custom Component</button> */}
         </div>
       </header>
       {showPopup && (

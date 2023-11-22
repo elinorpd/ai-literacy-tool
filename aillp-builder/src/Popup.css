@@ -96,4 +96,8 @@
     min-width: 33vw; /* 33% of the viewport width */
     min-height: 10vh; /* 10% of the viewport height */
   }
+
+  .popup .ailitobj {
+    max-width: 60vw; /* 66% of the viewport width */
+  }
   

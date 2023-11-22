@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Popup.css'; // You will need to create a corresponding CSS file for styling.
+// import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
 
 const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   // const [title, setTitle] = useState(data?.title || '');
@@ -35,7 +36,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   // 1. Title
   const renderTitleFields = () => (
     <>
-      <label htmlFor="value">Title</label>
+      <label htmlFor="value"><h5>Lesson Title</h5></label>
       <input
         type="text"
         id="value"
@@ -49,7 +50,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   // 2. Duration
   const renderDurationFields = () => (
     <>
-      <label htmlFor="value">Duration (mins)</label>
+      <label htmlFor="value"><h5>Duration (mins)</h5></label>
       <input
         type="number"
         id="value"
@@ -63,7 +64,8 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   // 3. Overview
   const renderOverviewFields = () => (
     <>
-    <label htmlFor="value">Overview</label>
+    <label htmlFor="value"><h5>Overview</h5></label>
+    <p>Overview or description of the lesson.</p>
     <textarea
       id="value"
       value={properties.value || ''}
@@ -89,12 +91,12 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   // 4. Learning Objectives
   const renderObjectivesFields = () => (
     <>
-      <label htmlFor="value">Learning Objectives</label>
-      <input
-        type="text"
+      <label htmlFor="value"><h5>Learning Objectives</h5></label>
+      <p align="left">Overall learning objectives for the lesson. Can be in paragraph form or a list.</p>
+      <textarea
         id="value"
         value={properties.value || ''}
-        onChange={handleValueChange}
+          onChange={handleValueChange}
       />
       {/* {renderEditableCheckbox()} */}
     </>
@@ -109,8 +111,10 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     }
     
     return (
-    <>
-    <label>AI Literacy Learning Objectives</label>
+    <><div className="ailitobj">
+    <label><h5>AI Literacy Learning Objectives</h5></label>
+    <p align="left">Select the learning objectives that you would like the AI to incorporate into your lesson plan in the form of an
+    AI Literacy activity. You may choose any of the following suggestions or write your own custom ones!</p>
     {properties.checklist.map((item, index) => (
       <div key={index} className="checkboxItem">
         <div key={`checklist-item-${index}-${item.checked}`}>
@@ -134,14 +138,23 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
           onChange={(e) => setProperties({ ...properties, customObjective: e.target.value })}
         />
       </div>
-  {renderEditableCheckbox()}
+  {/* {renderEditableCheckbox()} */}
+  </div>
   </>
 )};
 
   // 6. Activities
   const renderActivityFields = () => (
     <>
-      <label htmlFor="title">Activity Title</label>
+    <div className='ailitobj'>
+      <label htmlFor="title"><h5>Activity</h5></label>
+      <p align="left">Input an activity for the lesson. If you would like the AI to edit this, please select the "editable" checkbox below. 
+      This works best if you give some instruction within the description for where you'd like the AI to edit. 
+      For example in the description, you could describe your existing activity and write "please incorporate AI Literacy objectives into 
+      this activity where students work in groups of 3" or "write me a 4 question multiple choice quiz to assess students' learning from this activity" etc.
+      The more specific you are, the better the AI will be able to edit your activity.
+      </p>
+      <p>Title</p>
       <input
         type="text"
         id="title"
@@ -161,13 +174,21 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         onChange={handleAssessmentChange}
       />
       {renderEditableCheckbox()}
+    </div>
     </>
   );
 
   // 6.1. AI Activity
   const renderAIActivityFields = () => (
     <>
-    <p>AI Activity</p>
+    <div className='ailitobj'>
+    <h5>AI Activity</h5>
+    <p align="left">The AI will create an AI Literacy related activity in your lesson. 
+    First, enter a duration for the activity if you desire. Then, enter any specifications or requirements for the activity. 
+    This works best if you give some specifications, requirements, or desires to guide the AI.
+      For example, you could write "I would like the activity to be offline, without the use of technology" or "this activity should be in the form of a debate between two halves of the classroom" etc.
+      The generated activity will always include a short assessment at the end to assess students' learning from the activity.
+      </p>
       <label htmlFor="value">Duration (mins)</label>
       <input
         type="number"
@@ -181,6 +202,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.req || ''}
         onChange={handleReqChange}
       />
+      </div>
     </>
   );
   
@@ -188,7 +210,8 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   // 7. Target Audience
   const renderAudienceFields = () => (
       <>
-        <label htmlFor="value">Target Audience</label>
+        <label htmlFor="value"><h5>Target Audience</h5></label>
+        <p align="left">Who is the target audience for this lesson? This can be a specific grade level, age range, or other description.</p>
         <input
           type="text"
           id="value"
