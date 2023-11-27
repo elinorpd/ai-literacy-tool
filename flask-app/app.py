@@ -2,18 +2,25 @@
 import json
 from bs4 import BeautifulSoup
 from flask import Flask, jsonify, request
+from flask.helpers import send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  # Import CORS
 from chat_script import generate_response
 
+#PROD app
+# app = Flask(__name__, static_folder='build', static_url_path='/')
 
-app = Flask(__name__, static_folder='build', static_url_path='/')
-#app = Flask(__name__)
+#LOCAL app
+app = Flask(__name__)
+
 CORS(app)
 # CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}) # allow all origins on port 3000
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lessonplans.db'
 db = SQLAlchemy(app)
 
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
 class LessonPlan(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -61,4 +68,5 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    app.run(debug=False)
+    #PROD make debug False
+    app.run(debug=True)
