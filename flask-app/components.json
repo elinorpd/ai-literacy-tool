@@ -4,7 +4,7 @@
         "type": "Title",
         "properties": {
             "editable": false,
-            "value": "introduction to linguistics"
+            "value": "intro to python"
         }
     },
     {
@@ -12,34 +12,34 @@
         "type": "Duration",
         "properties": {
             "editable": false,
-            "value": "65"
+            "value": "45"
         }
     },
     {
         "id": "comp_2",
-        "type": "Objectives",
+        "type": "Audience",
         "properties": {
             "editable": false,
-            "value": "learn the basics of what linguistics is\nbasic subfields and topics in linguistics, short introduction to each one\nability to identify difference between linguistics and other fields like learning languages, psychology, philosophy..."
+            "value": "middle school"
         }
     },
     {
-        "id": "comp_3",
+        "id": "comp_4",
         "type": "AIObjectives",
         "properties": {
             "editable": false,
             "checklist": [
                 {
                     "label": "Understand the basic concept of AI, its main components, and everyday examples.",
-                    "checked": true
+                    "checked": false
                 },
                 {
                     "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
-                    "checked": true
+                    "checked": false
                 },
                 {
                     "label": "Understand the concept of bias in AI and its societal implications.",
-                    "checked": false
+                    "checked": true
                 },
                 {
                     "label": "Understand the collaboration between human creativity and AI algorithms.",
@@ -47,7 +47,7 @@
                 },
                 {
                     "label": "Recognize the importance of digital privacy and the role of AI in data collection.",
-                    "checked": false
+                    "checked": true
                 },
                 {
                     "label": "Understand the basics of safe online behavior in AI-integrated platforms.",
@@ -62,29 +62,12 @@
         }
     },
     {
-        "id": "comp_4",
-        "type": "AIActivity",
-        "properties": {
-            "editable": false,
-            "value": "20",
-            "req": "activity should include students using computers but not using ai itself. there shuold be groupwork and a component where they share their learnings with the class."
-        }
-    },
-    {
         "id": "comp_5",
         "type": "AIActivity",
         "properties": {
             "editable": false,
             "value": "10",
-            "req": "a debate about a topic in the intersection of ai literacy and linguistics"
-        }
-    },
-    {
-        "id": "comp_6",
-        "type": "Audience",
-        "properties": {
-            "editable": false,
-            "value": "middle schoolers in humanities classroom"
+            "req": ""
         }
     }
 ]

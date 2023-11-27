@@ -246,10 +246,19 @@ function App() {
     setLessonPlan(null); // Reset the lesson plan state
     setisLoading(true); // Start loading
     const jsonData = JSON.stringify(components);
+
+   
+    //PROD appURL
+    //'https://ai-lesson-planner-cd8f89bac323.herokuapp.com/';
+
+    //LOCAL appURL
+    // 'http://localhost:5000';
+
+    const appUrl = 'http://localhost:5000';
     
     // Start using try-catch for async-await pattern
     try {
-      const response = await fetch('http://localhost:5000/api/submit', {
+      const response = await fetch(`${appUrl}/api/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
