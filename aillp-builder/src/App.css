@@ -136,6 +136,33 @@ html, body {
     /* background-color: white; */
   }
 
+  .buttons button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .buttons button[type="submit"] {
+    background-color: #5c6bc0;
+    color: white;
+  }
+  
+  .buttons button[type="button"] {
+    background-color: #ccc;
+  }
+
+.previewbuttons {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 .lesson-component {
   border: 2px solid #ccc; /* Example border color */
   border-radius: 8px; /* Rounded corners */

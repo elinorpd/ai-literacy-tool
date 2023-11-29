@@ -60,22 +60,58 @@ function App() {
     return { __html: htmlString };
   };
 
-  function downloadLessonPlan() {
-    const filename = "lesson_plan.txt";
-    const blob = new Blob([lessonPlan], { type: "text/plain" });
-    const href = URL.createObjectURL(blob);
+  // function downloadLessonPlan() {
+  //   const filename = "lesson_plan.rtf";
+  //   const rtfContent = htmlToRtf.convertHtmlToRtf(lessonPlan); // Convert HTML to RTF
+
+  //   const blob = new Blob([rtfContent], { type: "application/rtf" }); // Create a blob for RTF
+  //   const href = URL.createObjectURL(blob);
   
-    // Create a link element, use it to download the file and then remove it
-    const link = document.createElement("a");
-    link.href = href;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  //   // Create a link element, use it to download the file and then remove it
+  //   const link = document.createElement("a");
+  //   link.href = href;
+  //   link.download = filename;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
   
-    // Free up memory when done
-    URL.revokeObjectURL(href);
-  }  
+  //   // Free up memory when done
+  //   URL.revokeObjectURL(href);
+  // }  
+
+  async function downloadLessonPlan() {
+    try {
+      // change the url to convert-to-text if you want to download plain text
+        const response = await fetch('http://localhost:5000/convert-to-md', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: lessonPlan, // Send the lesson plan HTML content
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        const href = URL.createObjectURL(blob);
+
+        // Create a link element, use it to download the file and then remove it
+        const link = document.createElement("a");
+        link.href = href;
+        link.download = "lesson_plan.md"; // change .txt if converting to plain text
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Free up memory when done
+        URL.revokeObjectURL(href);
+    } catch (error) {
+        console.error('Error downloading text file:', error);
+    }
+}
+
   
   function downloadPDF() {
     const input = document.getElementById('output'); // The ID of the HTML content you want to download as PDF

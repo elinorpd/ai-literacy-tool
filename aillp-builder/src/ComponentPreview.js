@@ -110,7 +110,7 @@ const ComponentPreview = ({ comp, onEditClick, onDeleteClick }) => {
   return (
     <div className="componentPreview">
       {renderComponentPreview(comp)}
-      <div className='buttons'>
+      <div className='previewbuttons'>
         <button type='button' onClick={() => onEditClick(comp)}>Edit</button>
         <button type='button' onClick={() => onDeleteClick(comp.id)}>Delete</button>
       </div>

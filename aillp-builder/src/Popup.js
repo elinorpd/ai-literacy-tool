@@ -20,14 +20,14 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     }
   
     return (
-      <div>
-        <label htmlFor="editable">Editable</label>
+      <div className='checkboxItem'>
         <input
           type="checkbox"
           id="editable"
           checked={properties.editable || false}
           onChange={handleEditableChange}
         />
+        <label htmlFor="editable">Editable: Check this if you'd like the AI to modify or add anything in this activity.</label>  
       </div>
     );
   };
@@ -144,6 +144,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
 )};
 
   // 6. Activities
+  // TODO: add these new fields in app and so the changes are propagated and saved etc. and then add then to the html parser
   const renderActivityFields = () => (
     <>
     <div className='ailitobj'>
@@ -161,18 +162,43 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.title || ''}
         onChange={handleTitleChange}
       />
-      <label htmlFor="value">Description</label>
-      <textarea
+      <label htmlFor="value">Duration (mins)</label>
+      <input
+        type="number"
         id="value"
         value={properties.value || ''}
         onChange={handleValueChange}
       />
-      <label htmlFor="assessment">Activity Assessment</label>
+      <label htmlFor="desc">Description (including materials or other specifications)</label>
+      <textarea
+        id="desc"
+        value={properties.desc || ''}
+        onChange={handleDescChange}
+      />
+      <div className="checkboxItem">
+        <input
+          type="checkbox"
+          id="assessment"
+          checked={properties.assessment || false}
+          onChange={handleAssessmentChange}
+        />
+        <label htmlFor="levels">Activity Alternatives: Check this if you'd like the AI to create versions of the activity to accommodate lower and higher level students in the class.</label>
+        </div>
+      <div className="checkboxItem">
+        <input
+          type="checkbox"
+          id="levels"
+          checked={properties.levels || false}
+          onChange={handleLevelsChange}
+        />
+        <label htmlFor="assessment">Assessment: Check this if you'd like the AI to create a short assessment for this activity.</label>
+      </div>
+      {/* <label htmlFor="assessment">Activity Assessment</label>
       <textarea
         id="assessment"
         value={properties.assessment || ''}
         onChange={handleAssessmentChange}
-      />
+      /> */}
       {renderEditableCheckbox()}
     </div>
     </>
@@ -208,7 +234,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   const renderAudienceFields = () => (
       <>
         <label htmlFor="value"><h5>Target Audience</h5></label>
-        <p align="left">Who is the target audience for this lesson? This can be a specific grade level, age range, or other description.</p>
+        <p align="left">Who is the target audience for this lesson? This can be a specific grade level, age range, specific interests, etc.</p>
         <input
           type="text"
           id="value"
@@ -268,8 +294,16 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     setProperties({ ...properties, req: e.target.value });
   };
 
+  const handleDescChange = (e) => {
+    setProperties({ ...properties, desc: e.target.value });
+  };
+
   const handleAssessmentChange = (e) => {
-    setProperties({ ...properties, assessment: e.target.value });
+    setProperties({ ...properties, assessment: e.target.checked });
+  };
+
+  const handleLevelsChange = (e) => {
+    setProperties({ ...properties, levels: e.target.checked });
   };
 
   const handleEditableChange = (e) => {

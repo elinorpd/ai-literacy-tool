@@ -70,6 +70,7 @@
     display: inline-block;
     vertical-align: middle;
     margin-right: 5px; /* Space between checkbox and label */
+    text-align: left;
   }
   
   .customObjectiveRow {

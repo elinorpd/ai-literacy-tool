@@ -1,10 +1,13 @@
 # app.py
+import io
 import json
 from bs4 import BeautifulSoup
 from flask import Flask, jsonify, request
 from flask.helpers import send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  # Import CORS
+from flask import send_file
+import html2text
 from chat_script import generate_response
 
 #PROD app
@@ -34,15 +37,6 @@ def is_valid_html(html_string):
         print(f"Invalid HTML: {e}")
         return False
 
-@app.route('/submit-lesson-plan', methods=['POST'])
-def submit_lesson_plan():
-    data = request.json
-    lesson_plan = LessonPlan(content=data)
-    db.session.add(lesson_plan)
-    db.session.commit()
-    return jsonify({"status": "success", "message": "Lesson plan submitted!"}), 200
-        
-
 @app.route('/api/submit', methods=['POST'])
 def handle_submit():
     components = request.json
@@ -63,6 +57,36 @@ def handle_submit():
         new_lesson_plan = generate_response(components, None, False, False)
     
     return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
+
+@app.route('/convert-to-md', methods=['POST'])
+def convert_to_md():
+    html_content = request.data.decode('utf-8')
+    
+    h = html2text.HTML2Text()
+    md_content = h.handle(html_content)
+
+    # Save the RTF content to a temporary file
+    temp_filename = 'tempfile.md'
+    with open(temp_filename, 'w') as file:
+        file.write(md_content)
+
+    return send_file(temp_filename, as_attachment=True)
+
+@app.route('/convert-to-text', methods=['POST'])
+def convert_to_text():
+    html_content = request.data.decode('utf-8')
+    soup = BeautifulSoup(html_content, "html.parser")
+    
+    # Extract text from HTML while preserving line breaks
+    text_content = soup.get_text(separator='\n')
+
+    # Save the text content to a temporary in-memory file
+    temp_file = io.StringIO()
+    temp_file.write(text_content)
+    temp_file.seek(0)
+
+    return send_file(temp_file, as_attachment=True, mimetype='text/plain')
+
 
 if __name__ == '__main__':
     with app.app_context():
