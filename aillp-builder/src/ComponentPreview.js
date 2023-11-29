@@ -1,7 +1,7 @@
 import React from 'react';
 import './ComponentPreview.css'; // Import the corresponding stylesheet
 
-const ComponentPreview = ({ comp }) => {
+const ComponentPreview = ({ comp, onEditClick, onDeleteClick }) => {
   const renderEditableStatus = () => {
     return comp.properties.editable ? 'Editable' : 'Not Editable';
   };
@@ -22,7 +22,7 @@ const ComponentPreview = ({ comp }) => {
           <>
             <div className="titleRow">
               <h3>{comp.type}</h3>
-              <span className="editableStatus">{renderEditableStatus()}</span>
+              {/* <span className="editableStatus">{renderEditableStatus()}</span> */}
             </div>
             {comp.properties.title && <h4>{comp.properties.title}</h4>}
             <p>{comp.properties.value}</p>
@@ -33,7 +33,7 @@ const ComponentPreview = ({ comp }) => {
             <>
               <div className="titleRow">
                 <h3>Learning {comp.type}</h3>
-                <span className="editableStatus">{renderEditableStatus()}</span>
+                {/* <span className="editableStatus">{renderEditableStatus()}</span> */}
               </div>
               {comp.properties.title && <h4>{comp.properties.title}</h4>}
               <p>{comp.properties.value}</p>
@@ -70,7 +70,7 @@ const ComponentPreview = ({ comp }) => {
             <>
               <div className="titleRow">
                 <h3>{comp.properties.title}</h3>
-                <span className="editableStatus">{renderEditableStatus()}</span>
+                {/* <span className="editableStatus">{renderEditableStatus()}</span> */}
               </div>
               
               <p>{comp.properties.value}</p>
@@ -81,7 +81,7 @@ const ComponentPreview = ({ comp }) => {
             <>
               <div className="titleRow">
                 <h3>{comp.type}</h3>
-                <span className="editableStatus">{renderEditableStatus()}</span>
+                {/* <span className="editableStatus">{renderEditableStatus()}</span> */}
               </div>
               {comp.properties.title && <h4>{comp.properties.title}</h4>}
               <p>{comp.properties.value} minutes</p>
@@ -92,7 +92,7 @@ const ComponentPreview = ({ comp }) => {
           <>
             <div className="titleRow">
               <h3>AI Literacy Learning Objectives</h3>
-              <span className="editableStatus">{renderEditableStatus()}</span>
+              {/* <span className="editableStatus">{renderEditableStatus()}</span> */}
             </div>
             <ul>
               {comp.properties.checklist.filter(item => item.checked).map((item, index) => (
@@ -110,6 +110,10 @@ const ComponentPreview = ({ comp }) => {
   return (
     <div className="componentPreview">
       {renderComponentPreview(comp)}
+      <div className='buttons'>
+        <button type='button' onClick={() => onEditClick(comp)}>Edit</button>
+        <button type='button' onClick={() => onDeleteClick(comp.id)}>Delete</button>
+      </div>
     </div>
   );
 };

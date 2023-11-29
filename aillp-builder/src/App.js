@@ -338,7 +338,7 @@ function App() {
           data={formData}      
         />
       <div className="columns outer">
-        <div className="leftColumn">
+        {/* <div className="leftColumn">
           <h2>Edit</h2>
           {components.map((item, index) => (
             <div key={item.id} className="lessonComponent">
@@ -349,12 +349,17 @@ function App() {
               />
             </div>
           ))}
-        </div>
+        </div> */}
         <div className="rightColumn">
           <h2>Preview</h2>
           <hr></hr>
           {components.filter(comp => comp).map((comp) => (
-            <ComponentPreview key={comp.id} comp={comp} />
+            <ComponentPreview 
+            key={comp.id} 
+            comp={comp} 
+            onEditClick={() => handleEditClick(comp)}
+            onDeleteClick={() => handleDeleteComponent(comp.id)}
+            />
           ))}
           {components.length === 0 && <p>Currently empty. You can use the buttons above to add components to your lesson plan!</p>}
           {components.length > 0 && <hr></hr>}
