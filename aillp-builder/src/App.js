@@ -3,7 +3,7 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import './App.css';
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import LessonComponent from './LessonComponent';
+// import LessonComponent from './LessonComponent';
 import Popup from './Popup';
 import ComponentPreview from './ComponentPreview'; // Adjust the path as necessary
 
@@ -82,7 +82,7 @@ function App() {
   async function downloadLessonPlan() {
     try {
       // change the url to convert-to-text if you want to download plain text
-        const response = await fetch('http://localhost:5000/convert-to-md', {
+        const response = await fetch('http://localhost:5000/convert-to-docx', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
@@ -100,7 +100,7 @@ function App() {
         // Create a link element, use it to download the file and then remove it
         const link = document.createElement("a");
         link.href = href;
-        link.download = "lesson_plan.md"; // change .txt if converting to plain text
+        link.download = "lesson_plan.docx"; // change .txt if converting to plain text
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

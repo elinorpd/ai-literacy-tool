@@ -7,7 +7,8 @@ from flask.helpers import send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS  # Import CORS
 from flask import send_file
-import html2text
+from flask import Response
+from htmldocx import HtmlToDocx
 from chat_script import generate_response
 
 #PROD app
@@ -58,19 +59,19 @@ def handle_submit():
     
     return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
 
-@app.route('/convert-to-md', methods=['POST'])
-def convert_to_md():
+@app.route('/convert-to-docx', methods=['POST'])
+def convert_to_docx():
     html_content = request.data.decode('utf-8')
     
-    h = html2text.HTML2Text()
-    md_content = h.handle(html_content)
+    docx_parser = HtmlToDocx()
+    docx = docx_parser.parse_html_string(html_content)
 
-    # Save the RTF content to a temporary file
-    temp_filename = 'tempfile.md'
-    with open(temp_filename, 'w') as file:
-        file.write(md_content)
+    # Save the document to an in-memory file
+    file_stream = io.BytesIO()
+    docx.save(file_stream)
+    file_stream.seek(0)
 
-    return send_file(temp_filename, as_attachment=True)
+    return send_file(file_stream, as_attachment=True, download_name='lesson_plan.docx')
 
 @app.route('/convert-to-text', methods=['POST'])
 def convert_to_text():
@@ -80,12 +81,11 @@ def convert_to_text():
     # Extract text from HTML while preserving line breaks
     text_content = soup.get_text(separator='\n')
 
-    # Save the text content to a temporary in-memory file
-    temp_file = io.StringIO()
-    temp_file.write(text_content)
-    temp_file.seek(0)
+    # Create a response with the text content and headers for downloading
+    response = Response(text_content, mimetype='text/plain')
+    response.headers['Content-Disposition'] = 'attachment; filename=lesson_plan.txt'
 
-    return send_file(temp_file, as_attachment=True, mimetype='text/plain')
+    return response
 
 
 if __name__ == '__main__':

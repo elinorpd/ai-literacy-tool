@@ -4,7 +4,7 @@
         "type": "Title",
         "properties": {
             "editable": false,
-            "value": "intro to python"
+            "value": "heres my title"
         }
     },
     {
@@ -12,7 +12,7 @@
         "type": "Duration",
         "properties": {
             "editable": false,
-            "value": "45"
+            "value": "23"
         }
     },
     {
@@ -20,45 +20,23 @@
         "type": "Audience",
         "properties": {
             "editable": false,
-            "value": "middle school"
+            "value": "kindergarteners"
+        }
+    },
+    {
+        "id": "comp_3",
+        "type": "Overview",
+        "properties": {
+            "editable": false,
+            "value": "origins of canadian thanksgiving"
         }
     },
     {
         "id": "comp_4",
-        "type": "AIObjectives",
+        "type": "Objectives",
         "properties": {
             "editable": false,
-            "checklist": [
-                {
-                    "label": "Understand the basic concept of AI, its main components, and everyday examples.",
-                    "checked": false
-                },
-                {
-                    "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
-                    "checked": false
-                },
-                {
-                    "label": "Understand the concept of bias in AI and its societal implications.",
-                    "checked": true
-                },
-                {
-                    "label": "Understand the collaboration between human creativity and AI algorithms.",
-                    "checked": false
-                },
-                {
-                    "label": "Recognize the importance of digital privacy and the role of AI in data collection.",
-                    "checked": true
-                },
-                {
-                    "label": "Understand the basics of safe online behavior in AI-integrated platforms.",
-                    "checked": false
-                },
-                {
-                    "label": "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).",
-                    "checked": false
-                }
-            ],
-            "customObjective": ""
+            "value": "learn the history of canadian thanksgiving\nhistory of the evolution of the holiday since the founding of canada\nhow is the holiday celebrated by different cultures across canada's provinces?"
         }
     },
     {
@@ -66,8 +44,8 @@
         "type": "AIActivity",
         "properties": {
             "editable": false,
-            "value": "10",
-            "req": ""
+            "value": "25",
+            "req": "involve skits"
         }
     }
 ]
