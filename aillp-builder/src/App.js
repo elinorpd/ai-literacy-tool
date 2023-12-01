@@ -10,19 +10,7 @@ import ComponentPreview from './ComponentPreview'; // Adjust the path as necessa
 // Initialize a counter for unique IDs outside of the component
 let uniqueIdCounter = 0;
 
-/**
- * A little function to help us with reordering the result
- * @param {Array} list - The list to reorder
- * @param {number} startIndex - The index of the item to move
- * @param {number} endIndex - The index to move the item to
- * @returns {Array} - The reordered list
- */
-// const reorder = (list, startIndex, endIndex) => {
-//   const result = Array.from(list);
-//   const [removed] = result.splice(startIndex, 1);
-//   result.splice(endIndex, 0, removed);
-//   return result;
-// };
+
 
 function App() {
   const [components, setComponents] = useState([]);
@@ -60,25 +48,6 @@ function App() {
     return { __html: htmlString };
   };
 
-  // function downloadLessonPlan() {
-  //   const filename = "lesson_plan.rtf";
-  //   const rtfContent = htmlToRtf.convertHtmlToRtf(lessonPlan); // Convert HTML to RTF
-
-  //   const blob = new Blob([rtfContent], { type: "application/rtf" }); // Create a blob for RTF
-  //   const href = URL.createObjectURL(blob);
-  
-  //   // Create a link element, use it to download the file and then remove it
-  //   const link = document.createElement("a");
-  //   link.href = href;
-  //   link.download = filename;
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  
-  //   // Free up memory when done
-  //   URL.revokeObjectURL(href);
-  // }  
-
   async function downloadLessonPlan() {
     try {
       // change the url to convert-to-text if you want to download plain text
@@ -108,7 +77,7 @@ function App() {
         // Free up memory when done
         URL.revokeObjectURL(href);
     } catch (error) {
-        console.error('Error downloading text file:', error);
+        console.error('Error downloading docx file:', error);
     }
 }
 
@@ -193,41 +162,6 @@ function App() {
     setShowPopup(false); // Close the popup after saving the data
   };
   
-
-  /**
-   * Function to handle the drag end event
-   * @param {Object} result - The drag result object
-   */
-  // const onDragEnd = (result) => {
-  //   // dropped outside the list
-  //   if (!result.destination) {
-  //     return;
-  //   }
-
-  //   const items = reorder(
-  //     components,
-  //     result.source.index,
-  //     result.destination.index
-  //   );
-
-  //   setComponents(items);
-  // };
-
-  /**
-   * Function to open the Popup and optionally initialize with data
-   * @param {Object} data - The data to initialize the Popup with
-   */
-  // deprecated
-  // const handleOpenPopup = () => {
-  //   // Reset the form data to empty fields
-  //   setFormData({
-  //     title: '',
-  //     value: '',
-  //     editable: false,
-  //     id: null, // Ensure no id is set when adding a new component
-  //   });
-  //   setShowPopup(true);
-  // };
   
   const handleAddComponentClick = (componentType) => {
     let newComponentProperties = {
@@ -342,8 +276,6 @@ function App() {
           </p>
         ))} */}
         {/* <button onClick={() => handleOpenPopup({})}>Add Component</button> */}
-        <p>To get started, first input your existing lesson plan using the buttons below. Then, click "Submit" to generate a lesson plan that incorporates AI literacy activities and/or improves existing activities!
-          Use the buttons on the left to edit or delete exiting components.</p>
         <div className='buttons'>
           <button type='button' onClick={() => handleAddComponentClick('Title')}>Lesson Title</button>
           <button type='button' onClick={() => handleAddComponentClick('Duration')}>Duration</button>
