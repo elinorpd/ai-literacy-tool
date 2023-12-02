@@ -92,10 +92,6 @@ html, body {
   border-bottom-right-radius: 5px;
 }
 
-.lessonComponent {
-  /* Add styles for your lesson components if needed */
-}
-
 .output {
   background-color: #EBEAED;
   padding: 10px;
@@ -133,7 +129,17 @@ html, body {
     align-content: center;
     flex-wrap: wrap;
     gap: 10px;
-    /* background-color: white; */
+  }
+
+  .start-button {
+    font-size: 25px;
+    padding: 20px 80px !important;
+    background-color: #d492f5 !important;
+    transition: background-color 0.2s; /* Smooth transition for the color change */
+  }
+
+  .start-button:hover {
+    background-color: rgb(62, 164, 237) !important;
   }
 
   .buttons button {

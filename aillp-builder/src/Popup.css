@@ -13,10 +13,31 @@
   
   .popup-content {
     background-color: #fff;
-    padding: 20px;
+    padding: 40px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    max-height: 80vh; /* Adjust the value as needed */
+    overflow-y: auto; /* Enables vertical scrolling */  
+    position: relative;
   }
+
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 50%; /* Fully rounded corners */
+    background: none;
+    cursor: pointer;
+    font-size: 24px; /* Adjust the size as needed */
+    padding: 5px; /* Add some padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* Adjust width as needed */
+    height: 30px; /* Adjust height as needed */
+    line-height: 1; /* Adjust line height for vertical alignment */
+    }  
   
   label {
     display: block;
