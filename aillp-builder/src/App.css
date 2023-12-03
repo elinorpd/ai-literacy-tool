@@ -169,6 +169,13 @@ html, body {
     flex-wrap: wrap;
     gap: 10px;
 }
+
+.preview-header {
+  display: flex;
+  justify-content: space-between; /* Aligns children (h2 and buttons) at the start and end of the container */
+  align-items: center; /* Vertically centers the items in the container */
+}
+
 .lesson-component {
   border: 2px solid #ccc; /* Example border color */
   border-radius: 8px; /* Rounded corners */

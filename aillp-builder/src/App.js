@@ -18,7 +18,37 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   // State to manage the form data
   const [formData, setFormData] = useState({});
-  const [lessonPlan, setlessonPlan] = useState(null); // current (input) lesson plan
+  const [lessonPlan, setlessonPlan] = useState({
+    type: 'newLessonPlan',
+    title: '',
+    duration: '',
+    overview: '',
+    audience: '',
+    objectives: '',
+    ailitobjectives: [
+      { label: "Understand the basic concept of AI, its main components, and everyday examples.", checked: false }, 
+      { label: "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.", checked: false },
+      { label: "Understand the concept of bias in AI and its societal implications.", checked: false },
+      { label: "Understand the collaboration between human creativity and AI algorithms.", checked: false },
+      { label: "Recognize the importance of digital privacy and the role of AI in data collection.", checked: false },
+      { label: "Understand the basics of safe online behavior in AI-integrated platforms.", checked: false },
+      { label: "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).", checked: false },
+    ],
+    customobjective: '',
+    activity: {
+      title: '',
+      duration: '',
+      description: '',
+      alternatives: false,
+      assessment: false,
+    },
+    aiactivity: {
+      duration: '',
+      req: '',
+      alternatives: false,
+      assessment: false,
+    },
+  }); // current (input) lesson plan
   const [outputLessonPlan, setOutputLessonPlan] = useState(null); // new state for the output lesson plan
   const [isLoading, setisLoading] = useState(false); // to show a loading indicator during generation
   const outputRef = useRef(null); // Create a ref for the output section
@@ -190,6 +220,30 @@ function App() {
     setShowPopup(true);
   }; 
 
+  const lessonPlanIsEmpty = (plan) => {
+    // Check each field of the lesson plan
+    return (
+      !plan.title &&
+      !plan.duration &&
+      !plan.overview &&
+      !plan.audience &&
+      !plan.objectives &&
+      !plan.customobjective &&
+      plan.ailitobjectives.every(obj => !obj.checked) &&
+      // Check for the activity structure
+      !plan.activity.title &&
+      !plan.activity.duration &&
+      !plan.activity.description &&
+      !plan.activity.alternatives &&
+      !plan.activity.assessment &&
+      !plan.aiactivity.title &&
+      !plan.aiactivity.duration &&
+      !plan.aiactivity.req &&
+      !plan.aiactivity.alternatives &&
+      !plan.aiactivity.assessment
+    );
+  };
+  
   /**
    * Function to close the Popup
    */
@@ -277,7 +331,37 @@ function App() {
   
   const handleReset = () => {
     // Set the components state back to the initial state, this could be an empty array or object depending on your setup
-    setComponents([]);
+    setlessonPlan({
+      type: 'newLessonPlan',
+      title: '',
+      duration: '',
+      overview: '',
+      audience: '',
+      objectives: '',
+      ailitobjectives: [
+        { label: "Understand the basic concept of AI, its main components, and everyday examples.", checked: false }, 
+        { label: "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.", checked: false },
+        { label: "Understand the concept of bias in AI and its societal implications.", checked: false },
+        { label: "Understand the collaboration between human creativity and AI algorithms.", checked: false },
+        { label: "Recognize the importance of digital privacy and the role of AI in data collection.", checked: false },
+        { label: "Understand the basics of safe online behavior in AI-integrated platforms.", checked: false },
+        { label: "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).", checked: false },
+      ],
+      customobjective: '',
+      activity: {
+        title: '',
+        duration: '',
+        description: '',
+        alternatives: false,
+        assessment: false,
+      },
+      aiactivity: {
+        duration: '',
+        req: '',
+        alternatives: false,
+        assessment: false,
+      },
+    });
     // Clear the lesson plan output
     setOutputLessonPlan(null);
   };
@@ -289,7 +373,7 @@ function App() {
         <h1>AI Lesson Plan Builder</h1>
         <h3>A GPT-4 powered tool for middle school educators to improve and incorporate AI literacy into lesson plans.</h3>
         <div className='buttons'>
-          <button type='button' className='start-button' onClick={getStartedClick}>Get Started</button>
+          <button type='button' className='start-button' onClick={handleEditClick}>Get Started</button>
         </div>
       </header>
       <Popup
@@ -301,22 +385,34 @@ function App() {
         />
       <div className="columns outer">
         <div className="rightColumn">
-          <h2>Preview</h2>
+          <div className="preview-header">
+            <h2>Lesson Plan Preview</h2>
+            {lessonPlan &&
+              <>
+              <div className='buttons'>
+              <button type='button' onClick={handleEditClick}>Edit Lesson Plan</button>
+              <button type='button' onClick={handleReset}>Reset</button>
+            </div>
+            </>
+            }
+          </div>
           <hr></hr>
-          {lessonPlan ? (
+          {!lessonPlanIsEmpty(lessonPlan) ? (
             <ComponentPreview 
             lessonPlan={lessonPlan} 
-          />
-          ) 
-          : (
+            />
+          ) : (
             <p>Currently empty. Create your lesson plan using the button above!</p> 
           )}
-          {lessonPlan && <hr></hr>}
-          <div className='buttons'>
+          {lessonPlan &&
+            <>
+            <hr></hr>
+            <div className='buttons'>
             <button type='submit' onClick={handleSubmitNewLessonPlan}>Submit</button>
-            <button type='button' onClick={handleEditClick}>Edit Lesson Plan</button>
-            <button type='button' onClick={handleReset}>Reset</button>
           </div>
+          </>
+          }
+          
         </div>
       </div>
       <div className='outer'>

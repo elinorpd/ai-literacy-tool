@@ -30,6 +30,12 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
       alternatives: false,
       assessment: false,
     },
+    aiactivity: {
+      duration: '',
+      req: '',
+      alternatives: false,
+      assessment: false,
+    },
   });
   
   // allow close popup when clicking escape char
@@ -70,6 +76,12 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         title: '',
         duration: '',
         description: '',
+        alternatives: false,
+        assessment: false,
+      },
+      aiactivity: {
+        duration: '',
+        req: '',
         alternatives: false,
         assessment: false,
       },
@@ -205,6 +217,43 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         <label htmlFor="assessment">Assessment: Check this if you'd like the AI to create a short assessment for this activity.</label>
       </div>
     </div>
+    <div className='ailitobj'>
+    <h5>AI Activity</h5>
+    <p align="left">The AI will craft an AI Literacy-related activity tailored to your lesson. Begin by specifying the duration of the activity, if desired, and outline any particular specifications or requirements in the text box. The resulting activity will always include a short assessment at the end to gauge students' learning outcomes.<br/><br/>
+    Be specific for optimal results. For example, request an offline activity without the use of technology, ask for a debate-style activity, or specify that the assessment should be in multiple choice format.   
+      </p>
+      <label htmlFor="duration">Duration (mins)</label>
+      <input
+        type="number"
+        id="aiactivity.duration"
+        value={properties.aiactivity.duration || ''}
+        onChange={handleChange}
+      />
+      <label htmlFor="req">Requirements or specifications (optional)</label>
+      <textarea
+        id="aiactivity.req"
+        value={properties.aiactivity.req || ''}
+        onChange={handleChange}
+      />
+      <div className="checkboxItem">
+        <input
+          type="checkbox"
+          id="aiactivity.alternatives"
+          checked={properties.aiactivity.alternatives || false}
+          onChange={handleChange}
+        />
+        <label htmlFor="alternatives">Activity Alternatives: Check this if you'd like the AI to create versions of the activity to accommodate lower and higher level students in the class.</label>
+        </div>
+      <div className="checkboxItem">
+        <input
+          type="checkbox"
+          id="aiactivity.assessment"
+          checked={properties.aiactivity.assessment || false}
+          onChange={handleChange}
+        />
+        <label htmlFor="assessment">Assessment: Check this if you'd like the AI to create a short assessment for this activity.</label>
+      </div>
+      </div>
     </>
   );
 
@@ -272,14 +321,17 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     const { id, value, type, checked } = e.target;
     // console.log(`Changing ${id} to ${value}`);
 
-    // Handle changes for nested properties in 'activity'
-    if (id.startsWith("activity.")) {
-      const activityKey = id.split(".")[1];
+    // Handle changes for nested properties in 'ai/activity'
+    if (id.startsWith("activity.") || id.startsWith("aiactivity.")) {
+      const parts = id.split(".");
+      const key = parts[0]; // 'activity' or 'aiactivity'
+      const property = parts[1];
+      
       setProperties(prevProps => ({
         ...prevProps,
-        activity: {
-          ...prevProps.activity,
-          [activityKey]: type === 'checkbox' ? checked : value
+        [key]: {
+          ...prevProps[key],
+          [property]: type === 'checkbox' ? checked : value
         }
       }));
     } else {
@@ -289,7 +341,6 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         [id]: value
       }));
     }
-
   };  
 
   const handleTitleChange = (e) => {
@@ -369,17 +420,19 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   // Otherwise, render the form
   return (
     <div className="popup">
-      <div className="popup-content">
-      <button className="close-button" onClick={onClose}>&times;</button>
-        <form onSubmit={handleSubmit}>
-          {renderFormFields()}  {/* This will dynamically render the correct fields based on the type */}
-          <div className="buttons">
-            <button type="button" onClick={onClose}>
-              Cancel
-            </button>
-            <button type="submit">Save</button>
-          </div>
-        </form>
+      <div className="popup-wrapper">
+        <button className="close-button" onClick={onClose}>&times;</button>
+        <div className="popup-content">
+          <form onSubmit={handleSubmit}>
+            {renderFormFields()}  {/* This will dynamically render the correct fields based on the type */}
+            <div className="buttons">
+              <button type="button" onClick={onClose}>
+                Cancel
+              </button>
+              <button type="submit">Save</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
