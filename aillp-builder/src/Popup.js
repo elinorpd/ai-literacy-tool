@@ -124,7 +124,6 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   };
   
   
-  
   const renderAllFields = () => (
     <>
     <label htmlFor="title"><h5>Lesson Title</h5></label>
@@ -374,49 +373,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   const handleValueChange = (e) => {
     setProperties({ ...properties, value: e.target.value });
   };
-
   
-  const handleReqChange = (e) => {
-    setProperties({ ...properties, req: e.target.value });
-  };
-
-  const handleEditableChange = (e) => {
-    setProperties({ ...properties, editable: e.target.checked });
-  };
-
-  // Function to determine which form fields to render
-  const renderFormFields = () => {
-    // if newlessonplan then render all fields
-    // data = formdata from app.js
-    // console.log(data)
-    switch (properties.type) {
-      // case 'Title':
-      //   return renderTitleFields();
-      // case 'Duration':
-      //   return renderDurationFields();
-      // case 'Overview':
-      //   return renderOverviewFields();
-      // case 'Assessment':
-      //   return renderAssessmentFields();
-      // case 'Objectives':
-      //   return renderObjectivesFields();
-      // case 'AIObjectives':
-      //   return renderAIObjectivesFields();
-      // case 'Activity':
-      //   return renderActivityFields();
-      // case 'AIActivity':
-      //   return renderAIActivityFields();
-      // case 'Audience':
-      //   return renderAudienceFields();
-      // case 'Custom':
-      //   return renderCustomFields();
-      case 'newLessonPlan':
-        // console.log("properties", properties)
-        return renderAllFields();
-      default:
-        return <p>Unknown component type</p>;
-    }
-  };
   
   if (!show) {
     return null;
@@ -448,7 +405,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         <button className="close-button" onClick={onClose}>&times;</button>
         <div className="popup-content">
           <form onSubmit={handleSubmit}>
-            {renderFormFields()}  {/* This will dynamically render the correct fields based on the type */}
+            {renderAllFields()}
             <div className="buttons">
               <button type="button" onClick={onClose}>
                 Cancel
