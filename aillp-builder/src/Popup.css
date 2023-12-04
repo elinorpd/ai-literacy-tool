@@ -132,3 +132,46 @@
     max-width: 60vw; /* 66% of the viewport width */
   }
   
+  .activity-selection-buttons {
+    display: flex; /* Aligns buttons in a row */
+    border-radius: 20px; /* Adjust as needed for oval shape */
+    overflow: hidden; /* Ensures outer border-radius is applied */
+  }
+  
+  .activity-selection-buttons button {
+    flex: 1; /* Each button takes equal width */
+    border: none; /* Removes border */
+    background-color: #ccc; /* Default background color */
+    color: black; /* Text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    margin: 0; /* Removes any default margin */
+    border-radius: 0; /* Removes individual border-radius */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+    position: relative; /* Needed for absolute positioning of the border */
+  }
+  
+  .activity-selection-buttons button:first-child {
+    border-top-left-radius: 20px; /* Rounded left corners for first button */
+    border-bottom-left-radius: 20px;
+  }
+  
+  .activity-selection-buttons button:last-child {
+    border-top-right-radius: 20px; /* Rounded right corners for last button */
+    border-bottom-right-radius: 20px;
+  }
+  
+  .activity-selection-buttons button.selected {
+    background-color: #5c6bc0; /* Background color for selected button */
+    color: white; /* Text color for selected button */
+  }
+  
+  .activity-selection-buttons button:first-child::after {
+    content: '';
+    position: absolute;
+    right: 0; /* Position to the right side of the button */
+    top: 0;
+    bottom: 0;
+    width: 1px; /* Width of the border */
+    background-color: rgb(0, 0, 0); /* Color of the border */
+  }
+  

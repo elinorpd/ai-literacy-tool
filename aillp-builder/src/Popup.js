@@ -3,9 +3,7 @@ import './Popup.css'; // You will need to create a corresponding CSS file for st
 // import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
 
 const Popup = ({ show, onClose, onSave, data, isLoading }) => {
-  // const [title, setTitle] = useState(data?.title || '');
-  // const [value, setValue] = useState(data?.value || '');
-  // const [editable, setEditable] = useState(data?.editable || false);
+  const [activityType, setActivityType] = useState(null); // 'aiLiteracy' or 'normal'
   const [id, setId] = useState(data?.id || null); // use null to signify no id if new component
   const [properties, setProperties] = useState(data || {
     title: '',
@@ -94,23 +92,38 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   //   console.log('Properties changed:', properties);
   // }, [properties]);  
 
-  const renderEditableCheckbox = () => {
-    if (!properties) {
-      return null; // or some default UI
-    }
+  const handleActivityTypeSelection = (type) => {
+    setActivityType(type);
   
-    return (
-      <div className='checkboxItem'>
-        <input
-          type="checkbox"
-          id="editable"
-          checked={properties.editable || false}
-          onChange={handleEditableChange}
-        />
-        <label htmlFor="editable">Editable: Check this if you'd like the AI to modify or add anything in this activity.</label>  
-      </div>
-    );
+    if (type === 'aiLiteracy') {
+      // Clear normal activity fields
+      setProperties(prevProps => ({
+        ...prevProps,
+        activity: {
+          title: '',
+          duration: '',
+          description: '',
+          alternatives: false,
+          assessment: false,
+        }
+      }));
+    } else if (type === 'normal') {
+      // Clear AI Literacy objectives and AI activity fields
+      setProperties(prevProps => ({
+        ...prevProps,
+        ailitobjectives: prevProps.ailitobjectives.map(obj => ({ ...obj, checked: false })),
+        customobjective: '',
+        aiactivity: {
+          duration: '',
+          req: '',
+          alternatives: false,
+          assessment: false,
+        }
+      }));
+    }
   };
+  
+  
   
   const renderAllFields = () => (
     <>
@@ -128,6 +141,13 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.duration || ''}
         onChange={handleChange}
       />
+      <label htmlFor="audience"><h5>Target Audience</h5></label>
+      <input
+        type="text"
+        id="audience"
+        value={properties.audience || ''}
+        onChange={handleChange}
+      />
     <label htmlFor="overview"><h5>Overview</h5></label>
     <p>Overview or description of the lesson.</p>
     <textarea
@@ -142,35 +162,34 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.objectives || ''}
           onChange={handleChange}
       />
-    <div className="ailitobj">
-    <label><h5>AI Literacy Learning Objectives</h5></label>
-    <p align="left">Select the learning objectives that you would like the AI to incorporate into your lesson plan in the form of an
-    AI Literacy activity. You may choose any of the following suggestions or write your own custom ones!</p>
-    {properties.ailitobjectives.map((item, index) => (
-      <div key={index} className="checkboxItem">
-        <div key={`checklist-item-${index}-${item.checked}`}>
-          <input
-            type="checkbox"
-            id={`objective${index}`}
-            checked={item.checked || false}
-            onChange={(e) => handleChecklistChange(e, index)}
-          />
-          <label htmlFor={`objective${index}`}>{item.label}</label>
-        </div>
+      <p>Would you like to add an AI Literacy activity to the lesson or proceed with a normal activity?</p>
+      <div className='activity-selection-buttons'>
+        <button
+          type='button'
+          onClick={() => handleActivityTypeSelection('aiLiteracy')}
+          className={activityType === 'aiLiteracy' ? 'selected' : ''}
+        >
+          AI Literacy Activity
+        </button>
+        <button
+          type='button'
+          onClick={() => handleActivityTypeSelection('normal')}
+          className={activityType === 'normal' ? 'selected' : ''}
+        >
+          Activity
+        </button>
       </div>
-    ))}
-    <br/>
-      <div className="customObjectiveRow">
-        <label htmlFor="customobjective">Custom Objective:</label>
-        <input
-          type="text"
-          id="customobjective"
-          value={properties.customobjective || ''}
-          onChange={handleChange}
-        />
-      </div>
-  </div>
-  <div className='ailitobj'>
+      {/* Render AI Literacy or Activity fields based on selection */}
+      {activityType === 'aiLiteracy' && renderAILiteracyFields()}
+      {activityType === 'normal' && renderActivityFields()}
+
+    </>
+  );
+
+
+  const renderActivityFields = () => (
+    <>
+    <div className='ailitobj'>
       <label htmlFor="title"><h5>Activity</h5></label>
       <p align="left">Input an activity for the lesson. If you would like the AI to edit this, please select the "editable" checkbox below. 
       This works best if you give some instruction within the description for where you'd like the AI to edit. 
@@ -217,69 +236,74 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         <label htmlFor="assessment">Assessment: Check this if you'd like the AI to create a short assessment for this activity.</label>
       </div>
     </div>
-    <div className='ailitobj'>
-    <h5>AI Activity</h5>
-    <p align="left">The AI will craft an AI Literacy-related activity tailored to your lesson. Begin by specifying the duration of the activity, if desired, and outline any particular specifications or requirements in the text box. The resulting activity will always include a short assessment at the end to gauge students' learning outcomes.<br/><br/>
-    Be specific for optimal results. For example, request an offline activity without the use of technology, ask for a debate-style activity, or specify that the assessment should be in multiple choice format.   
-      </p>
-      <label htmlFor="duration">Duration (mins)</label>
-      <input
-        type="number"
-        id="aiactivity.duration"
-        value={properties.aiactivity.duration || ''}
-        onChange={handleChange}
-      />
-      <label htmlFor="req">Requirements or specifications (optional)</label>
-      <textarea
-        id="aiactivity.req"
-        value={properties.aiactivity.req || ''}
-        onChange={handleChange}
-      />
-      <div className="checkboxItem">
-        <input
-          type="checkbox"
-          id="aiactivity.alternatives"
-          checked={properties.aiactivity.alternatives || false}
-          onChange={handleChange}
-        />
-        <label htmlFor="alternatives">Activity Alternatives: Check this if you'd like the AI to create versions of the activity to accommodate lower and higher level students in the class.</label>
-        </div>
-      <div className="checkboxItem">
-        <input
-          type="checkbox"
-          id="aiactivity.assessment"
-          checked={properties.aiactivity.assessment || false}
-          onChange={handleChange}
-        />
-        <label htmlFor="assessment">Assessment: Check this if you'd like the AI to create a short assessment for this activity.</label>
-      </div>
-      </div>
     </>
   );
 
-
-  // 6.1. AI Activity
-  const renderAIActivityFields = () => (
+  const renderAILiteracyFields = () => (
     <>
-    <div className='ailitobj'>
-    <h5>AI Activity</h5>
-    <p align="left">The AI will craft an AI Literacy-related activity tailored to your lesson. Begin by specifying the duration of the activity, if desired, and outline any particular specifications or requirements in the text box. The resulting activity will always include a short assessment at the end to gauge students' learning outcomes.<br/><br/>
-    Be specific for optimal results. For example, request an offline activity without the use of technology, ask for a debate-style activity, or specify that the assessment should be in multiple choice format.   
-      </p>
-      <label htmlFor="value">Duration (mins)</label>
-      <input
-        type="number"
-        id="value"
-        value={properties.value || ''}
-        onChange={handleValueChange}
-      />
-      <label htmlFor="req">Requirements or specifications (optional)</label>
-      <textarea
-        id="req"
-        value={properties.req || ''}
-        onChange={handleReqChange}
-      />
-      </div>
+    <div className="ailitobj">
+      <label><h5>AI Literacy Learning Objectives</h5></label>
+      <p align="left">Select the learning objectives that you would like the AI to incorporate into your lesson plan in the form of an
+      AI Literacy activity. You may choose any of the following suggestions or write your own custom ones!</p>
+      {properties.ailitobjectives.map((item, index) => (
+        <div key={index} className="checkboxItem">
+          <div key={`checklist-item-${index}-${item.checked}`}>
+            <input
+              type="checkbox"
+              id={`objective${index}`}
+              checked={item.checked || false}
+              onChange={(e) => handleChecklistChange(e, index)}
+            />
+            <label htmlFor={`objective${index}`}>{item.label}</label>
+          </div>
+        </div>
+      ))}
+      <br/>
+        <div className="customObjectiveRow">
+          <label htmlFor="customobjective">Custom Objective:</label>
+          <input
+            type="text"
+            id="customobjective"
+            value={properties.customobjective || ''}
+            onChange={handleChange}
+          />
+        </div>
+      <h5>AI Activity</h5>
+      <p align="left">The AI will craft an AI Literacy-related activity tailored to your lesson. Begin by specifying the duration of the activity, if desired, and outline any particular specifications or requirements in the text box. The resulting activity will always include a short assessment at the end to gauge students' learning outcomes.<br/><br/>
+      Be specific for optimal results. For example, request an offline activity without the use of technology, ask for a debate-style activity, or specify that the assessment should be in multiple choice format.   
+        </p>
+        <label htmlFor="duration">Duration (mins)</label>
+        <input
+          type="number"
+          id="aiactivity.duration"
+          value={properties.aiactivity.duration || ''}
+          onChange={handleChange}
+        />
+        <label htmlFor="req">Requirements or specifications (optional)</label>
+        <textarea
+          id="aiactivity.req"
+          value={properties.aiactivity.req || ''}
+          onChange={handleChange}
+        />
+        <div className="checkboxItem">
+          <input
+            type="checkbox"
+            id="aiactivity.alternatives"
+            checked={properties.aiactivity.alternatives || false}
+            onChange={handleChange}
+          />
+          <label htmlFor="alternatives">Activity Alternatives: Check this if you'd like the AI to create versions of the activity to accommodate lower and higher level students in the class.</label>
+          </div>
+        <div className="checkboxItem">
+          <input
+            type="checkbox"
+            id="aiactivity.assessment"
+            checked={properties.aiactivity.assessment || false}
+            onChange={handleChange}
+          />
+          <label htmlFor="assessment">Assessment: Check this if you'd like the AI to create a short assessment for this activity.</label>
+        </div>
+        </div>
     </>
   );
 
@@ -299,7 +323,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         value={properties.value || ''}
         onChange={handleValueChange}
       />
-      {renderEditableCheckbox()}
+      {/* {renderEditableCheckbox()} */}
     </>
   );
 
