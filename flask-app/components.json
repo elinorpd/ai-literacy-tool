@@ -1,10 +1,10 @@
 {
     "type": "newLessonPlan",
-    "title": "heres my title",
-    "duration": "45",
-    "overview": "my overview",
-    "audience": "my target audience",
-    "objectives": "my learning objectives",
+    "title": "introduction  to the history of new york city",
+    "duration": "60",
+    "overview": "introduction  to the history of new york city",
+    "audience": "grade 6 students",
+    "objectives": "learn the history of new york city area from before colonization to present day",
     "ailitobjectives": [
         {
             "label": "Understand the basic concept of AI, its main components, and everyday examples.",
@@ -37,11 +37,11 @@
     ],
     "customobjective": "",
     "activity": {
-        "title": "my activity",
-        "duration": "28",
-        "description": "my description of activity",
+        "title": "map visualization",
+        "duration": "35",
+        "description": "students create a layered map of the city over various times. please help me flesh this out and include materials and more specific instructions and ideas ",
         "alternatives": true,
-        "assessment": true
+        "assessment": false
     },
     "aiactivity": {
         "duration": "",

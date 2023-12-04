@@ -50,12 +50,10 @@ def handle_submit():
     # now do the thing to create the lesson plan
     new_lesson_plan = generate_response(components, None, False)
     # print(new_lesson_plan)
-    if is_valid_html(new_lesson_plan):
-        return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
-    else:
-        # need to clean up the html
-        # call chatgpt to generate a new lesson plan in plain text
-        new_lesson_plan = generate_response(components, None, False, False)
+    while not is_valid_html(new_lesson_plan):
+        print('Invalid HTML, trying again')
+        # call chatgpt to generate a new lesson plan
+        new_lesson_plan = generate_response(components, None, False)
     
     return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
 
