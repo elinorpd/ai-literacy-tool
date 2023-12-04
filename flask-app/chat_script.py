@@ -15,78 +15,59 @@ def editable_str(editable, value):
     else:
         return ": "
 
-# helper function to parse lesson plan components list into a string
-def parse_lesson_plan(components):
-    components_str = ""
-    for component in components:
-        if component["type"] in ['Title', 'Audience', 'Overview', 'Learning Objectives', 'Assessment']:
-            components_str += f'{component["type"]}: ' + component["properties"]["value"] + "\n"
-            
-        if component["type"] == 'Duration':
-            components_str += f'Lesson {component["type"]}: ' + component["properties"]["value"] + "mins.\n"
-            
-        elif component["type"] == 'Activity':
-            components_str += component["type"] + " Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n" 
-            if component["properties"]["assessment"] != "":
-                components_str += "Activity Assessment: " + component["properties"]["assessment"] + "\n"
-            
-        elif component["type"] == 'AIActivity':
-            components_str += "AI Literacy Activity" + editable_str(True, component["properties"]["editable"]) + "\nDuration " + str(component["properties"]["value"]) + "minutes.\nActivity requirements: "  + component["properties"]["req"] + "\n" + "AI Literacy Activity Assessment: \n"
-            
-        elif component["type"] == 'Custom':
-            components_str += "Title: " + component["properties"]["title"] + editable_str(True, component["properties"]["editable"]) + component["properties"]["value"] + "\n"
-            
-        elif component["type"] == 'AIObjectives':
-            # if any of the existing objectives are checked, add them to the lesson plan
-            if any([o["checked"]==True for o in component["properties"]["checklist"]]):
-                components_str += "AI Literacy Learning Objectives" + editable_str(True, component["properties"]["editable"]) + "\n".join([o["label"] for o in component["properties"]["checklist"] if o["checked"]==True]) + "\n"
-            elif component["properties"]["customObjective"] != "":
-                components_str += "AI Literacy Learning Objectives" + editable_str(True, component["properties"]["editable"]) + component["properties"]["customObjective"] + "\n"
-            
-    return components_str
 
-def parse_lesson_plan_html(components):
-    components_str = ""
-    for component in components:
-        if component["type"] == 'Title': 
-            components_str += f'<h3>{component["type"]}: {component["properties"]["value"]}</h3>' + "<br/><br/>\n"
-        
-        elif component["type"] in ['Audience', 'Overview', 'Learning Objectives', 'Assessment']:
-            components_str += f'<h3>{component["type"]}:</h3><br/><p>{component["properties"]["value"]}</p>'  + "<br/>\n"
-        
-        elif component["type"] == 'Duration':
-            components_str += f'<h3>Lesson {component["type"]}:</h3><br/><p>{component["properties"]["value"]} mins.</p>'  + "<br/>\n"
-       
-        elif component["type"] == 'Activity':
-            components_str += f'<h3>{component["type"]} Title:</h3><br/><p>{component["properties"]["title"]}</p>'  + "<br/>\n"
-            components_str += f'<h5>{component["type"]} Description:</h5><br/><p>{component["properties"]["value"]}</p>'  + "<br/>\n"
-            if component["properties"]["assessment"] != "":
-                components_str += f'<h5>{component["type"]} Assessment:</h5><br/><p>{component["properties"]["assessment"]}</p>'  + "<br/>\n"
-       
-        elif component["type"] == 'AIActivity':
-            components_str += f'<h3>AI Literacy Activity</h3><br/><p>Duration {component["properties"]["value"]} minutes.</p>'  + "<br/>\n"
-            components_str += f'<h5>AI Literacy Activity Description:</h5><br/><p>{component["properties"]["req"]}</p>'  + "<br/>\n"
-            components_str += f'<h5>AI Literacy Activity Assessment:</h5><br/><p>short assessment goes here</p>'  + "<br/>\n"    
-    
-        elif component["type"] == 'Custom': # disabled for now
-            components_str += f'<h3>Title:{component["properties"]["title"]}</h3>'  + "<br/>\n"
-            components_str += f'<h5>Description:</h5><br/><p>{component["properties"]["value"]}</p>'  + "<br/>\n"
-            
-        elif component["type"] == 'AIObjectives':
-            # if any of the existing objectives are checked, add them to the lesson plan
-            if any([o["checked"]==True for o in component["properties"]["checklist"]]):
-                components_str += f'<h3>AI Literacy Learning Objectives</h3><br/><p>' + "\n<ul>\n"
-                # create html bullet list
-                components_str += "\n".join([f'<li>{o["label"]}</li>' for o in component["properties"]["checklist"] if o["checked"]==True])
-            elif component["properties"]["customObjective"] != "":
-                components_str += f'<li>{component["properties"]["customObjective"]}</li>\n</ul>\n<br/>\n'
-                
-    return components_str
-    
+def parse_lesson_plan_html(lesson_plan):
+    html_str = ""
+
+    # Title
+    if lesson_plan.get('title'):
+        html_str += f'<h3>Title: {lesson_plan["title"]}</h3><br/><br/>\n'
+
+    # Duration
+    if lesson_plan.get('duration'):
+        html_str += f'<h3>Duration: {lesson_plan["duration"]} mins.</h3><br/><br/>\n'
+
+    # Overview
+    if lesson_plan.get('overview'):
+        html_str += f'<h3>Overview:</h3><br/><p>{lesson_plan["overview"]}</p><br/>\n'
+
+    # Audience
+    if lesson_plan.get('audience'):
+        html_str += f'<h3>Audience:</h3><br/><p>{lesson_plan["audience"]}</p><br/>\n'
+
+    # Learning Objectives
+    if lesson_plan.get('objectives'):
+        html_str += f'<h3>Learning Objectives:</h3><br/><p>{lesson_plan["objectives"]}</p><br/>\n'
+
+    # AI Literacy Learning Objectives
+    ailit_objectives = lesson_plan.get('ailitobjectives', [])
+    custom_objective = lesson_plan.get('customobjective')
+    if any(obj.get('checked') for obj in ailit_objectives) or custom_objective:
+        html_str += f'<h3>AI Literacy Learning Objectives:</h3><br/><ul>\n'
+        for obj in ailit_objectives:
+            if obj.get('checked'):
+                html_str += f'<li>{obj["label"]}</li>\n'
+        if custom_objective:
+            html_str += f'<li>{custom_objective}</li>\n'
+        html_str += '</ul><br/>\n'
+
+    # Activity
+    activity = lesson_plan.get('activity', {})
+    if activity.get('title'):
+        html_str += f'<h3>Activity Title:</h3><br/><p>{activity.get("title", "")}</p><br/>\n'
+        html_str += f'<h5>Activity Description:</h5><br/><p>{activity.get("description", "")}</p><br/>\n'
+
+    # AI Activity
+    ai_activity = lesson_plan.get('aiactivity', {})
+    aiactivity = lesson_plan.get('aiactivity', {}).get('duration') # is true only if ai activity is there
+    if aiactivity:
+        html_str += f'<h3>AI Activity:</h3><br/><p>Duration {ai_activity.get("duration", "")} minutes.</p><br/>\n'
+        html_str += f'<h5>AI Activity Requirements:</h5><br/><p>{ai_activity.get("req", "")}</p><br/>\n'
+
+    return html_str, aiactivity
 
 #function to load and parse json file containing the lesson plan
 def parse_lesson_plan_cli(file_path, editable=True):
-    # TODO maybe need to have a version that only includes the editable components
     f = open(file_path)
     data = json.load(f)
     lesson_plan = ""
@@ -127,16 +108,6 @@ def print_lesson_plan(file_name):
     # pretty print the json
     print(json.dumps(data, indent=4))
     
-    # if 'activities' in data:
-    #     for act in data['activities']:
-    #         print(act['title'])
-    #         print(act['description'])
-    #         print(act['editable'])
-    #     f.close()
-    # else:
-    #     print("WARNING! No activities in lesson plan.")
-    #     f.close()
-
 #function to read multiline input
 def get_multiline_input():
     print("Double-enter to save it.")
@@ -152,34 +123,30 @@ def get_multiline_input():
             return
 
 # Define a function to generate a response from GPT-4
-def generate_response(file_name, args=None, save=True, html=True):
+def generate_response(lessonplan, args=None, save=True, html=True, ai_activity=False):
     """
     Generates a new lesson plan by modifying editable sections of an existing lesson plan using OpenAI's GPT-3 language model.
 
     Args:
-        file_name (str): The file path of the existing lesson plan to modify.
+        lessonplan (str): lesson plan in dictionary/json format
         args (argparse.Namespace, optional): Command-line arguments. Defaults to None.
 
     Returns:
         str: The original lesson plan with modified editable sections, written to a new file.
     """   
-    # disabling functionality for inputting a file name because its irrelevant now. we can add this functinoality back in later if we want
-    # print(type(file_name))
-    # print(file_name)
-    # if type(file_name) != str:
-    #     lesson_plan = file_name
-    # else:
-    #     lesson_plan = parse_lesson_plan(file_name)
-    # print(lesson_plan)
     
-    lesson_plan = parse_lesson_plan_html(file_name)
+    lesson_plan, aiactivity = parse_lesson_plan_html(lessonplan)
     print(lesson_plan)
     html_str = "html formatting within a <p></p>" if html else "plain text formatting"
+    activity_str = "incorporate a new activity based on given AI literacy learning objectives." if aiactivity else "modify an existing activity according to the instructions in the text."
 
     response = openai.ChatCompletion.create(
                   model=args.model if args else "gpt-4-1106-preview",
                   messages=[
-                      {"role": "system", "content": f"You are an expert in AI literacy and middle school education. We will give you an existing lesson plan from a middle school teacher. For each component of the plan, it will indicate whether or not you should edit that section. For any activities that have 'editable: True', please modify or replace the activity with an engaging, safe, and time-appropriate AI literacy activity relevant to the lesson. Do not change any components with 'editable: False'. For other editable sections, modify if you think it is necessary to incorporate AI Literacy learning objectives and maintain coherence.\n\nReturn only the lesson plan in {html_str}, with your edits to the editable sections with no additional text or references to your edits. Don't include the (editable: value) statements."},
+                      {"role": "system", "content": f"You are an expert in {'AI literacy and' if aiactivity else ''} middle school education. We will give you an existing lesson plan from a middle school teacher.\
+                        Your task is to modify the lesson plan to {activity_str}. Replace the incomplete activity below with a topic, time, age, and level-appropriate activity according to the target audience (if not provided, assume middle school ages 11-14). Be specific and include all necessary details for a teacher to implement.\
+                        For other sections (title, overview, lesson objectives), modify if you think it is necessary to maintain coherence {'(e.g. incorporate AI Literacy aspect to lesson overview)' if aiactivity else ''}. Do not edit other sections!\
+                        \n\nReturn only the lesson plan in {html_str}, with your edits with no additional text or references to your edits."},
                       {"role": "user", "content": str(lesson_plan)},
                   ],
                   )
@@ -211,10 +178,7 @@ def input_lesson_form(args):
         lesson_plan={}
     form = 1
     
-    # TODO!! allow teacher to select from a list of AI Literacy learning objectives (or write their own) to guide the edits
     # TODO(eventually) dont allow empty inputs
-    # TODO(eventually) add overview section, maybe as well as other sections. for now these are covered in catch all custom component
-    # TODO(eventually) allow user to specify the order of the lesson. currently its grouped by our ordering and type of component
     
     print("Hello! Please enter your current lesson plan. At a minimum, you must give a Title, Learning Objectives, and Duration.\n\
         For each component, you will be asked whether it is 'editable.' This means that the AI will potentially modify this section in\n\
@@ -455,7 +419,7 @@ if __name__ == "__main__":
     
     file_path = input_lesson_form(args)
     # print_lesson_plan(file_path)
-    print(parse_lesson_plan(file_path))
+    print(parse_lesson_plan_cli(file_path))
     # generate AI modified lesson plan
     print("Generating AI modified lesson plan...")
     generate_response(file_path, args)

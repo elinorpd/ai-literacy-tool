@@ -92,10 +92,6 @@ html, body {
   border-bottom-right-radius: 5px;
 }
 
-.lessonComponent {
-  /* Add styles for your lesson components if needed */
-}
-
 .output {
   background-color: #EBEAED;
   padding: 10px;
@@ -133,7 +129,17 @@ html, body {
     align-content: center;
     flex-wrap: wrap;
     gap: 10px;
-    /* background-color: white; */
+  }
+
+  .start-button {
+    font-size: 25px;
+    padding: 20px 80px !important;
+    background-color: #d492f5 !important;
+    transition: background-color 0.2s; /* Smooth transition for the color change */
+  }
+
+  .start-button:hover {
+    background-color: rgb(62, 164, 237) !important;
   }
 
   .buttons button {
@@ -163,6 +169,13 @@ html, body {
     flex-wrap: wrap;
     gap: 10px;
 }
+
+.preview-header {
+  display: flex;
+  justify-content: space-between; /* Aligns children (h2 and buttons) at the start and end of the container */
+  align-items: center; /* Vertically centers the items in the container */
+}
+
 .lesson-component {
   border: 2px solid #ccc; /* Example border color */
   border-radius: 8px; /* Rounded corners */

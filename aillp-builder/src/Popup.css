@@ -10,13 +10,43 @@
     justify-content: center;
     z-index: 1000;
   }
+
+  .popup-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Set the max width and height as needed */
+  }  
   
   .popup-content {
     background-color: #fff;
-    padding: 20px;
+    padding: 50px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    max-height: 80vh; /* Adjust the value as needed */
+    overflow-y: auto; /* Enables vertical scrolling */  
+    position: relative;
   }
+
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10; /* Ensures it's above other content */
+    border: 1px solid #ccc;
+    border-radius: 50%; /* Fully rounded corners */
+    background: none;
+    cursor: pointer;
+    font-size: 24px; /* Adjust the size as needed */
+    padding: 5px; /* Add some padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* Adjust width as needed */
+    height: 30px; /* Adjust height as needed */
+    line-height: 1; /* Adjust line height for vertical alignment */
+    }  
   
   label {
     display: block;
@@ -100,5 +130,48 @@
 
   .popup .ailitobj {
     max-width: 60vw; /* 66% of the viewport width */
+  }
+  
+  .activity-selection-buttons {
+    display: flex; /* Aligns buttons in a row */
+    border-radius: 20px; /* Adjust as needed for oval shape */
+    overflow: hidden; /* Ensures outer border-radius is applied */
+  }
+  
+  .activity-selection-buttons button {
+    flex: 1; /* Each button takes equal width */
+    border: none; /* Removes border */
+    background-color: #ccc; /* Default background color */
+    color: black; /* Text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    margin: 0; /* Removes any default margin */
+    border-radius: 0; /* Removes individual border-radius */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+    position: relative; /* Needed for absolute positioning of the border */
+  }
+  
+  .activity-selection-buttons button:first-child {
+    border-top-left-radius: 20px; /* Rounded left corners for first button */
+    border-bottom-left-radius: 20px;
+  }
+  
+  .activity-selection-buttons button:last-child {
+    border-top-right-radius: 20px; /* Rounded right corners for last button */
+    border-bottom-right-radius: 20px;
+  }
+  
+  .activity-selection-buttons button.selected {
+    background-color: #5c6bc0; /* Background color for selected button */
+    color: white; /* Text color for selected button */
+  }
+  
+  .activity-selection-buttons button:first-child::after {
+    content: '';
+    position: absolute;
+    right: 0; /* Position to the right side of the button */
+    top: 0;
+    bottom: 0;
+    width: 1px; /* Width of the border */
+    background-color: rgb(0, 0, 0); /* Color of the border */
   }
   
