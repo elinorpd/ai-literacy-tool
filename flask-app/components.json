@@ -1,14 +1,14 @@
 {
     "type": "newLessonPlan",
-    "title": "solar system",
-    "duration": "45",
+    "title": "digestive system",
+    "duration": "40",
     "overview": "",
-    "audience": "middle school",
-    "objectives": "",
+    "audience": "grade 6",
+    "objectives": "understanding about the functions about digestive system",
     "ailitobjectives": [
         {
             "label": "Understand the basic concept of AI, its main components, and everyday examples.",
-            "checked": false
+            "checked": true
         },
         {
             "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
@@ -16,7 +16,7 @@
         },
         {
             "label": "Understand the concept of bias in AI and its societal implications.",
-            "checked": true
+            "checked": false
         },
         {
             "label": "Understand the collaboration between human creativity and AI algorithms.",
@@ -47,6 +47,6 @@
         "duration": "10",
         "req": "",
         "alternatives": true,
-        "assessment": false
+        "assessment": true
     }
 }
