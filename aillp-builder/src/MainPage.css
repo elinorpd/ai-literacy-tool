@@ -189,24 +189,3 @@ html, body {
 .lesson-component button {
   margin-left: 10px; /* Space between buttons */
 }
-
-.nav-buttons {
-  position: absolute;
-  top: 10px; /* adjust as needed */
-  right: 10px; /* adjust as needed */
-  display: flex;
-  gap: 10px; /* space between buttons */
-}
-
-.nav-buttons button {
-  background-color: #f0f0f0; /* or any color */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.nav-buttons button:hover {
-  background-color: #e0e0e0; /* darker shade on hover */
-}
