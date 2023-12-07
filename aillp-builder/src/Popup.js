@@ -126,35 +126,35 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   
   const renderAllFields = () => (
     <>
-    <label htmlFor="title"><h5>Lesson Title</h5></label>
+    <label htmlFor="title"><h3>Lesson Title</h3></label>
       <input
         type="text"
         id="title"
         value={properties.title || ''}
         onChange={handleChange}
       />
-      <label htmlFor="duration"><h5>Duration (mins)</h5></label>
+      <label htmlFor="duration"><h3>Duration (mins)</h3></label>
       <input
         type="number"
         id="duration"
         value={properties.duration || ''}
         onChange={handleChange}
       />
-      <label htmlFor="audience"><h5>Target Audience</h5></label>
+      <label htmlFor="audience"><h3>Target Audience</h3></label>
       <input
         type="text"
         id="audience"
         value={properties.audience || ''}
         onChange={handleChange}
       />
-    <label htmlFor="overview"><h5>Overview</h5></label>
+    <label htmlFor="overview"><h3>Overview</h3></label>
     <p>Overview or description of the lesson.</p>
     <textarea
       id="overview"
       value={properties.overview || ''}
         onChange={handleChange}
     />
-    <label htmlFor="objectives"><h5>Learning Objectives</h5></label>
+    <label htmlFor="objectives"><h3>Learning Objectives</h3></label>
       <p align="left">Overall learning objectives for the lesson. Can be in paragraph form or a list.</p>
       <textarea
         id="objectives"
@@ -189,12 +189,10 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   const renderActivityFields = () => (
     <>
     <div className='ailitobj'>
-      <label htmlFor="title"><h5>Activity</h5></label>
-      <p align="left">Input an activity for the lesson. If you would like the AI to edit this, please select the "editable" checkbox below. 
-      This works best if you give some instruction within the description for where you'd like the AI to edit. 
-      For example in the description, you could describe your existing activity and write "please incorporate AI Literacy objectives into 
-      this activity where students work in groups of 3" or "write me a 4 question multiple choice quiz to assess students' learning from this activity" etc.
-      The more specific you are, the better the AI will be able to edit your activity.
+      <label htmlFor="title"><h4>Activity</h4></label>
+      <p align="left">Input an existing activity for the lesson that you would like the AI to modify. 
+      This works best if you give some instruction within the description for where you'd like the AI to edit.
+      <b>The more specific you are, the better the AI will be able to edit your activity.</b>
       </p>
       <label htmlFor="title">Title</label>
       <input
@@ -215,6 +213,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         id="activity.description"
         value={properties.activity.description || ''}
         onChange={handleChange}
+        placeholder='You could describe your existing activity and write "incorporate AI Literacy objectives into this activity where students work in groups of 3" or "write me a 4 question multiple choice quiz to assess students&#39; learning from this activity etc".'
       />
       <div className="checkboxItem">
         <input
@@ -223,7 +222,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
           checked={properties.activity.alternatives || false}
           onChange={handleChange}
         />
-        <label htmlFor="alternatives">Activity Alternatives: Check this if you'd like the AI to create versions of the activity to accommodate lower and higher level students in the class.</label>
+        <label htmlFor="alternatives"><b>Activity Alternatives: </b>Check this if you'd like the AI to create versions of the activity to accommodate lower and higher level students in the class.</label>
         </div>
       <div className="checkboxItem">
         <input
@@ -232,7 +231,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
           checked={properties.activity.assessment || false}
           onChange={handleChange}
         />
-        <label htmlFor="assessment">Assessment: Check this if you'd like the AI to create a short assessment for this activity.</label>
+        <label htmlFor="assessment"><b>Assessment:</b> Check this if you'd like the AI to create a short assessment for this activity.</label>
       </div>
     </div>
     </>
@@ -241,7 +240,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   const renderAILiteracyFields = () => (
     <>
     <div className="ailitobj">
-      <label><h5>AI Literacy Learning Objectives</h5></label>
+      <label><h4>AI Literacy Learning Objectives</h4></label>
       <p align="left">Select the learning objectives that you would like the AI to incorporate into your lesson plan in the form of an
       AI Literacy activity. You may choose any of the following suggestions or write your own custom ones!</p>
       {properties.ailitobjectives.map((item, index) => (
@@ -267,9 +266,9 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
             onChange={handleChange}
           />
         </div>
-      <h5>AI Activity</h5>
-      <p align="left">The AI will craft an AI Literacy-related activity tailored to your lesson. Begin by specifying the duration of the activity, if desired, and outline any particular specifications or requirements in the text box. The resulting activity will always include a short assessment at the end to gauge students' learning outcomes.<br/><br/>
-      Be specific for optimal results. For example, request an offline activity without the use of technology, ask for a debate-style activity, or specify that the assessment should be in multiple choice format.   
+      <h4>AI Activity</h4>
+      <p align="left">The AI will craft an AI Literacy-related activity tailored to your lesson. Begin by specifying the <b>duration</b> of the activity, if desired, and outline any particular specifications or requirements in the text box.<br/><br/>
+      <b>Be specific for optimal results.</b> 
         </p>
         <label htmlFor="duration">Duration (mins)</label>
         <input
@@ -283,6 +282,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
           id="aiactivity.req"
           value={properties.aiactivity.req || ''}
           onChange={handleChange}
+          placeholder='Request an offline activity without the use of technology, ask for a debate-style activity, or specify that the assessment should be in multiple choice format.'
         />
         <div className="checkboxItem">
           <input
@@ -291,7 +291,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
             checked={properties.aiactivity.alternatives || false}
             onChange={handleChange}
           />
-          <label htmlFor="alternatives">Activity Alternatives: Check this if you'd like the AI to create versions of the activity to accommodate lower and higher level students in the class.</label>
+          <label htmlFor="alternatives"><b>Activity Alternatives:</b> Check this if you would like the AI to create versions of the activity to accommodate lower and higher level students in the class.</label>
           </div>
         <div className="checkboxItem">
           <input
@@ -300,7 +300,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
             checked={properties.aiactivity.assessment || false}
             onChange={handleChange}
           />
-          <label htmlFor="assessment">Assessment: Check this if you'd like the AI to create a short assessment for this activity.</label>
+          <label htmlFor="assessment"><b>Assessment:</b> Check this if you would like the AI to create a short assessment for this activity to gauge students' learning outcomes.</label>
         </div>
         </div>
     </>

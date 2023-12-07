@@ -83,10 +83,17 @@ function App() {
     return { __html: htmlString };
   };
 
+  //PROD appURL
+  //'https://ai-lesson-planner-cd8f89bac323.herokuapp.com';
+
+  //LOCAL appURL
+  // 'http://localhost:5000';
+
+  const appUrl = 'http://localhost:5000';
   async function downloadLessonPlan() {
     try {
       // change the url to convert-to-text if you want to download plain text
-        const response = await fetch('http://localhost:5000/convert-to-docx', {
+        const response = await fetch(`${appUrl}/convert-to-docx`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
@@ -258,8 +265,6 @@ function App() {
     const jsonData = JSON.stringify(lessonPlan);
 
 
-    const appUrl = 'http://localhost:5000';
-
     // Start using try-catch for async-await pattern
     try {
       const response = await fetch(`${appUrl}/api/submit`, {
@@ -293,14 +298,6 @@ function App() {
     setisLoading(true); // Start loading
     const jsonData = JSON.stringify(components);
 
-   
-    //PROD appURL
-    //'https://ai-lesson-planner-cd8f89bac323.herokuapp.com/';
-
-    //LOCAL appURL
-    // 'http://localhost:5000';
-
-    const appUrl = 'http://localhost:5000';
     
     // Start using try-catch for async-await pattern
     try {

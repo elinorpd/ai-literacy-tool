@@ -137,21 +137,24 @@ def generate_response(lessonplan, args=None, save=True, html=True, ai_activity=F
     
     lesson_plan, aiactivity = parse_lesson_plan_html(lessonplan)
     print(lesson_plan)
-    html_str = "html formatting within a <p></p>" if html else "plain text formatting"
+    html_str = "html formatting within a <p></p>. Add a <br/> before every <b>. List items in newline" if html else "plain text formatting"
     activity_str = "incorporate a new activity based on given AI literacy learning objectives." if aiactivity else "modify an existing activity according to the instructions in the text."
 
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
                   model=args.model if args else "gpt-4-1106-preview",
                   messages=[
-                      {"role": "system", "content": f"You are an expert in {'AI literacy and' if aiactivity else ''} middle school education. We will give you an existing lesson plan from a middle school teacher.\
-                        Your task is to modify the lesson plan to {activity_str}. Replace the incomplete activity below with a topic, time, age, and level-appropriate activity according to the target audience (if not provided, assume middle school ages 11-14). Be specific and include all necessary details for a teacher to implement.\
+                      {"role": "system", "content": f"You are an expert in {'AI literacy and' if aiactivity else ''} middle school education. We will give you an existing lesson plan from a teacher.\
+                        Your task is to modify the lesson plan to {activity_str}. Replace the incomplete activity below with a topic, age, and level-appropriate activity according to the target audience (if not provided, assume middle school ages 11-14). Be specific and include all necessary details for a teacher to implement.\
                         For other sections (title, overview, lesson objectives), modify if you think it is necessary to maintain coherence {'(e.g. incorporate AI Literacy aspect to lesson overview)' if aiactivity else ''}. Do not edit other sections!\
-                        \n\nReturn only the lesson plan in {html_str}, with your edits with no additional text or references to your edits."},
+                        Suggest lower and advanced level activities if the any of the activity section has alternatives marked as true.\
+                        Create an assessment with around 5 quiz type questions for the activity if assessment for that activity is marked as true and no other assessment related information has been specified in the requirement.\
+                        DO NOT change the duration of the overall lesson plan and any activity if it is already present in the lesson plan. However, suggest a duration if the duration fields are empty.\
+                        \n\nReturn only the lesson plan in {html_str}, with your edits with NO ADDITIONAL TEXT OR REFERENCE TO YOUR EDITS."},
                       {"role": "user", "content": str(lesson_plan)},
                   ],
                   )
 
-    result = response["choices"][0]["message"]["content"]
+    result = response.choices[0].message.content
     print("Here is the new lesson plan:")
     print(result)
     if save: # save the file to output_dir

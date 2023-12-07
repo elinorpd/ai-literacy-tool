@@ -1,10 +1,10 @@
 {
     "type": "newLessonPlan",
-    "title": "introduction  to the history of new york city",
-    "duration": "60",
-    "overview": "introduction  to the history of new york city",
-    "audience": "grade 6 students",
-    "objectives": "learn the history of new york city area from before colonization to present day",
+    "title": "solar system",
+    "duration": "45",
+    "overview": "",
+    "audience": "middle school",
+    "objectives": "",
     "ailitobjectives": [
         {
             "label": "Understand the basic concept of AI, its main components, and everyday examples.",
@@ -12,11 +12,11 @@
         },
         {
             "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
-            "checked": false
+            "checked": true
         },
         {
             "label": "Understand the concept of bias in AI and its societal implications.",
-            "checked": false
+            "checked": true
         },
         {
             "label": "Understand the collaboration between human creativity and AI algorithms.",
@@ -37,16 +37,16 @@
     ],
     "customobjective": "",
     "activity": {
-        "title": "map visualization",
-        "duration": "35",
-        "description": "students create a layered map of the city over various times. please help me flesh this out and include materials and more specific instructions and ideas ",
-        "alternatives": true,
+        "title": "",
+        "duration": "",
+        "description": "",
+        "alternatives": false,
         "assessment": false
     },
     "aiactivity": {
-        "duration": "",
+        "duration": "10",
         "req": "",
-        "alternatives": false,
+        "alternatives": true,
         "assessment": false
     }
 }
