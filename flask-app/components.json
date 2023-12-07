@@ -1,18 +1,18 @@
 {
     "type": "newLessonPlan",
-    "title": "digestive system",
-    "duration": "40",
-    "overview": "",
-    "audience": "grade 6",
-    "objectives": "understanding about the functions about digestive system",
+    "title": "Introduction to fake plant production",
+    "duration": "45",
+    "overview": "students will learn abuot the merits of fake plants",
+    "audience": "10 years old",
+    "objectives": "students will learn abuot the merits of fake plants including how they are made, the industry, the history of their use, and speculate about the future of plastic plants",
     "ailitobjectives": [
         {
             "label": "Understand the basic concept of AI, its main components, and everyday examples.",
-            "checked": true
+            "checked": false
         },
         {
             "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
-            "checked": true
+            "checked": false
         },
         {
             "label": "Understand the concept of bias in AI and its societal implications.",
@@ -37,16 +37,16 @@
     ],
     "customobjective": "",
     "activity": {
-        "title": "",
-        "duration": "",
+        "title": "please suggest me an activity",
+        "duration": "25",
         "description": "",
-        "alternatives": false,
-        "assessment": false
-    },
-    "aiactivity": {
-        "duration": "10",
-        "req": "",
         "alternatives": true,
         "assessment": true
+    },
+    "aiactivity": {
+        "duration": "",
+        "req": "",
+        "alternatives": false,
+        "assessment": false
     }
 }

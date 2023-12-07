@@ -50,19 +50,26 @@ def parse_lesson_plan_html(lesson_plan):
         if custom_objective:
             html_str += f'<li>{custom_objective}</li>\n'
         html_str += '</ul><br/>\n'
-
-    # Activity
     activity = lesson_plan.get('activity', {})
     if activity.get('title'):
         html_str += f'<h3>Activity Title:</h3><br/><p>{activity.get("title", "")}</p><br/>\n'
         html_str += f'<h5>Activity Description:</h5><br/><p>{activity.get("description", "")}</p><br/>\n'
+        if activity.get('assessment'):
+            html_str += f'<h5>Activity Assessment:</h5><br/><p>Create an activity assessment consisting of 3-4 multiple choice quiz questions complete with all answer choices and an explanation of the correct answer choice. Please format it properly in a list.</p><br/>\n'
+        if activity.get('alternatives'):
+            html_str += f'<h5>Activity Alternatives:</h5><br/><p>Please suggest a version of this activity for lower and more advanced level students.{" If necessary, include versions of the assessment appropriate for the two levels." if activity.get("assessment") else ""}</p><br/>\n'
 
     # AI Activity
     ai_activity = lesson_plan.get('aiactivity', {})
     aiactivity = lesson_plan.get('aiactivity', {}).get('duration') # is true only if ai activity is there
     if aiactivity:
         html_str += f'<h3>AI Activity:</h3><br/><p>Duration {ai_activity.get("duration", "")} minutes.</p><br/>\n'
-        html_str += f'<h5>AI Activity Requirements:</h5><br/><p>{ai_activity.get("req", "")}</p><br/>\n'
+        req = ai_activity.get('req', '') # needed to make this a var bc of too many nested quotes lol
+        html_str += f'<h5>AI Activity Description:</h5><br/><p>Please design and describe an AI activity relevant to both the lesson and the AI Literacy Objectives above in as much detail as needed for a teacher with no AI experience to implement this in their classroom.{f" Please adhere to the following requirements: {req}" if req else ""}</p><br/>\n'
+        if ai_activity.get('assessment'):
+            html_str += f'<h5>AI Activity Assessment:</h5><br/><p>Create an activity assessment consisting of 3-4 multiple choice quiz questions complete with all answer choices and an explanation of the correct answer choice. Please format it properly in a list.</p><br/>\n'
+        if ai_activity.get('alternatives'):
+            html_str += f'<h5>Activity Alternatives:</h5><br/><p>Please suggest a version of this activity for lower and more advanced level students.{" If necessary, include versions of the assessment appropriate for the two levels." if ai_activity.get("assessment") else ""}</p><br/>\n'
 
     return html_str, aiactivity
 
@@ -142,14 +149,11 @@ def generate_response(lessonplan, args=None, save=True, html=True, ai_activity=F
 
     print("Shrestha: In generate response")
     response = openai.chat.completions.create(
-                  model=args.model if args else "gpt-4-1106-preview",
+                  model=args.model if args else "gpt-3.5-turbo",
                   messages=[
                       {"role": "system", "content": f"You are an expert in {'AI literacy and' if aiactivity else ''} middle school education. We will give you an existing lesson plan from a teacher.\
                         Your task is to modify the lesson plan to {activity_str}. Replace the incomplete activity below with a topic, age, and level-appropriate activity according to the target audience (if not provided, assume middle school ages 11-14). Be specific and include all necessary details for a teacher to implement.\
                         For other sections (title, overview, lesson objectives), modify if you think it is necessary to maintain coherence {'(e.g. incorporate AI Literacy aspect to lesson overview)' if aiactivity else ''}. Do not edit other sections!\
-                        Suggest lower and advanced level activities if the any of the activity section has alternatives marked as true.\
-                        Create an assessment with around 5 quiz type questions for the activity if assessment for that activity is marked as true and no other assessment related information has been specified in the requirement.\
-                        DO NOT change the duration of the overall lesson plan and any activity if it is already present in the lesson plan. However, suggest a duration if the duration fields are empty.\
                         \n\nReturn only the lesson plan in {html_str}, with your edits with NO ADDITIONAL TEXT OR REFERENCE TO YOUR EDITS."},
                       {"role": "user", "content": str(lesson_plan)},
                   ],
