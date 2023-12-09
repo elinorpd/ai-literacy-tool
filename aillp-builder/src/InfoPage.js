@@ -1,21 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import './InfoPage.css';
 
 
-const InfoPage = () => {
-  useEffect(() => {
-    // Get the hash from the URL (e.g., "#AILLO1")
-    const hash = window.location.hash;
 
-    // Scroll to the element with the matching ID
-    if (hash) {
-      const targetElement = document.getElementById(hash.substring(1));
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth', duration: 50000});
-      }
+function InfoPage() {
+  const location = useLocation();
+  const lastHash = useRef('');
+  useEffect(() => {
+    if (location.hash) {
+      lastHash.current = location.hash.slice(1); // safe hash for further use after navigation
     }
-  }, []);
+
+    if (lastHash.current && document.getElementById(lastHash.current)) {
+      setTimeout(() => {
+        document
+          .getElementById(lastHash.current)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        lastHash.current = '';
+      }, 100);
+    }
+  }, [location]);
 
   return (
     <div cl>

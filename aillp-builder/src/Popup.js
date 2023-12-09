@@ -48,7 +48,6 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
   const navigate = useNavigate();
 
   const handleLabelClick = (index) => {
-    // Logic to handle the label click, e.g., updating state or performing other actions
 
     // Navigate to the specified element in the 'info' page
     const elementId = `AILLO${index + 1}`;
@@ -272,7 +271,11 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
               onChange={(e) => handleChecklistChange(e, index)}
             />
             {/* <label htmlFor={`objective${index}`}><a href='info#AILLO1' target='_blank'>{item.label}</a></label> */}
-            <label htmlFor={`objective${index}`}  onClick={() => openNewTab(index)} className="blueUnderlined">{index+1}.{item.label}
+            {/* <label htmlFor={`objective${index}`}  onClick={() => openNewTab(index)} className="blueUnderlined"> */}
+            <label htmlFor={`objective${index}`}>
+              <Link smooth to={`/info#AILLO${index + 1}`} target="_blank" rel="noopener noreferrer">
+              {index+1}.{item.label}
+              </Link>
             </label>
           </div>
         </div>
