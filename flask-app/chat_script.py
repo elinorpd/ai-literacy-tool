@@ -147,7 +147,6 @@ def generate_response(lessonplan, args=None, save=True, html=True, ai_activity=F
     html_str = "html formatting within a <p></p>. Add a <br/> before every <b>. List items in newline" if html else "plain text formatting"
     activity_str = "incorporate a new activity based on given AI literacy learning objectives." if aiactivity else "modify an existing activity according to the instructions in the text."
 
-    print("Shrestha: In generate response")
     response = openai.chat.completions.create(
                   model=args.model if args else "gpt-3.5-turbo",
                   messages=[
@@ -159,7 +158,6 @@ def generate_response(lessonplan, args=None, save=True, html=True, ai_activity=F
                   ],
                   )
 
-    print("Shrestha: Done generating repsonse")
     result = response.choices[0].message.content
     print("Here is the new lesson plan:")
     print(result)

@@ -48,14 +48,13 @@ def handle_submit():
         json.dump(components, file, indent=4)
         
     # now do the thing to create the lesson plan
-    print("Shrestha: In handlesubmit app.py")
     new_lesson_plan = generate_response(components, None, False)
     # print(new_lesson_plan)
     while not is_valid_html(new_lesson_plan):
         print('Invalid HTML, trying again')
         # call chatgpt to generate a new lesson plan
         new_lesson_plan = generate_response(components, None, False)
-    print("Shrestha: done handlesubmit app.py")
+
     return jsonify({'status': 'success', 'new_lesson_plan':new_lesson_plan}), 200
 
 @app.route('/convert-to-docx', methods=['POST'])

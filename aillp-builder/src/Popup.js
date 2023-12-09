@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Popup.css'; // You will need to create a corresponding CSS file for styling.
 // import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
 
@@ -252,7 +253,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
               checked={item.checked || false}
               onChange={(e) => handleChecklistChange(e, index)}
             />
-            <label htmlFor={`objective${index}`}>{item.label}</label>
+            <label htmlFor={`objective${index}`}> <Link to={`/info/#AILLO${index+1}`} target="_blank" rel="noopener noreferrer">{item.label}</Link> </label>
           </div>
         </div>
       ))}
