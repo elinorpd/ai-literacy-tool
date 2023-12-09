@@ -27,7 +27,6 @@ const InfoPage = () => {
         We are a team of graduate students at MIT. 
         This tool was built as a project for MIT <a href="https://mit-cml.github.io/gen-ai-fall-2023.github.io/" target="_blank">MAS.S10: Generative Artificial Intelligence in K-12 Education</a> by Elinor Poole-Dayan, Shrestha Mohanty, and Swati Garg. 
         We are passionate about the intersecting fields of technology and education and have built an Artificial Intelligence (AI) Literacy Lesson Planner tool that incorporates topics of AI within activities of existing lesson plans, enhancing educational experience and equipping students with valuable skills for the future.
-        https://mit-cml.github.io/gen-ai-fall-2023.github.io/
         </p>
 
         <h1>What is Artificial Intelligence (AI)?</h1>

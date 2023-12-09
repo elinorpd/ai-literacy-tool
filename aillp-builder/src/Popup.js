@@ -37,6 +37,14 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     },
   });
   
+  function openNewTab(index) {
+    const url = `info#AILLO${index + 1}`;
+    const win = window.open(url, '_blank');
+    if (win != null) {
+      win.focus();
+    }
+  }
+
   const navigate = useNavigate();
 
   const handleLabelClick = (index) => {
@@ -263,10 +271,8 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
               checked={item.checked || false}
               onChange={(e) => handleChecklistChange(e, index)}
             />
-            <label htmlFor={`objective${index}`}  onClick={() => handleLabelClick(index)} className="blueUnderlined"> 
-            {/* <Link to={`/info#AILLO${index+1}`} target="_blank" rel="noopener noreferrer" onClick={() => handleLabelClick(index)}> */}
-              {index+1}.{item.label}
-            {/* </Link>  */}
+            {/* <label htmlFor={`objective${index}`}><a href='info#AILLO1' target='_blank'>{item.label}</a></label> */}
+            <label htmlFor={`objective${index}`}  onClick={() => openNewTab(index)} className="blueUnderlined">{index+1}.{item.label}
             </label>
           </div>
         </div>
