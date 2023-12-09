@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Header from './Header';
 import './InfoPage.css';
-import { useParams } from 'react-router-dom';
+
 
 const InfoPage = () => {
   useEffect(() => {
@@ -25,7 +25,7 @@ const InfoPage = () => {
         <h1>Who are we?</h1>
         <p>
         We are a team of graduate students at MIT. 
-        This tool was built as a project for MIT <a href="https://en.unesco.org/sites/default/files/competency_framework_e.pdf" target="_blank">MAS.S10: Generative Artificial Intelligence in K-12 Education</a> by Elinor Poole-Dayan, Shrestha Mohanty, and Swati Garg. 
+        This tool was built as a project for MIT <a href="https://mit-cml.github.io/gen-ai-fall-2023.github.io/" target="_blank">MAS.S10: Generative Artificial Intelligence in K-12 Education</a> by Elinor Poole-Dayan, Shrestha Mohanty, and Swati Garg. 
         We are passionate about the intersecting fields of technology and education and have built an Artificial Intelligence (AI) Literacy Lesson Planner tool that incorporates topics of AI within activities of existing lesson plans, enhancing educational experience and equipping students with valuable skills for the future.
         https://mit-cml.github.io/gen-ai-fall-2023.github.io/
         </p>
@@ -66,7 +66,7 @@ const InfoPage = () => {
           potential challenges in the educational landscape.
         </p>
 
-        <h1>AI Literacy Learning Objectives:</h1>
+        <h1 id="AILLO">AI Literacy Learning Objectives:</h1>
         <h2 id="AILLO1">1. Understand the basic concept of AI, its main components, and everyday examples:</h2>
         <p>
           AI, or Artificial Intelligence, refers to machines or computer systems that are designed to perform tasks that
@@ -91,7 +91,6 @@ const InfoPage = () => {
           consequences. Societal implications include reinforcing existing inequalities and creating unfair advantages or
           disadvantages.
         </p>
-
         <h2 id="AILLO4">4. Understand the collaboration between human creativity and AI algorithms:</h2>
         <p>
           Collaboration between humans and AI involves using AI tools to enhance human creativity. For instance, artists can
@@ -99,7 +98,6 @@ const InfoPage = () => {
           AI for inspiration. The collaboration aims to combine the strengths of human creativity with the efficiency and
           innovation capabilities of AI.
         </p>
-
         <h2 id="AILLO5">5. Recognize the importance of digital privacy and the role of AI in data collection:</h2>
         <p>
           Digital privacy involves safeguarding personal information online. AI plays a role in data collection by analyzing
@@ -133,14 +131,15 @@ const InfoPage = () => {
         <h1>How to use our tool?</h1>
         <ol>
           <li>Choose an existing lesson plan to upload into the tool.</li>
-          <li>Click on the <b>‘Get Started’</b> button.</li>
-          <li>Use the headers mentioned (‘Lesson Title’, ‘Duration’ etc) to add the related fields from your lesson plan into
+          <li>Click on the <b>Get Started</b> button.</li>
+          <li>Use the headers mentioned (Lesson Title, Duration etc) to add the related fields from your lesson plan into
             the tool.</li>
           <li>If you want the AI to include an AI Literacy activity in the lesson plan, click on <b>AI Activity.</b></li>
           <ul>
-            <li>Select the <b>AI Literacy Learning Objectives’</b>‘ you would like to cover as part of your lesson. We recommend picking
-              any two objectives at a time. To learn more about the <b>‘AI Literacy Learning Objectives’</b>, go to this section of our
-              info page.</li>
+            <li>Select the <b>AI Literacy Learning Objectives</b> you would like to cover as part of your lesson. We recommend picking
+              any two objectives at a time. To learn more about the <b>‘AI Literacy Learning Objectives’</b>, 
+              click on the objective or go <a href="#AILLO">here</a>.
+            </li>
             <li>You can enter the <b>duration of the activity.</b></li>
             <li>In the ‘AI activity’ <b>Requirements</b> section, add any details/prompts/ideas you would like AI to consider while
               generating an AI Literacy activity for your lesson plan. The generated activity would cover the AI Literacy
@@ -153,7 +152,8 @@ const InfoPage = () => {
           <li>If you would like to update or refresh an existing activity <b>(non-AI related)</b> in your lesson plan, go to the
             ‘Activity’ section instead. The parameters of this activity section are similar to those of the AI activity section
             but geared towards directing the AI to suggest changes to existing activities.</li>
-          <li>Hit <b>‘Submit’</b> and let the tool do its magic!</li>
+          <li>Click on <b>Save</b> and let the tool do its magic!</li>
+          <li>Hit <b>Submit</b> and let the tool do its magic!</li>
         </ol>
 
         <h1> Resources:</h1>

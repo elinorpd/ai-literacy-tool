@@ -13,7 +13,7 @@ import InfoPage from './InfoPage'; // Import the info page component
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/info" element={<InfoPage />} />
@@ -21,5 +21,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;

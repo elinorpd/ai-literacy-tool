@@ -1,10 +1,10 @@
 {
     "type": "newLessonPlan",
-    "title": "titlelele",
-    "duration": "24",
-    "overview": "sfvdx",
-    "audience": "gersd",
-    "objectives": "asvdcx",
+    "title": "solar system",
+    "duration": "45",
+    "overview": "",
+    "audience": "",
+    "objectives": "",
     "ailitobjectives": [
         {
             "label": "Understand the basic concept of AI, its main components, and everyday examples.",
@@ -12,7 +12,7 @@
         },
         {
             "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
-            "checked": true
+            "checked": false
         },
         {
             "label": "Understand the concept of bias in AI and its societal implications.",
@@ -20,11 +20,11 @@
         },
         {
             "label": "Understand the collaboration between human creativity and AI algorithms.",
-            "checked": false
+            "checked": true
         },
         {
             "label": "Recognize the importance of digital privacy and the role of AI in data collection.",
-            "checked": false
+            "checked": true
         },
         {
             "label": "Understand the basics of safe online behavior in AI-integrated platforms.",
@@ -32,10 +32,10 @@
         },
         {
             "label": "Evaluate the reliability of AI-driven content (e.g., deepfakes, automated articles, hallucinations).",
-            "checked": true
+            "checked": false
         }
     ],
-    "customobjective": "fewasd",
+    "customobjective": "",
     "activity": {
         "title": "",
         "duration": "",
@@ -44,9 +44,9 @@
         "assessment": false
     },
     "aiactivity": {
-        "duration": "21",
-        "req": "wasvdc",
-        "alternatives": false,
+        "duration": "10",
+        "req": "",
+        "alternatives": true,
         "assessment": true
     }
 }

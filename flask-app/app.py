@@ -85,10 +85,12 @@ def convert_to_text():
 
     return response
 
+@app.route('/<path:path>')
+def catch_all(path='index'):
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    #PROD make debug False
     app.run(debug=True)

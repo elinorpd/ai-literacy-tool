@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Popup.css'; // You will need to create a corresponding CSS file for styling.
 // import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
 
@@ -37,6 +37,16 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
     },
   });
   
+  const navigate = useNavigate();
+
+  const handleLabelClick = (index) => {
+    // Logic to handle the label click, e.g., updating state or performing other actions
+
+    // Navigate to the specified element in the 'info' page
+    const elementId = `AILLO${index + 1}`;
+    navigate(`/info#${elementId}`);
+  };
+
   // allow close popup when clicking escape char
   useEffect(() => {
     const handleEsc = (event) => {
@@ -214,7 +224,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         id="activity.description"
         value={properties.activity.description || ''}
         onChange={handleChange}
-        placeholder='You could describe your existing activity and write "incorporate AI Literacy objectives into this activity where students work in groups of 3" or "write me a 4 question multiple choice quiz to assess students&#39; learning from this activity etc".'
+        placeholder='You could describe your existing activity like "incorporate AI Literacy objectives into this activity where students work in groups of 3".'
       />
       <div className="checkboxItem">
         <input
@@ -253,7 +263,11 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
               checked={item.checked || false}
               onChange={(e) => handleChecklistChange(e, index)}
             />
-            <label htmlFor={`objective${index}`}> <Link to={`/info/#AILLO${index+1}`} target="_blank" rel="noopener noreferrer">{item.label}</Link> </label>
+            <label htmlFor={`objective${index}`}  onClick={() => handleLabelClick(index)} className="blueUnderlined"> 
+            {/* <Link to={`/info#AILLO${index+1}`} target="_blank" rel="noopener noreferrer" onClick={() => handleLabelClick(index)}> */}
+              {index+1}.{item.label}
+            {/* </Link>  */}
+            </label>
           </div>
         </div>
       ))}
@@ -283,7 +297,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
           id="aiactivity.req"
           value={properties.aiactivity.req || ''}
           onChange={handleChange}
-          placeholder='Request an offline activity without the use of technology, ask for a debate-style activity, or specify that the assessment should be in multiple choice format.'
+          placeholder='Request an offline activity without the use of technology, ask for a debate-style activity.'
         />
         <div className="checkboxItem">
           <input
