@@ -5,20 +5,8 @@ A project for MIT Media Lab [MAS.S10: Generative Artificial Intelligence in K-12
 ## Instructions
 1. Install necessary python libraries with `pip install -r requirements.txt`
 2. Create a command line environment variable with your private OpenAI API key via `export OPENAI_API_KEY='sk-yourkeyhere'`
-3. Run the script with `python chat-script.py`
-
-    ```
-    usage: chat-script.py [-h] [--input INPUT] [--output_dir OUTPUT_DIR] [--model MODEL]
-
-    options:
-    -h, --help            show this help message and exit
-    --input INPUT         optional input json file name
-    --output_dir OUTPUT_DIR
-                          optional output directory name (relative path), default "output"
-    --model MODEL         openai model to use, default "gpt-3.5-turbo" or use "gpt-4"
-    ```
-5. It will prompt you to input a lesson plan part-by-part. You may do this from scratch or you may use one of the existing examples in this repository.
-6. It will print the newly generated lesson plan and save it as a text file in the output directory
+3. In the `ai-literacy-tool/flask-app` directory, run `python app.py`
+4. In the `ai-literacy-tool/aillp-builder/src` directory, run `npm start`. This will open the web app locally to [http://localhost:3000/](http://localhost:3000/).
 
 ## Motivation 
 - There is a growing need for AI literacy in younger students as AI tools are increasingly accessible
@@ -44,6 +32,4 @@ However, many school teachers do not have the expertise or capacity to develop n
 
 ## Sample Files
 
-- `lesson_plan_physical-computing_text.txt` : sample lesson plan in text format which can be used to copy/ paste as an input form in `chat_script.py`
-
-- `lesson_plan_physical-computing.json` : sample lesson plan in json format. This file can be provided as input file for `chat_script.py`
+- `lesson_plan_physical-computing_text.txt` : sample lesson plan in text format which can be used to copy/ paste as an input 
