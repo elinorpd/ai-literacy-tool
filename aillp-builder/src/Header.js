@@ -12,7 +12,7 @@ function Header({ onClick }) {
     <header className="App-header">
       <div className="nav-buttons">
         <button onClick={() => navigate('/')}>Home</button>
-        <button onClick={() => navigate('/info')}>Info</button>
+        <button onClick={() => navigate('/info')}>AI Basics</button>
         <button onClick={() => window.location.href = 'mailto:elinorpd@media.mit.edu'}>Contact Us</button>
       </div>
         <h1>AI Lesson Plan Builder</h1>
@@ -22,6 +22,9 @@ function Header({ onClick }) {
             <button type='button' className='start-button' onClick={onClick}>Get Started</button>
           )}
       </div>
+      <h3>Need help? See a 
+        <a href="https://drive.google.com/drive/folders/1tQS815e0UOcCr0fMouGUb54_w3nb6AiL?usp=sharing" target="_blank" style={{ color: 'white' }}> tutorial here </a> 
+        and learn more about <Link to="/info" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}> Basics of AI here</Link>.</h3>
     </header>
   );
 }

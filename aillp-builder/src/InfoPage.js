@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from './Header';
 import './InfoPage.css';
 
@@ -23,25 +23,71 @@ function InfoPage() {
     }
   }, [location]);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
   return (
     <div cl>
       <Header />
       <div class="centered-div">
+      <h1>CONTENTS</h1>
+      <div>
+          <ul>
+            <li>
+              <Link to="#" onClick={() => scrollToSection('about_us')}>
+                Who are we?
+              </Link>
+            </li>
+            <li>
+              <Link to="#" onClick={() => scrollToSection('what')}>
+                What is AI?
+              </Link>
+            </li>
+            <li>
+              <Link to="#" onClick={() => scrollToSection('why')}>
+                Why should you care?
+              </Link>
+            </li>
+            <li>
+              <Link to="#" onClick={() => scrollToSection('AILLO')}>
+                AI Literacy Learning Objectives
+              </Link>
+            </li>
+            <li>
+              <Link to="#" onClick={() => scrollToSection('for')}>
+                Who is this tool meant for?
+              </Link>
+            </li>
+            <li>
+              <Link to="#" onClick={() => scrollToSection('how')}>
+                How to use our tool?
+              </Link>
+            </li>
+            <li>
+              <Link to="#" onClick={() => scrollToSection('resources')}>
+                Resources
+              </Link>
+            </li>
+          </ul>
+        </div>
 
-        <h1>Who are we?</h1>
+        <h1 id="about_us">Who are we?</h1>
         <p>
         We are a team of graduate students at MIT. 
         This tool was built as a project for MIT <a href="https://mit-cml.github.io/gen-ai-fall-2023.github.io/" target="_blank">MAS.S10: Generative Artificial Intelligence in K-12 Education</a> by Elinor Poole-Dayan, Shrestha Mohanty, and Swati Garg. 
         We are passionate about the intersecting fields of technology and education and have built an Artificial Intelligence (AI) Literacy Lesson Planner tool that incorporates topics of AI within activities of existing lesson plans, enhancing educational experience and equipping students with valuable skills for the future.
         </p>
 
-        <h1>What is Artificial Intelligence (AI)?</h1>
+        <h1 id="what">What is Artificial Intelligence (AI)?</h1>
         <p>
           AI, or Artificial Intelligence, is a field of computer science that automates tasks that typically require human intelligence.
           This could be activities like recognizing speech, making decisions, translating languages, and recognizing patterns or images.
         </p>
 
-        <h1>Why should you care?</h1>
+        <h1 id="why">Why should you care?</h1>
         <p>
           As AI gains more prominence in the realm of education, it is essential to provide teachers with the necessary skills to
           harness its transformative potential. Incorporating AI into education offers a range of benefits, including but not
@@ -124,7 +170,7 @@ function InfoPage() {
           discerning real from AI-generated content to make informed decisions and prevent the spread of false information.
         </p>
 
-        <h1>Who is this tool meant for?</h1>
+        <h1 id="for">Who is this tool meant for?</h1>
         <p>
           We envision our tool as a valuable resource for middle school teachers seeking to seamlessly integrate AI concepts
           into their lessons or those simply looking to refresh and find inspiration for new, engaging activities. However, it
@@ -133,7 +179,7 @@ function InfoPage() {
           harness its potential, a foundational understanding of AI would be beneficial.
         </p>
 
-        <h1>How to use our tool?</h1>
+        <h1 id="how">How to use our tool?</h1>
         <ol>
           <li>Choose an existing lesson plan to upload into the tool.</li>
           <li>Click on the <b>Get Started</b> button.</li>
@@ -161,10 +207,10 @@ function InfoPage() {
           <li>Hit <b>Submit</b> and let the tool do its magic!</li>
         </ol>
 
-        <h1> Resources:</h1>
+        <h1 id="resources"> Resources:</h1>
         <p>UNESCO has defined a Competency Framework that every organization working for K12 education is recommended to follow.
             The details of the framework can be found below:</p>
-        <p><a href="https://en.unesco.org/sites/default/files/competency_framework_e.pdf" target="_blank">UNESCO Competency Framework</a></p>
+        <p><a href="https://docs.google.com/presentation/d/1TwyDmquum1mUStWQPgthRnRW-ZwLdXPy/edit#slide=id.p4" target="_blank">UNESCO Competency Framework</a></p>
 
         <p>Another cool website that explains a lot of the AIED in K-12 education specifically is AI4K12. Check it out!</p>
         <p><a href="https://ai4k12.org/" target="_blank">AI4K12</a></p>

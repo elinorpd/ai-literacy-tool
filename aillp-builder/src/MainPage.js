@@ -407,17 +407,18 @@ function MainPage() {
       <div className='outer'>
         {/* Render the new lesson plan if it exists */}
       <span id="output"> {/* anything in this span will be in the downloadable PDF */}
-      {outputLessonPlan && (
+      {outputLessonPlan && ( <>
         <div className="output" ref={outputRef}>
           <h2 className='glp'>Generated Lesson Plan:</h2>
           <div dangerouslySetInnerHTML={createMarkup(outputLessonPlan)} />
         </div>
-      )}
-      </span>
       <div className='buttons'>
         <button type='button' onClick={downloadLessonPlan}>Download</button>
         <button type='button' onClick={downloadPDF}>Download PDF</button>   
-        </div> 
+        </div> </>
+        )}
+      </span>
+      
       </div>
 
           

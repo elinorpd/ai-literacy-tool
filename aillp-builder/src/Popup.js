@@ -231,7 +231,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         id="activity.description"
         value={properties.activity.description || ''}
         onChange={handleChange}
-        placeholder='You could describe your existing activity like "incorporate AI Literacy objectives into this activity where students work in groups of 3".'
+        placeholder='This text is a placeholder which you could edit. You could describe your existing activity like "incorporate AI Literacy objectives into this activity where students work in groups of 3".'
       />
       <div className="checkboxItem">
         <input
@@ -306,7 +306,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
           id="aiactivity.req"
           value={properties.aiactivity.req || ''}
           onChange={handleChange}
-          placeholder='Request an offline activity without the use of technology, ask for a debate-style activity.'
+          placeholder='This text is a placeholder which you could edit. Request an offline activity without the use of technology, ask for a debate-style activity.'
         />
         <div className="checkboxItem">
           <input
