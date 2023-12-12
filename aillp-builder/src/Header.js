@@ -6,7 +6,7 @@ function Header({ onClick }) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const displayGetStartedButton = location.pathname !== '/info';
+    const isNotInfoPage = location.pathname !== '/info';
 
   return (
     <header className="App-header">
@@ -18,13 +18,26 @@ function Header({ onClick }) {
         <h1>AI Lesson Plan Builder</h1>
         <h3 style={{ textAlign: 'center' }}>A GPT powered tool for middle school educators to improve and incorporate AI literacy into lesson plans.</h3>
         <div className='buttons'>
-          {displayGetStartedButton && (
+          {isNotInfoPage && (
             <button type='button' className='start-button' onClick={onClick}>Get Started</button>
           )}
       </div>
-      <h3>Need help? See a 
-        <a href="https://drive.google.com/drive/folders/1tQS815e0UOcCr0fMouGUb54_w3nb6AiL?usp=sharing" target="_blank" style={{ color: 'white' }}> tutorial here </a> 
-        and learn more about <Link to="/info" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}> Basics of AI here</Link>.</h3>
+      <h3>
+        {isNotInfoPage && (
+        <>
+          Need help? Learn more about{' '}
+          <Link to="/info" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
+            basics of AI here
+          </Link>
+          &nbsp;and&nbsp;
+        </>
+        )}
+        watch a 
+        <a href="https://drive.google.com/drive/folders/1tQS815e0UOcCr0fMouGUb54_w3nb6AiL?usp=sharing" target="_blank" style={{ color: 'white' }}> tutorial here 
+        </a> 
+        &nbsp;on using the tool
+
+      </h3>
     </header>
   );
 }

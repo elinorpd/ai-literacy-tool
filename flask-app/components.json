@@ -1,18 +1,18 @@
 {
     "type": "newLessonPlan",
-    "title": "jhjkh",
-    "duration": "87",
-    "overview": "jljhl",
-    "audience": "nlkj",
-    "objectives": "nn",
+    "title": "solar system",
+    "duration": "45",
+    "overview": "",
+    "audience": "middle school",
+    "objectives": "",
     "ailitobjectives": [
         {
             "label": "Understand the basic concept of AI, its main components, and everyday examples.",
-            "checked": false
+            "checked": true
         },
         {
             "label": "Discuss ethical implications of AI, including issues of privacy, bias, and decision-making.",
-            "checked": false
+            "checked": true
         },
         {
             "label": "Understand the concept of bias in AI and its societal implications.",
@@ -20,11 +20,11 @@
         },
         {
             "label": "Understand the collaboration between human creativity and AI algorithms.",
-            "checked": true
+            "checked": false
         },
         {
             "label": "Recognize the importance of digital privacy and the role of AI in data collection.",
-            "checked": true
+            "checked": false
         },
         {
             "label": "Understand the basics of safe online behavior in AI-integrated platforms.",
