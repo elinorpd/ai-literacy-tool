@@ -231,7 +231,7 @@ const Popup = ({ show, onClose, onSave, data, isLoading }) => {
         id="activity.description"
         value={properties.activity.description || ''}
         onChange={handleChange}
-        placeholder='This text is a placeholder which you could edit. You could describe your existing activity like "incorporate AI Literacy objectives into this activity where students work in groups of 3".'
+        placeholder='This text is a placeholder which you could edit. You could describe your existing activity like "students work in groups of 3" or "the activity should involve acting things out".'
       />
       <div className="checkboxItem">
         <input
