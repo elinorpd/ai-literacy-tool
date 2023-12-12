@@ -33,7 +33,7 @@ function Header({ onClick }) {
             </>
           )}
           watch a 
-          <a href="https://drive.google.com/drive/folders/1tQS815e0UOcCr0fMouGUb54_w3nb6AiL?usp=sharing" target="_blank" style={{ color: 'white' }}> tutorial here 
+          <a href="https://drive.google.com/file/d/1MCPXtyI6zAhX0bcP2ZZXZthaQ_19GAOE/view" target="_blank" style={{ color: 'white' }}> tutorial here 
           </a> 
           &nbsp;on using the tool
         </h3>

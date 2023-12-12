@@ -128,7 +128,7 @@ function InfoPage() {
 
         <h2 id="AILLO2">2. Discuss the ethical implications of AI, including issues of privacy, bias, and decision-making:</h2>
         <p>
-          Explanation: AI raises ethical concerns about how it impacts our lives. Privacy issues involve the collection and use
+          AI raises ethical concerns about how it impacts our lives. Privacy issues involve the collection and use
           of personal data, while bias refers to unfair treatment due to pre-existing prejudices in AI algorithms. Decision-making
           concerns revolve around the potential for AI to make critical choices without human oversight, leading to ethical
           dilemmas.
